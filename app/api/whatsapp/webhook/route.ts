@@ -7,6 +7,7 @@ import {
   getOrCreateConversation,
   getRecentMessages,
   isDuplicateMessage,
+  recordSendResult,
 } from "@/lib/whatsapp/conversations"
 import { verifyWhatsAppSignature } from "@/lib/whatsapp/verify"
 
@@ -118,8 +119,11 @@ async function handleWebhookPayload(payload: WhatsAppWebhookPayload) {
         waName,
       })
 
-      await appendMessage(conversationId, "assistant", reply)
-      await sendWhatsAppText(message.from, reply)
+      const assistantMessageId = await appendMessage(conversationId, "assistant", reply)
+      const sendResult = await sendWhatsAppText(message.from, reply)
+      if (assistantMessageId) {
+        await recordSendResult(assistantMessageId, sendResult)
+      }
     }
   }
 }

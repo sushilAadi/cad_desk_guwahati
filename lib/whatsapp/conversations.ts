@@ -83,19 +83,48 @@ export async function appendMessage(
   role: ConversationMessage["role"],
   content: string,
   waMessageId?: string
+): Promise<string | null> {
+  const supabase = getSupabaseAdmin()
+  if (!supabase) return null
+
+  const { data, error } = await supabase
+    .from("whatsapp_messages")
+    .insert({
+      conversation_id: conversationId,
+      role,
+      content,
+      wa_message_id: waMessageId ?? null,
+    })
+    .select("id")
+    .single()
+
+  if (error) {
+    console.error("[conversations] appendMessage failed:", error)
+    return null
+  }
+
+  return data?.id ?? null
+}
+
+/** Records the outcome of a WhatsApp send attempt for a stored message (debugging aid). */
+export async function recordSendResult(
+  messageId: string,
+  result: { ok: boolean; status?: number; error?: string }
 ): Promise<void> {
   const supabase = getSupabaseAdmin()
   if (!supabase) return
 
-  const { error } = await supabase.from("whatsapp_messages").insert({
-    conversation_id: conversationId,
-    role,
-    content,
-    wa_message_id: waMessageId ?? null,
-  })
+  const { error } = await supabase
+    .from("whatsapp_messages")
+    .update({
+      send_ok: result.ok,
+      send_status: result.status ?? null,
+      send_error: result.error ?? null,
+    })
+    .eq("id", messageId)
 
   if (error) {
-    console.error("[conversations] appendMessage failed:", error)
+    console.error("[conversations] recordSendResult failed:", error)
   }
 }
 
