@@ -10,6 +10,7 @@ import {
   recordSendResult,
 } from "@/lib/whatsapp/conversations"
 import { verifyWhatsAppSignature } from "@/lib/whatsapp/verify"
+import { getSupabaseAdmin } from "@/lib/supabase/server"
 
 export const dynamic = "force-dynamic"
 
@@ -40,10 +41,18 @@ interface WhatsAppContact {
   wa_id: string
 }
 
+interface WhatsAppStatus {
+  id: string
+  status: string
+  timestamp: string
+  recipient_id?: string
+  errors?: { code: number; title?: string; message?: string; error_data?: { details?: string } }[]
+}
+
 interface WhatsAppChangeValue {
   messages?: WhatsAppTextMessage[]
   contacts?: WhatsAppContact[]
-  statuses?: unknown[]
+  statuses?: WhatsAppStatus[]
 }
 
 interface WhatsAppWebhookPayload {
@@ -85,6 +94,11 @@ async function handleWebhookPayload(payload: WhatsAppWebhookPayload) {
 
   for (const change of changes) {
     const value = change.value
+
+    if (value?.statuses?.length) {
+      await recordDeliveryStatuses(value.statuses)
+    }
+
     const messages = value?.messages
     if (!messages || messages.length === 0) continue // e.g. a delivery/read status update
 
@@ -125,5 +139,28 @@ async function handleWebhookPayload(payload: WhatsAppWebhookPayload) {
         await recordSendResult(assistantMessageId, sendResult)
       }
     }
+  }
+}
+
+/** Persists Meta's delivery-status callbacks (sent/delivered/read/failed) for debugging. */
+async function recordDeliveryStatuses(statuses: WhatsAppStatus[]) {
+  const supabase = getSupabaseAdmin()
+  if (!supabase) return
+
+  const rows = statuses.map((s) => {
+    const firstError = s.errors?.[0]
+    return {
+      wa_message_id: s.id,
+      status: s.status,
+      error_code: firstError?.code ?? null,
+      error_title: firstError?.title ?? null,
+      error_message: firstError?.message ?? firstError?.error_data?.details ?? null,
+      raw: s,
+    }
+  })
+
+  const { error } = await supabase.from("whatsapp_delivery_status").insert(rows)
+  if (error) {
+    console.error("[webhook] recordDeliveryStatuses failed:", error)
   }
 }
