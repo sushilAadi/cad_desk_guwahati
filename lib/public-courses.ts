@@ -8,6 +8,8 @@ export interface PublicCourse {
   category: string
   duration: string | null
   certification: boolean
+  image: string | null
+  lessons: string | null
 }
 
 // Used only if Supabase isn't reachable/configured, so the homepage still
@@ -15,7 +17,7 @@ export interface PublicCourse {
 const FALLBACK_CATEGORIES = [
   "Civil / Architecture",
   "Mechanical",
-  "CS / IT",
+  "CS/IT",
   "Electrical",
   "Creative Arts",
 ]
@@ -26,7 +28,7 @@ export async function getPublicCourses(): Promise<PublicCourse[]> {
 
   const { data, error } = await supabase
     .from("courses")
-    .select("id, title, caption, category, duration, certification")
+    .select("id, title, caption, category, duration, certification, image, lessons")
     .order("category", { ascending: true })
     .order("title", { ascending: true })
 

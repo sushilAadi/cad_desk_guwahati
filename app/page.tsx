@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { CourseExplorer } from "@/components/home/course-explorer"
+import { SiteHeader } from "@/components/nav/site-header"
 import { getPublicCourses, groupByCategory } from "@/lib/public-courses"
 
 export const dynamic = "force-dynamic"
@@ -38,29 +39,7 @@ export default async function Home() {
   return (
     <div className="flex flex-1 flex-col bg-background">
       {/* Nav */}
-      <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <span className="text-lg font-semibold tracking-tight">
-            CAD Desk Guwahati
-          </span>
-          <nav className="hidden items-center gap-6 text-sm text-muted-foreground sm:flex">
-            <Link href="#courses" className="hover:text-foreground">
-              Courses
-            </Link>
-            <Link href="#why-us" className="hover:text-foreground">
-              Why Us
-            </Link>
-            <Link href="#contact" className="hover:text-foreground">
-              Contact
-            </Link>
-          </nav>
-          <Button asChild size="sm">
-            <Link href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer">
-              Chat on WhatsApp
-            </Link>
-          </Button>
-        </div>
-      </header>
+      <SiteHeader groups={groups} totalCount={courses.length} />
 
       {/* Hero */}
       <section className="relative overflow-hidden">
