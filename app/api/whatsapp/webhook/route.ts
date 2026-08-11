@@ -4,6 +4,7 @@ import { runAgentTurn } from "@/lib/gemini/agent"
 import { sendWhatsAppText } from "@/lib/whatsapp/send"
 import {
   sendWelcomeMenu,
+  sendMainMenuHint,
   handleMenuSelection,
   completePendingAction,
   isMenuResetKeyword,
@@ -199,6 +200,7 @@ async function handleWebhookPayload(payload: WhatsAppWebhookPayload) {
       if (assistantMessageId) {
         await recordSendResult(assistantMessageId, sendResult)
       }
+      await sendMainMenuHint(message.from)
     }
   }
 }

@@ -14,7 +14,12 @@ export interface ToolContext {
 // so the model can never see a fee value to leak in the first place.
 const COURSE_LIST_FIELDS = "id,title,caption,category,duration,certification"
 const COURSE_DETAIL_FIELDS =
-  "id,title,caption,description,category,duration,prerequisites,certification,lessons"
+  "id,title,caption,description,category,duration,prerequisites,certification,lessons,table_of_contents"
+
+interface TocModule {
+  title?: string
+  [key: string]: unknown
+}
 
 export const toolDeclarations: FunctionDeclaration[] = [
   {
@@ -45,7 +50,7 @@ export const toolDeclarations: FunctionDeclaration[] = [
   {
     name: "get_course_details",
     description:
-      "Gets full details for one specific course by id or title: description, duration, prerequisites, certification. Never returns fees.",
+      "Gets full details for one specific course by id or title: description, duration, prerequisites, certification, and a short curriculum preview (module titles only, capped at 6). Call this whenever the student asks about content, syllabus, curriculum, table of contents, modules, or 'what will I learn'. Never returns fees.",
     parametersJsonSchema: {
       type: "object",
       properties: {
@@ -148,7 +153,18 @@ export async function executeTool(
 
       const { data, error } = await q.maybeSingle()
       if (error || !data) return { error: "Course not found." }
-      return { course: data }
+
+      // Cap the curriculum preview at 6 module titles -- keep it a light
+      // teaser for WhatsApp, not a full syllabus dump, and don't leak the
+      // nested per-module detail arrays at all.
+      const toc = Array.isArray(data.table_of_contents)
+        ? (data.table_of_contents as TocModule[])
+            .slice(0, 6)
+            .map((m) => m.title)
+            .filter((t): t is string => typeof t === "string")
+        : []
+
+      return { course: { ...data, table_of_contents: toc, table_of_contents_is_partial: toc.length > 0 } }
     }
 
     case "capture_lead": {

@@ -58,6 +58,16 @@ function splitFields(text: string): string[] {
     .filter((s) => s.length > 0)
 }
 
+/**
+ * Sent after every free-text (Gemini) reply, so there's always a visible,
+ * tappable way back to the menu -- not just the hidden "type menu" keyword.
+ */
+export async function sendMainMenuHint(to: string): Promise<SendResult> {
+  return sendWhatsAppButtons(to, "Anything else? You can also jump back anytime:", [
+    { id: MENU_MAIN, title: "🏠 Main Menu" },
+  ])
+}
+
 /** Sent on a brand-new conversation's first message, regardless of what they typed. */
 export async function sendWelcomeMenu(to: string): Promise<SendResult> {
   return sendWhatsAppButtons(
