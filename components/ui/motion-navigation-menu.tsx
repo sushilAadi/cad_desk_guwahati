@@ -145,7 +145,7 @@ export function NavigationBar({ children, className }: NavigationBarProps) {
   return (
     <div
       className={cn(
-        "relative flex items-center justify-between border border-zinc-200 bg-white text-zinc-900 px-6 py-3.5 shadow-md transition-all duration-200 rounded-none",
+        "relative flex items-center justify-between  px-6 py-3.5 shadow-md transition-all duration-200 rounded-none",
         className
       )}
     >
@@ -222,7 +222,7 @@ export function NavigationMenuItem({
           "relative flex items-center gap-1.5 px-3.5 py-1.5 text-sm font-bold tracking-tight transition-all focus:outline-none cursor-pointer select-none",
           isActive
             ? "text-zinc-950 font-black"
-            : "text-zinc-600 hover:text-zinc-900 opacity-70 hover:opacity-100"
+            : "text-white hover:text-zinc-900 opacity-70 hover:opacity-100"
         )}
       >
         {isActive && (

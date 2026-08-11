@@ -63,7 +63,7 @@ export function SiteHeader({ groups, totalCount }: SiteHeaderProps) {
   ]
 
   return (
-    <header className="sticky top-0 z-50 w-full max-w-6xl mx-auto px-4 pt-4 bg-background/95 backdrop-blur">
+    <header className="sticky top-0 z-50 w-full max-w-6xl mx-auto  backdrop-blur">
       <MotionNavigationMenu topGap={16} roundedStyle="none">
         <NavigationBar>
           {/* Brand Logo */}
@@ -73,14 +73,14 @@ export function SiteHeader({ groups, totalCount }: SiteHeaderProps) {
             </div>
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5">
-                <span className="text-sm font-black tracking-wider uppercase text-zinc-900">
+                <span className="text-sm font-black tracking-wider uppercase text-white">
                   CAD DESK
                 </span>
                 <span className="rounded bg-amber-500/20 px-1.5 py-0.5 text-[9px] font-bold text-amber-700">
                   {totalCount}+ Courses
                 </span>
               </div>
-              <span className="text-[10px] text-zinc-500 -mt-0.5 tracking-tight hidden sm:inline">
+              <span className="text-[10px] text-zinc-200 -mt-0.5 tracking-tight hidden sm:inline">
                 Guwahati, Noonmati
               </span>
             </div>
