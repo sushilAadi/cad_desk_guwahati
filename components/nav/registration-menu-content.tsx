@@ -9,7 +9,7 @@ const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponen
 
 export function RegistrationMenuContent() {
   return (
-    <div className="w-full p-6 text-zinc-900 bg-white rounded-none border-2 border-zinc-900 shadow-2xl space-y-4">
+    <div className="w-full p-6 text-zinc-900 bg-white rounded-none border border-zinc-200 shadow-xl space-y-4">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b-2 border-zinc-200 pb-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2">

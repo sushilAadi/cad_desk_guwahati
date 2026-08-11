@@ -145,7 +145,7 @@ export function NavigationBar({ children, className }: NavigationBarProps) {
   return (
     <div
       className={cn(
-        "relative flex items-center justify-between border-2 border-zinc-900 bg-white text-zinc-900 px-6 py-3.5 shadow-xl transition-all duration-200 rounded-none",
+        "relative flex items-center justify-between border border-zinc-200 bg-white text-zinc-900 px-6 py-3.5 shadow-md transition-all duration-200 rounded-none",
         className
       )}
     >
@@ -228,7 +228,7 @@ export function NavigationMenuItem({
         {isActive && (
           <motion.div
             layoutId="active-nav-pill"
-            className="absolute inset-0 border-b-2 border-zinc-900 bg-zinc-200/60 -z-10"
+            className="absolute inset-0 border-b-2 border-amber-500 bg-zinc-100 -z-10"
             transition={{ type: "spring", stiffness: 450, damping: 35 }}
           />
         )}
@@ -315,14 +315,14 @@ export function NavigationMenuViewport({ items, className }: NavigationMenuViewp
               }}
               transition={{ type: "spring", stiffness: 350, damping: 32 }}
               className={cn(
-                "relative w-full overflow-hidden border-2 border-zinc-900 bg-white text-zinc-900 p-0 shadow-2xl rounded-none",
+                "relative w-full overflow-hidden border border-zinc-200 bg-white text-zinc-900 p-0 shadow-xl rounded-none",
                 className
               )}
             >
               {/* Arrow Pointer */}
               {pointerLeft > 0 && (
                 <motion.div
-                  className="absolute -top-1.5 h-3 w-3 rotate-45 border-t-2 border-l-2 border-zinc-900 bg-white z-10"
+                  className="absolute -top-1.5 h-3 w-3 rotate-45 border-t border-l border-zinc-200 bg-white z-10"
                   animate={{
                     left: `${Math.max(24, Math.min(pointerLeft - 6, (parentContainer?.clientWidth || 800) - 24))}px`,
                   }}

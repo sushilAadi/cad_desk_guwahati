@@ -67,9 +67,9 @@ export function CoursesMegaMenu({
   }
 
   return (
-    <div className="w-full p-5 text-zinc-900 bg-white rounded-none border-2 border-zinc-900 shadow-2xl">
+    <div className="w-full p-5 text-zinc-900 bg-white rounded-none border border-zinc-200 shadow-xl">
       {/* Top Header Bar */}
-      <div className="flex items-center justify-between border-b-2 border-zinc-900 pb-3 mb-4">
+      <div className="flex items-center justify-between border-b border-zinc-200 pb-3 mb-4">
         <div className="flex items-center gap-3">
           <div className="flex h-8 w-8 items-center justify-center bg-zinc-900 text-amber-400 font-extrabold rounded-none">
             <GraduationCap className="h-5 w-5" />
@@ -87,7 +87,7 @@ export function CoursesMegaMenu({
         <button
           type="button"
           onClick={onOpenCatalog}
-          className="px-3 py-1.5 bg-zinc-900 text-amber-400 hover:bg-zinc-800 font-mono text-xs font-bold tracking-wider cursor-pointer border border-zinc-900 flex items-center gap-1"
+          className="px-3 py-1.5 bg-zinc-900 text-amber-400 hover:bg-zinc-800 font-mono text-xs font-bold tracking-wider cursor-pointer flex items-center gap-1"
         >
           View Full Catalog <ArrowRight className="h-3.5 w-3.5" />
         </button>
@@ -116,7 +116,7 @@ export function CoursesMegaMenu({
                   }}
                   className={`group p-2.5 transition-all cursor-pointer border-2 flex items-center justify-between gap-3 ${
                     isActive
-                      ? "bg-zinc-900 text-white border-zinc-900 shadow-md"
+                      ? "bg-zinc-900 text-white border-amber-400 shadow-md"
                       : "bg-zinc-50 text-zinc-900 border-zinc-200 hover:border-zinc-400 hover:bg-zinc-100"
                   }`}
                 >
@@ -165,7 +165,7 @@ export function CoursesMegaMenu({
         {/* Right Column: Hovered Category Details & Courses Grid */}
         <div className="md:col-span-8 space-y-4">
           {/* Active Category Header Banner */}
-          <div className="border-2 border-zinc-900 bg-zinc-900 text-white p-4 flex flex-col sm:flex-row items-center gap-4 relative overflow-hidden">
+          <div className="border border-zinc-200 bg-zinc-900 text-white p-4 flex flex-col sm:flex-row items-center gap-4 relative overflow-hidden">
             {/* Category Image Preview */}
             <div className="h-24 w-28 shrink-0 overflow-hidden border-2 border-amber-400 relative bg-zinc-800">
               <img
@@ -246,7 +246,7 @@ export function CoursesMegaMenu({
                       href={whatsappLinkFor(course.title)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-2.5 py-1 bg-zinc-900 hover:bg-amber-500 hover:text-zinc-950 text-white font-mono text-[10px] font-bold tracking-wider cursor-pointer transition-colors border border-zinc-900"
+                      className="px-2.5 py-1 bg-zinc-900 hover:bg-amber-500 hover:text-zinc-950 text-white font-mono text-[10px] font-bold tracking-wider cursor-pointer transition-colors"
                     >
                       Enquire
                     </a>

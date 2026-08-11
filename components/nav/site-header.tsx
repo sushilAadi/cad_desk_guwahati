@@ -9,6 +9,7 @@ import {
   NavigationMenuViewport,
 } from "@/components/ui/motion-navigation-menu"
 import { CoursesMegaMenu } from "@/components/nav/courses-mega-menu"
+import { RegistrationMenuContent } from "@/components/nav/registration-menu-content"
 import { EnquiryMenuContent } from "@/components/nav/enquiry-menu-content"
 import { ContactMenuContent } from "@/components/nav/contact-menu-content"
 import { MobileNavDrawer } from "@/components/nav/mobile-nav-drawer"
@@ -48,6 +49,10 @@ export function SiteHeader({ groups, totalCount }: SiteHeaderProps) {
       ),
     },
     {
+      id: "registration",
+      content: <RegistrationMenuContent />,
+    },
+    {
       id: "enquiry",
       content: <EnquiryMenuContent />,
     },
@@ -84,6 +89,7 @@ export function SiteHeader({ groups, totalCount }: SiteHeaderProps) {
           {/* Navigation Items */}
           <NavigationMenuList className="hidden md:flex">
             <NavigationMenuItem id="courses" title="Courses" badge={`${totalCount}`} />
+            <NavigationMenuItem id="registration" title="Registration" />
             <NavigationMenuItem id="enquiry" title="Enquiry Desk" />
             <NavigationMenuItem id="contact" title="Contact Us" />
           </NavigationMenuList>

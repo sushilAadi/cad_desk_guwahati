@@ -8,14 +8,16 @@ import {
   X,
   ChevronDown,
   GraduationCap,
+  UserCheck,
   HelpCircle,
   Building2,
   MessageCircle,
-  Phone,
-  MapPin,
 } from "lucide-react"
 import type { PublicCourse } from "@/lib/public-courses"
 import { getCategoryDisplay } from "./category-config"
+import { RegistrationMenuContent } from "./registration-menu-content"
+import { EnquiryMenuContent } from "./enquiry-menu-content"
+import { ContactMenuContent } from "./contact-menu-content"
 
 const WHATSAPP_NUMBER = "919127281610"
 const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
@@ -40,6 +42,7 @@ function whatsappLinkFor(courseTitle: string) {
 export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [openCategory, setOpenCategory] = useState<string | null>(null)
+  const [openSection, setOpenSection] = useState<"registration" | "enquiry" | "contact" | null>(null)
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : ""
@@ -51,6 +54,7 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
   const close = () => {
     setIsOpen(false)
     setOpenCategory(null)
+    setOpenSection(null)
   }
 
   return (
@@ -60,7 +64,7 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
         type="button"
         onClick={() => setIsOpen(true)}
         aria-label="Open menu"
-        className="md:hidden flex h-9 w-9 items-center justify-center border-2 border-zinc-900 bg-white text-zinc-900"
+        className="md:hidden flex h-9 w-9 items-center justify-center border border-zinc-200 bg-white text-zinc-900 hover:bg-zinc-50"
       >
         <Menu className="h-5 w-5" />
       </button>
@@ -86,10 +90,10 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 320, damping: 32 }}
-              className="fixed inset-y-0 right-0 z-[70] flex h-full w-[85vw] max-w-sm flex-col bg-white text-zinc-900 border-l-2 border-zinc-900 shadow-2xl md:hidden"
+              className="fixed inset-y-0 right-0 z-[70] flex h-full w-[85vw] max-w-sm flex-col bg-white text-zinc-900 border-l border-zinc-200 shadow-2xl md:hidden"
             >
               {/* Header */}
-              <div className="flex items-center justify-between border-b-2 border-zinc-900 px-4 py-3.5">
+              <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3.5">
                 <div className="flex items-center gap-2">
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-tr from-amber-500 via-amber-600 to-amber-400 text-zinc-950">
                     <GraduationCap className="h-4 w-4" />
@@ -192,50 +196,114 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
                   </div>
                 </div>
 
-                {/* Enquiry */}
-                <a
-                  href={WHATSAPP_LINK}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={close}
-                  className="flex items-center gap-3 border-b border-zinc-200 px-4 py-3.5 hover:bg-zinc-50"
-                >
-                  <HelpCircle className="h-4 w-4 text-blue-600 shrink-0" />
-                  <div className="min-w-0">
-                    <span className="block text-xs font-extrabold text-zinc-900">Enquiry Desk</span>
-                    <span className="block text-[11px] text-zinc-500">Ask about syllabus, batches, fees</span>
-                  </div>
-                </a>
+                {/* Registration — same content as desktop */}
+                <div className="border-b border-zinc-200">
+                  <button
+                    type="button"
+                    onClick={() => setOpenSection(openSection === "registration" ? null : "registration")}
+                    className="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-zinc-50"
+                  >
+                    <UserCheck className="h-4 w-4 text-amber-600 shrink-0" />
+                    <div className="min-w-0 flex-1 text-left">
+                      <span className="block text-xs font-extrabold text-zinc-900">Registration</span>
+                      <span className="block text-[11px] text-zinc-500">Enroll into a course</span>
+                    </div>
+                    <ChevronDown
+                      className={`h-3.5 w-3.5 text-zinc-400 shrink-0 transition-transform ${
+                        openSection === "registration" ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {openSection === "registration" && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ type: "spring", stiffness: 380, damping: 34 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="p-3">
+                          <RegistrationMenuContent />
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
 
-                {/* Contact */}
-                <a
-                  href={WHATSAPP_LINK}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={close}
-                  className="flex items-center gap-3 border-b border-zinc-200 px-4 py-3.5 hover:bg-zinc-50"
-                >
-                  <Building2 className="h-4 w-4 text-emerald-600 shrink-0" />
-                  <div className="min-w-0">
-                    <span className="block text-xs font-extrabold text-zinc-900">Contact Us</span>
-                    <span className="block text-[11px] text-zinc-500">Noonmati, Guwahati</span>
-                  </div>
-                </a>
+                {/* Enquiry — same content as desktop */}
+                <div className="border-b border-zinc-200">
+                  <button
+                    type="button"
+                    onClick={() => setOpenSection(openSection === "enquiry" ? null : "enquiry")}
+                    className="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-zinc-50"
+                  >
+                    <HelpCircle className="h-4 w-4 text-blue-600 shrink-0" />
+                    <div className="min-w-0 flex-1 text-left">
+                      <span className="block text-xs font-extrabold text-zinc-900">Enquiry Desk</span>
+                      <span className="block text-[11px] text-zinc-500">Ask about syllabus, batches, fees</span>
+                    </div>
+                    <ChevronDown
+                      className={`h-3.5 w-3.5 text-zinc-400 shrink-0 transition-transform ${
+                        openSection === "enquiry" ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {openSection === "enquiry" && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ type: "spring", stiffness: 380, damping: 34 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="p-3">
+                          <EnquiryMenuContent />
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
 
-                <div className="px-4 py-3.5 space-y-2 text-[11px] text-zinc-600">
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-3.5 w-3.5 text-zinc-400 shrink-0" />
-                    <span>Near Axom Jatiya Vidyalaya, Noonmati, Guwahati, Assam 781020</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Phone className="h-3.5 w-3.5 text-zinc-400 shrink-0" />
-                    <span>+91 91272 81610</span>
-                  </div>
+                {/* Contact — same content as desktop */}
+                <div className="border-b border-zinc-200">
+                  <button
+                    type="button"
+                    onClick={() => setOpenSection(openSection === "contact" ? null : "contact")}
+                    className="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-zinc-50"
+                  >
+                    <Building2 className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <div className="min-w-0 flex-1 text-left">
+                      <span className="block text-xs font-extrabold text-zinc-900">Contact Us</span>
+                      <span className="block text-[11px] text-zinc-500">Noonmati, Guwahati</span>
+                    </div>
+                    <ChevronDown
+                      className={`h-3.5 w-3.5 text-zinc-400 shrink-0 transition-transform ${
+                        openSection === "contact" ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {openSection === "contact" && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ type: "spring", stiffness: 380, damping: 34 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="p-3">
+                          <ContactMenuContent />
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               </div>
 
               {/* Sticky bottom CTA */}
-              <div className="border-t-2 border-zinc-900 p-4">
+              <div className="border-t border-zinc-200 p-4">
                 <a
                   href={WHATSAPP_LINK}
                   target="_blank"
