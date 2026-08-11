@@ -135,20 +135,26 @@ export async function recordSendResult(
 }
 
 export interface PendingAction {
-  /** What the student is trying to do -- affects confirmation wording only. */
+  /** What the student is trying to do -- "register" writes to student_registrations, "enquire" to enquiries. */
   mode: "enquire" | "register"
   courseId: string
   courseTitle: string
   /** Batch already picked via button; null means it's still being asked for as free text too. */
   batch: string | null
-  /** Which free-text reply we're currently waiting on. */
-  step: "name_qual" | "email_dob" | "address"
+  /**
+   * Which free-text reply we're currently waiting on. "father_college" and
+   * "confirm" only occur in "register" mode -- enquire finishes after "address".
+   */
+  step: "name_qual" | "email_dob" | "address" | "father_college" | "confirm"
   /** Fields collected so far across steps -- only written to the DB once the flow finishes. */
   collected: {
     name?: string
     qualification?: string
     email?: string
     dob?: string
+    address?: string
+    fathersName?: string
+    college?: string
   }
 }
 

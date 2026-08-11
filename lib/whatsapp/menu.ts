@@ -3,6 +3,7 @@ import "server-only"
 import { getSupabaseAdmin } from "@/lib/supabase/server"
 import { sendWhatsAppButtons, sendWhatsAppList, sendWhatsAppText, type SendResult } from "@/lib/whatsapp/send"
 import { captureLead } from "@/lib/whatsapp/leads"
+import { createRegistration } from "@/lib/whatsapp/registrations"
 import { getFeatureFlags } from "@/lib/config/flags"
 import {
   setPendingAction,
@@ -173,7 +174,7 @@ async function sendCourseList(to: string, category: string) {
     )
   }
 
-  // Reserve 3 rows: "see more" (if needed), "Ask a Question", and Main Menu (always).
+  // Reserve 3 rows: "Other" (always -- covers both overflow and "not listed here"), "Ask a Question", and Main Menu.
   const shown = data.slice(0, MAX_LIST_ROWS - 3)
   const rows = shown.map((c) => ({
     id: `${COURSE_PREFIX}${c.id}`,
@@ -181,13 +182,12 @@ async function sendCourseList(to: string, category: string) {
     description: `${c.duration ? `${c.duration} days` : "Flexible"}${c.certification ? " • Certified" : ""}`,
   }))
 
-  if (data.length > shown.length) {
-    rows.push({
-      id: `${MORE_PREFIX}${category}`,
-      title: "🔎 See more",
-      description: "More courses available — type to search",
-    })
-  }
+  rows.push({
+    id: `${MORE_PREFIX}${category}`,
+    title: "✍️ Other",
+    description:
+      data.length > shown.length ? "More courses available — type to search" : "Don't see it? Type the name",
+  })
   rows.push({
     id: `${ASK_PREFIX}category:${category}`,
     title: "💬 Ask a Question",
@@ -275,42 +275,77 @@ async function startNameCollection(
     collected: {},
   })
 
+  const qualNote =
+    mode === "register" ? "(both name and qualification are required)" : "(qualification is optional)"
+
   if (batch) {
     await sendWhatsAppText(
       to,
-      "Almost done — reply with your *Name - Qualification*, separated by a dash.\nExample: `Rahul Sharma - 12th Pass`\n(Qualification is optional, just your name works too.)"
+      `Almost done — reply with your *Name - Qualification*, separated by a dash ${qualNote}.\nExample: \`Rahul Sharma - 12th Pass\``
     )
   } else {
     await sendWhatsAppText(
       to,
-      "No problem — reply with your *Batch - Name - Qualification*, separated by dashes.\nExample: `Evening - Rahul Sharma - 12th Pass`\n(Qualification is optional.)"
+      `No problem — reply with your *Batch - Name - Qualification*, separated by dashes ${qualNote}.\nExample: \`Evening - Rahul Sharma - 12th Pass\``
     )
   }
 }
 
 async function askEmailDob(to: string, conversationId: string, pending: PendingAction) {
   await setPendingAction(conversationId, { ...pending, step: "email_dob" })
+  const note =
+    pending.mode === "register"
+      ? "(both are required to complete registration)"
+      : "(optional — reply `skip` to move on)"
   await sendWhatsAppText(
     to,
-    "Thanks! Now your *Email, Date of Birth (DD/MM/YYYY)*, separated by a comma.\nExample: `rahul@email.com, 15/08/2000`\n(Optional — reply `skip` to move on.)"
+    `Thanks! Now your *Email, Date of Birth (DD/MM/YYYY)*, separated by a comma ${note}.\nExample: \`rahul@email.com, 15/08/2000\``
   )
 }
 
 async function askAddress(to: string, conversationId: string, pending: PendingAction) {
   await setPendingAction(conversationId, { ...pending, step: "address" })
+  const note = pending.mode === "register" ? "(required to complete registration)" : "(optional — reply `skip` to finish)"
+  await sendWhatsAppText(to, `Almost there — what's your *address*? ${note}`)
+}
+
+/** Register-only step 4: father's name (optional) + college/school (required). */
+async function askFatherCollege(to: string, conversationId: string, pending: PendingAction) {
+  await setPendingAction(conversationId, { ...pending, step: "father_college" })
   await sendWhatsAppText(
     to,
-    "Last step — what's your *address*? (Optional — reply `skip` to finish.)"
+    "Almost done — reply with your *Father's Name, College/School*, separated by a comma (father's name is optional).\nExample: `Ramesh Sharma, ABC College`\nOr just the college name on its own works too."
   )
 }
 
-async function finalizeLead(
-  to: string,
-  conversationId: string,
-  pending: PendingAction,
-  address: string | null
-) {
-  const { name, qualification, email, dob } = pending.collected
+/** Register-only step 5: final Yes/No confirmation before writing to student_registrations. */
+async function askConfirm(to: string, conversationId: string, pending: PendingAction) {
+  await setPendingAction(conversationId, { ...pending, step: "confirm" })
+  const c = pending.collected
+  const batch = pending.batch || "Flexible"
+  const summary = [
+    `*${c.name}*`,
+    c.qualification ? `Qualification: ${c.qualification}` : null,
+    c.college ? `College: ${c.college}` : null,
+    c.email ? `Email: ${c.email}` : null,
+    c.dob ? `DOB: ${c.dob}` : null,
+    c.address ? `Address: ${c.address}` : null,
+    `Course: ${pending.courseTitle} (${batch} batch)`,
+  ]
+    .filter(Boolean)
+    .join("\n")
+
+  await sendWhatsAppText(
+    to,
+    `Please confirm your registration details:\n\n${summary}\n\nReply *YES* to confirm and submit, or *NO* to cancel.`
+  )
+}
+
+const YES_WORDS = new Set(["yes", "y", "confirm", "ok", "okay", "sure", "haan", "yep", "yeah"])
+const NO_WORDS = new Set(["no", "n", "cancel", "nahi"])
+
+async function finalizeEnquiry(to: string, conversationId: string, pending: PendingAction) {
+  const { name, qualification, email, dob, address } = pending.collected
   const batch = pending.batch || "Flexible"
 
   const result = await captureLead(
@@ -323,7 +358,7 @@ async function finalizeLead(
       batchTime: batch,
       email: email ?? null,
       dob: dob ?? null,
-      address,
+      address: address ?? null,
     }
   )
 
@@ -334,17 +369,48 @@ async function finalizeLead(
     return
   }
 
-  const confirmation =
-    pending.mode === "register"
-      ? `Thanks ${name}! You're registered for *${pending.courseTitle}* (${batch} batch). Our team will confirm your seat at the Noonmati centre shortly. 🎉`
-      : `Thanks ${name}! I've shared your interest in *${pending.courseTitle}* (${batch} batch) with our counseling team — they'll reach out soon. 😊`
+  await sendWhatsAppText(
+    to,
+    `Thanks ${name}! I've shared your interest in *${pending.courseTitle}* (${batch} batch) with our counseling team — they'll reach out soon. 😊`
+  )
+}
 
-  await sendWhatsAppText(to, confirmation)
+async function finalizeRegistration(to: string, conversationId: string, pending: PendingAction, declaration: boolean) {
+  const { name, qualification, email, dob, address, fathersName, college } = pending.collected
+
+  const result = await createRegistration({
+    waPhone: to,
+    name: name || "WhatsApp lead",
+    fathersName: fathersName ?? null,
+    contactAddress: address || "Not provided",
+    dob: dob || new Date().toISOString().slice(0, 10),
+    email: email || "not-provided@caddeskguwahati.com",
+    qualification: qualification || "Not provided",
+    college: college || "Not provided",
+    courseId: pending.courseId,
+    courseTitle: pending.courseTitle,
+    declaration,
+  })
+
+  await clearPendingAction(conversationId)
+
+  if (!result.success) {
+    await sendWhatsAppText(to, "Sorry, something went wrong saving that — could you try again in a moment?")
+    return
+  }
+
+  const batch = pending.batch || "Flexible"
+  await sendWhatsAppText(
+    to,
+    `You're registered, ${name}! 🎉\nRegistration No: *${result.regNo}*\nCourse: ${pending.courseTitle} (${batch} batch)\n\nOur team will confirm your seat and complete the paperwork at the Noonmati centre shortly.`
+  )
 }
 
 /**
  * Called when a free-text reply arrives while a pending_action is waiting on it.
  * Returns a short label (for conversation history) describing what happened.
+ * Registration is stricter than enquiry -- email/DOB/address/college can't be
+ * skipped, since they're NOT NULL columns on the real student_registrations table.
  */
 export async function completePendingAction(
   to: string,
@@ -353,6 +419,8 @@ export async function completePendingAction(
   rawText: string,
   waName: string | null
 ): Promise<string> {
+  const isRegister = pending.mode === "register"
+
   if (pending.step === "name_qual") {
     let batch = pending.batch
     let name: string
@@ -369,6 +437,14 @@ export async function completePendingAction(
       qualification = parts[2] || undefined
     }
 
+    if (isRegister && !qualification) {
+      await sendWhatsAppText(
+        to,
+        "Qualification is required to complete registration — please include it.\nExample: `Rahul Sharma - 12th Pass`"
+      )
+      return "[asked again: qualification required for registration]"
+    }
+
     const next: PendingAction = {
       ...pending,
       batch,
@@ -379,6 +455,11 @@ export async function completePendingAction(
   }
 
   if (pending.step === "email_dob") {
+    if (isRegister && isSkip(rawText)) {
+      await sendWhatsAppText(to, "Email and date of birth are required to complete registration — they can't be skipped.")
+      return "[asked again: email/DOB required for registration]"
+    }
+
     let email: string | undefined
     let dob: string | undefined
 
@@ -386,6 +467,14 @@ export async function completePendingAction(
       const parts = splitInto(rawText, 2)
       email = parts[0] || undefined
       dob = parts[1] ? parseDob(parts[1]) ?? undefined : undefined
+    }
+
+    if (isRegister && (!email || !dob)) {
+      await sendWhatsAppText(
+        to,
+        "I need both a valid email and date of birth (DD/MM/YYYY) to complete registration.\nExample: `rahul@email.com, 15/08/2000`"
+      )
+      return "[asked again: valid email/DOB required for registration]"
     }
 
     const next: PendingAction = {
@@ -396,10 +485,68 @@ export async function completePendingAction(
     return "[collected email/DOB, asked for address]"
   }
 
-  // step === "address"
-  const address = isSkip(rawText) ? null : rawText.trim() || null
-  await finalizeLead(to, conversationId, pending, address)
-  return `[completed pending ${pending.mode}]`
+  if (pending.step === "address") {
+    const address = isSkip(rawText) ? null : rawText.trim() || null
+
+    if (isRegister && !address) {
+      await sendWhatsAppText(to, "Address is required to complete registration — it can't be skipped.")
+      return "[asked again: address required for registration]"
+    }
+
+    const next: PendingAction = {
+      ...pending,
+      collected: { ...pending.collected, address: address ?? undefined },
+    }
+
+    if (isRegister) {
+      await askFatherCollege(to, conversationId, next)
+      return "[collected address, asked for father's name/college]"
+    }
+
+    await finalizeEnquiry(to, conversationId, next)
+    return "[completed pending enquire]"
+  }
+
+  if (pending.step === "father_college") {
+    const parts = splitInto(rawText, 2)
+    let fathersName: string | undefined
+    let college: string | undefined
+
+    if (parts.length >= 2) {
+      ;[fathersName, college] = parts
+    } else {
+      college = parts[0] || undefined
+    }
+
+    if (!college) {
+      await sendWhatsAppText(
+        to,
+        "College/school name is required to complete registration (father's name is optional).\nExample: `Ramesh Sharma, ABC College` or just `ABC College`"
+      )
+      return "[asked again: college required for registration]"
+    }
+
+    const next: PendingAction = {
+      ...pending,
+      collected: { ...pending.collected, fathersName, college },
+    }
+    await askConfirm(to, conversationId, next)
+    return "[collected father's name/college, asked to confirm]"
+  }
+
+  // step === "confirm" (register only)
+  const answer = rawText.trim().toLowerCase()
+  if (YES_WORDS.has(answer)) {
+    await finalizeRegistration(to, conversationId, pending, true)
+    return "[completed pending register]"
+  }
+  if (NO_WORDS.has(answer)) {
+    await clearPendingAction(conversationId)
+    await sendWhatsAppText(to, "No problem — registration cancelled. You can start again anytime from the menu.")
+    return "[cancelled pending register]"
+  }
+  await sendWhatsAppText(to, "Please reply *YES* to confirm and submit, or *NO* to cancel.")
+  return "[asked again: yes/no confirmation]"
 }
 
 async function sendEnquiryPrompt(to: string) {
