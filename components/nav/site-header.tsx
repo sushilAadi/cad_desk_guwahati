@@ -9,9 +9,9 @@ import {
   NavigationMenuViewport,
 } from "@/components/ui/motion-navigation-menu"
 import { CoursesMegaMenu } from "@/components/nav/courses-mega-menu"
-import { RegistrationMenuContent } from "@/components/nav/registration-menu-content"
 import { EnquiryMenuContent } from "@/components/nav/enquiry-menu-content"
 import { ContactMenuContent } from "@/components/nav/contact-menu-content"
+import { MobileNavDrawer } from "@/components/nav/mobile-nav-drawer"
 import type { PublicCourse } from "@/lib/public-courses"
 import { GraduationCap } from "lucide-react"
 
@@ -46,10 +46,6 @@ export function SiteHeader({ groups, totalCount }: SiteHeaderProps) {
           onOpenCatalog={() => scrollToCourses()}
         />
       ),
-    },
-    {
-      id: "registration",
-      content: <RegistrationMenuContent />,
     },
     {
       id: "enquiry",
@@ -88,20 +84,22 @@ export function SiteHeader({ groups, totalCount }: SiteHeaderProps) {
           {/* Navigation Items */}
           <NavigationMenuList className="hidden md:flex">
             <NavigationMenuItem id="courses" title="Courses" badge={`${totalCount}`} />
-            <NavigationMenuItem id="registration" title="Registration" />
             <NavigationMenuItem id="enquiry" title="Enquiry Desk" />
             <NavigationMenuItem id="contact" title="Contact Us" />
           </NavigationMenuList>
 
-          {/* Action Button */}
-          <a
-            href={WHATSAPP_LINK}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center rounded-lg bg-zinc-900 px-3.5 py-2 text-xs font-bold text-white hover:bg-zinc-800 transition-colors"
-          >
-            Chat on WhatsApp
-          </a>
+          {/* Action Button (desktop) + Hamburger (mobile) */}
+          <div className="flex items-center gap-2">
+            <a
+              href={WHATSAPP_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:inline-flex items-center rounded-lg bg-zinc-900 px-3.5 py-2 text-xs font-bold text-white hover:bg-zinc-800 transition-colors"
+            >
+              Chat on WhatsApp
+            </a>
+            <MobileNavDrawer groups={groups} totalCount={totalCount} />
+          </div>
         </NavigationBar>
 
         {/* Dropdown Menu Viewport taking full width */}
