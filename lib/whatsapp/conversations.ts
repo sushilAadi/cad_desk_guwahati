@@ -141,6 +141,15 @@ export interface PendingAction {
   courseTitle: string
   /** Batch already picked via button; null means it's still being asked for as free text too. */
   batch: string | null
+  /** Which free-text reply we're currently waiting on. */
+  step: "name_qual" | "email_dob" | "address"
+  /** Fields collected so far across steps -- only written to the DB once the flow finishes. */
+  collected: {
+    name?: string
+    qualification?: string
+    email?: string
+    dob?: string
+  }
 }
 
 /** Reads the in-progress menu flow (if any) waiting on a free-text reply. */

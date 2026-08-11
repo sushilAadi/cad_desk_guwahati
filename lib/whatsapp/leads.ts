@@ -19,6 +19,9 @@ export async function captureLead(
     courseId?: string | null
     qualification?: string | null
     batchTime?: string | null
+    email?: string | null
+    dob?: string | null // ISO yyyy-mm-dd, or null
+    address?: string | null
   }
 ): Promise<{ success: boolean; leadId?: string; error?: string }> {
   const supabase = getSupabaseAdmin()
@@ -36,6 +39,9 @@ export async function captureLead(
       course_id: fields.courseId ?? null,
       qualification: fields.qualification ?? null,
       batch_time: fields.batchTime ?? null,
+      email: fields.email ?? null,
+      dob: fields.dob ?? null,
+      address: fields.address ?? null,
     })
     .select("id")
     .single()

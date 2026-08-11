@@ -3,6 +3,7 @@ import "server-only"
 import { getSupabaseAdmin } from "@/lib/supabase/server"
 import { sendWhatsAppButtons, sendWhatsAppList, sendWhatsAppText, type SendResult } from "@/lib/whatsapp/send"
 import { captureLead } from "@/lib/whatsapp/leads"
+import { getFeatureFlags } from "@/lib/config/flags"
 import {
   setPendingAction,
   clearPendingAction,
@@ -14,6 +15,7 @@ import {
 const ROOT_COURSES = "menu:courses"
 const ROOT_ENQUIRY = "menu:enquiry"
 const ROOT_REGISTRATION = "menu:registration"
+const ROOT_ASK = "ask:general"
 const MENU_MAIN = "menu:main"
 const CATEGORY_PREFIX = "cat:"
 const COURSE_PREFIX = "course:"
@@ -21,6 +23,7 @@ const MORE_PREFIX = "more:"
 const ENQUIRE_PREFIX = "enquire:" // enquire:<courseId>
 const REGISTER_PREFIX = "register:" // register:<courseId>
 const BATCH_PREFIX = "batch:" // batch:<mode>:<courseId>:<Morning|Evening|other>
+const ASK_PREFIX = "ask:" // ask:general | ask:category:<category> | ask:course:<courseId>
 
 const MAX_LIST_ROWS = 10
 
@@ -59,6 +62,43 @@ function splitFields(text: string): string[] {
 }
 
 /**
+ * Splits on "-"/"," like splitFields, but folds any extra parts into the
+ * last expected field instead of dropping them -- protects against dates
+ * (DD-MM-YYYY) or addresses containing the same delimiter characters.
+ */
+function splitInto(text: string, count: number): string[] {
+  const parts = splitFields(text)
+  if (parts.length <= count) return parts
+  const head = parts.slice(0, count - 1)
+  const tail = parts.slice(count - 1).join(" - ")
+  return [...head, tail]
+}
+
+function isSkip(text: string): boolean {
+  return text.trim().toLowerCase() === "skip"
+}
+
+/** Parses DD/MM/YYYY, DD-MM-YYYY, or YYYY-MM-DD into an ISO yyyy-mm-dd string. */
+function parseDob(raw: string): string | null {
+  const s = raw.trim()
+  if (!s) return null
+
+  let m = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/)
+  if (m) {
+    const [, d, mo, y] = m
+    return `${y}-${mo.padStart(2, "0")}-${d.padStart(2, "0")}`
+  }
+
+  m = s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})$/)
+  if (m) {
+    const [, y, mo, d] = m
+    return `${y}-${mo.padStart(2, "0")}-${d.padStart(2, "0")}`
+  }
+
+  return null
+}
+
+/**
  * Sent after every free-text (Gemini) reply, so there's always a visible,
  * tappable way back to the menu -- not just the hidden "type menu" keyword.
  */
@@ -70,14 +110,22 @@ export async function sendMainMenuHint(to: string): Promise<SendResult> {
 
 /** Sent on a brand-new conversation's first message, regardless of what they typed. */
 export async function sendWelcomeMenu(to: string): Promise<SendResult> {
-  return sendWhatsAppButtons(
+  const flags = getFeatureFlags()
+
+  const rows = [
+    { id: ROOT_COURSES, title: "📚 Courses", description: "Browse by field" },
+    { id: ROOT_ENQUIRY, title: "❓ Enquiry Desk", description: "Ask us to reach out" },
+  ]
+  if (flags.enableRegistration) {
+    rows.push({ id: ROOT_REGISTRATION, title: "📝 Registration", description: "Join a course" })
+  }
+  rows.push({ id: ROOT_ASK, title: "💬 Ask a Question", description: "Type anything, anytime" })
+
+  return sendWhatsAppList(
     to,
     "👋 Welcome to CAD Desk Guwahati! We're a CAD/CAM & IT training institute at our Noonmati centre. How can I help you today?",
-    [
-      { id: ROOT_COURSES, title: "📚 Courses" },
-      { id: ROOT_ENQUIRY, title: "❓ Enquiry Desk" },
-      { id: ROOT_REGISTRATION, title: "📝 Registration" },
-    ]
+    "View Options",
+    [{ rows }]
   )
 }
 
@@ -119,8 +167,8 @@ async function sendCourseList(to: string, category: string) {
     )
   }
 
-  // Reserve 2 rows: one for "see more" (if needed) and one for Main Menu (always).
-  const shown = data.slice(0, MAX_LIST_ROWS - 2)
+  // Reserve 3 rows: "see more" (if needed), "Ask a Question", and Main Menu (always).
+  const shown = data.slice(0, MAX_LIST_ROWS - 3)
   const rows = shown.map((c) => ({
     id: `${COURSE_PREFIX}${c.id}`,
     title: truncate(c.title, 24),
@@ -134,6 +182,11 @@ async function sendCourseList(to: string, category: string) {
       description: "More courses available — type to search",
     })
   }
+  rows.push({
+    id: `${ASK_PREFIX}category:${category}`,
+    title: "💬 Ask a Question",
+    description: `About ${truncate(category, 40)} courses`,
+  })
   rows.push({ id: MENU_MAIN, title: "🏠 Main Menu", description: "Back to the start" })
 
   await sendWhatsAppList(to, `${category} courses:`, "View Courses", [{ rows }])
@@ -162,11 +215,18 @@ async function sendCourseDetail(to: string, courseId: string) {
   ].filter(Boolean)
 
   await sendWhatsAppText(to, lines.join("\n"))
-  await sendWhatsAppButtons(to, "Want to take this further?", [
-    { id: `${ENQUIRE_PREFIX}${course.id}`, title: "❓ Enquire" },
-    { id: `${REGISTER_PREFIX}${course.id}`, title: "📝 Register" },
-    { id: MENU_MAIN, title: "🏠 Main Menu" },
-  ])
+
+  const flags = getFeatureFlags()
+  const rows = [
+    { id: `${ASK_PREFIX}course:${course.id}`, title: "💬 Ask a Question", description: `About ${truncate(course.title, 40)}` },
+    { id: `${ENQUIRE_PREFIX}${course.id}`, title: "❓ Enquire", description: "Get a callback" },
+  ]
+  if (flags.enableRegistration) {
+    rows.push({ id: `${REGISTER_PREFIX}${course.id}`, title: "📝 Register", description: "Join this course" })
+  }
+  rows.push({ id: MENU_MAIN, title: "🏠 Main Menu", description: "Back to the start" })
+
+  await sendWhatsAppList(to, "Want to take this further?", "View Options", [{ rows }])
 }
 
 async function sendMoreCoursesPrompt(to: string, category: string) {
@@ -200,14 +260,21 @@ async function startNameCollection(
   courseTitle: string,
   batch: string | null
 ) {
+  await setPendingAction(conversationId, {
+    mode,
+    courseId,
+    courseTitle,
+    batch,
+    step: "name_qual",
+    collected: {},
+  })
+
   if (batch) {
-    await setPendingAction(conversationId, { mode, courseId, courseTitle, batch })
     await sendWhatsAppText(
       to,
       "Almost done — reply with your *Name - Qualification*, separated by a dash.\nExample: `Rahul Sharma - 12th Pass`\n(Qualification is optional, just your name works too.)"
     )
   } else {
-    await setPendingAction(conversationId, { mode, courseId, courseTitle, batch: null })
     await sendWhatsAppText(
       to,
       "No problem — reply with your *Batch - Name - Qualification*, separated by dashes.\nExample: `Evening - Rahul Sharma - 12th Pass`\n(Qualification is optional.)"
@@ -215,37 +282,42 @@ async function startNameCollection(
   }
 }
 
-/** Called when a free-text reply arrives while a pending_action is waiting on it. */
-export async function completePendingAction(
+async function askEmailDob(to: string, conversationId: string, pending: PendingAction) {
+  await setPendingAction(conversationId, { ...pending, step: "email_dob" })
+  await sendWhatsAppText(
+    to,
+    "Thanks! Now your *Email, Date of Birth (DD/MM/YYYY)*, separated by a comma.\nExample: `rahul@email.com, 15/08/2000`\n(Optional — reply `skip` to move on.)"
+  )
+}
+
+async function askAddress(to: string, conversationId: string, pending: PendingAction) {
+  await setPendingAction(conversationId, { ...pending, step: "address" })
+  await sendWhatsAppText(
+    to,
+    "Last step — what's your *address*? (Optional — reply `skip` to finish.)"
+  )
+}
+
+async function finalizeLead(
   to: string,
   conversationId: string,
   pending: PendingAction,
-  rawText: string,
-  waName: string | null
-): Promise<void> {
-  const parts = splitFields(rawText)
-
-  let batch = pending.batch
-  let name: string
-  let qualification: string | null
-
-  if (batch) {
-    name = parts[0] || waName || "WhatsApp lead"
-    qualification = parts[1] || null
-  } else {
-    batch = parts[0] || "Flexible"
-    name = parts[1] || waName || "WhatsApp lead"
-    qualification = parts[2] || null
-  }
+  address: string | null
+) {
+  const { name, qualification, email, dob } = pending.collected
+  const batch = pending.batch || "Flexible"
 
   const result = await captureLead(
     { waPhone: to },
     {
-      name,
+      name: name || "WhatsApp lead",
       courseTitle: pending.courseTitle,
       courseId: pending.courseId,
-      qualification,
+      qualification: qualification ?? null,
       batchTime: batch,
+      email: email ?? null,
+      dob: dob ?? null,
+      address,
     }
   )
 
@@ -264,8 +336,73 @@ export async function completePendingAction(
   await sendWhatsAppText(to, confirmation)
 }
 
+/**
+ * Called when a free-text reply arrives while a pending_action is waiting on it.
+ * Returns a short label (for conversation history) describing what happened.
+ */
+export async function completePendingAction(
+  to: string,
+  conversationId: string,
+  pending: PendingAction,
+  rawText: string,
+  waName: string | null
+): Promise<string> {
+  if (pending.step === "name_qual") {
+    let batch = pending.batch
+    let name: string
+    let qualification: string | undefined
+
+    if (batch) {
+      const parts = splitInto(rawText, 2)
+      name = parts[0] || waName || "WhatsApp lead"
+      qualification = parts[1] || undefined
+    } else {
+      const parts = splitInto(rawText, 3)
+      batch = parts[0] || "Flexible"
+      name = parts[1] || waName || "WhatsApp lead"
+      qualification = parts[2] || undefined
+    }
+
+    const next: PendingAction = {
+      ...pending,
+      batch,
+      collected: { ...pending.collected, name, qualification },
+    }
+    await askEmailDob(to, conversationId, next)
+    return "[collected name/qualification, asked for email/DOB]"
+  }
+
+  if (pending.step === "email_dob") {
+    let email: string | undefined
+    let dob: string | undefined
+
+    if (!isSkip(rawText)) {
+      const parts = splitInto(rawText, 2)
+      email = parts[0] || undefined
+      dob = parts[1] ? parseDob(parts[1]) ?? undefined : undefined
+    }
+
+    const next: PendingAction = {
+      ...pending,
+      collected: { ...pending.collected, email, dob },
+    }
+    await askAddress(to, conversationId, next)
+    return "[collected email/DOB, asked for address]"
+  }
+
+  // step === "address"
+  const address = isSkip(rawText) ? null : rawText.trim() || null
+  await finalizeLead(to, conversationId, pending, address)
+  return `[completed pending ${pending.mode}]`
+}
+
 async function sendEnquiryPrompt(to: string) {
   await sendCategoryList(to, "Happy to help! Which field is your question about?")
+}
+
+/** Invites free text after "Ask a Question" is tapped -- the reply flows to the Gemini agent as normal. */
+async function sendAskPrompt(to: string, context: string) {
+  await sendWhatsAppText(to, `Sure! Type your question about ${context} and I'll do my best to help. 😊`)
 }
 
 async function sendRegistrationPrompt(to: string) {
@@ -300,6 +437,10 @@ export async function handleMenuSelection(
     return "[tapped: Enquiry Desk]"
   }
   if (id === ROOT_REGISTRATION) {
+    if (!getFeatureFlags().enableRegistration) {
+      await sendEnquiryPrompt(to)
+      return "[tapped: Registration (disabled, routed to Enquiry)]"
+    }
     await sendRegistrationPrompt(to)
     return "[tapped: Registration]"
   }
@@ -319,8 +460,9 @@ export async function handleMenuSelection(
     return `[tapped: see more in ${category}]`
   }
   if (id.startsWith(ENQUIRE_PREFIX) || id.startsWith(REGISTER_PREFIX)) {
-    const mode: PendingAction["mode"] = id.startsWith(REGISTER_PREFIX) ? "register" : "enquire"
-    const courseId = id.slice(mode === "register" ? REGISTER_PREFIX.length : ENQUIRE_PREFIX.length)
+    let mode: PendingAction["mode"] = id.startsWith(REGISTER_PREFIX) ? "register" : "enquire"
+    if (mode === "register" && !getFeatureFlags().enableRegistration) mode = "enquire"
+    const courseId = id.slice(id.startsWith(REGISTER_PREFIX) ? REGISTER_PREFIX.length : ENQUIRE_PREFIX.length)
 
     const supabase = getSupabaseAdmin()
     const { data: course } = supabase
@@ -342,6 +484,28 @@ export async function handleMenuSelection(
     const batch = batchRaw === "other" ? null : batchRaw
     await startNameCollection(to, conversationId, mode, courseId, course?.title ?? "this course", batch)
     return `[tapped batch: ${batchRaw} for ${courseId}]`
+  }
+  if (id.startsWith(ASK_PREFIX)) {
+    const rest = id.slice(ASK_PREFIX.length) // "general" | "category:<category>" | "course:<courseId>"
+
+    if (rest.startsWith("category:")) {
+      const category = rest.slice("category:".length)
+      await sendAskPrompt(to, `${category} courses`)
+      return `[tapped: ask a question about ${category}]`
+    }
+    if (rest.startsWith("course:")) {
+      const courseId = rest.slice("course:".length)
+      const supabase = getSupabaseAdmin()
+      const { data: course } = supabase
+        ? await supabase.from("courses").select("title").eq("id", courseId).maybeSingle()
+        : { data: null }
+      const title = course?.title ?? "this course"
+      await sendAskPrompt(to, title)
+      return `[tapped: ask a question about ${title}]`
+    }
+
+    await sendAskPrompt(to, "our courses")
+    return "[tapped: Ask a Question]"
   }
 
   // Unknown id (e.g. an old menu from before a deploy) -- fall back gracefully.

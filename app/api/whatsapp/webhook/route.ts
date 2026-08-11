@@ -180,8 +180,8 @@ async function handleWebhookPayload(payload: WhatsAppWebhookPayload) {
       const pending = await getPendingAction(conversationId)
       if (pending) {
         await appendMessage(conversationId, "user", message.text.body, message.id)
-        await completePendingAction(message.from, conversationId, pending, message.text.body, waName)
-        await appendMessage(conversationId, "assistant", "[completed pending registration/enquiry]")
+        const label = await completePendingAction(message.from, conversationId, pending, message.text.body, waName)
+        await appendMessage(conversationId, "assistant", label)
         continue
       }
 
