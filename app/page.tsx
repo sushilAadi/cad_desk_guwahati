@@ -8,12 +8,9 @@ export default async function Home() {
   const groups = groupByCategory(courses)
 
   return (
-    <div className="flex flex-1 flex-col bg-background">
+    <div className="flex min-h-screen flex-1 flex-col bg-blue-600">
       {/* Nav */}
       <SiteHeader groups={groups} totalCount={courses.length} />
-
-      {/* First screen */}
-      <section className="h-screen w-full bg-blue-600" />
     </div>
   )
 }
