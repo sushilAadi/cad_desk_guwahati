@@ -7,6 +7,12 @@ export interface ConversationMessage {
   content: string
 }
 
+export interface ConversationRef {
+  id: string
+  /** True if this conversation row was just created by this call (first-ever message from this number). */
+  isNew: boolean
+}
+
 /**
  * Finds or creates the conversation row for a WhatsApp phone number.
  * Returns null if Supabase isn't configured.
@@ -14,7 +20,7 @@ export interface ConversationMessage {
 export async function getOrCreateConversation(
   waPhone: string,
   waName: string | null
-): Promise<string | null> {
+): Promise<ConversationRef | null> {
   const supabase = getSupabaseAdmin()
   if (!supabase) return null
 
@@ -35,7 +41,7 @@ export async function getOrCreateConversation(
       .from("whatsapp_conversations")
       .update({ wa_name: waName ?? undefined, updated_at: new Date().toISOString() })
       .eq("id", existing.id)
-    return existing.id
+    return { id: existing.id, isNew: false }
   }
 
   const { data: created, error: insertError } = await supabase
@@ -49,7 +55,7 @@ export async function getOrCreateConversation(
     return null
   }
 
-  return created.id
+  return { id: created.id, isNew: true }
 }
 
 /** Returns the last `limit` messages for a conversation, oldest first. */

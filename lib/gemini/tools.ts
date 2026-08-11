@@ -2,6 +2,7 @@ import "server-only"
 import type { FunctionDeclaration } from "@google/genai"
 
 import { getSupabaseAdmin } from "@/lib/supabase/server"
+import { captureLead, requestCallback } from "@/lib/whatsapp/leads"
 
 export interface ToolContext {
   waPhone: string
@@ -90,15 +91,6 @@ export const toolDeclarations: FunctionDeclaration[] = [
   },
 ]
 
-function baseLeadFields(ctx: ToolContext) {
-  return {
-    phone: ctx.waPhone,
-    channel: "WhatsApp" as const,
-    status: "New" as const,
-    sources: ["WhatsApp Bot"],
-  }
-}
-
 export async function executeTool(
   name: string,
   args: Record<string, unknown>,
@@ -166,58 +158,19 @@ export async function executeTool(
       const courseTitle = typeof args.course_title === "string" ? args.course_title : null
       const courseId = typeof args.course_id === "string" ? args.course_id : null
 
-      const { data, error } = await supabase
-        .from("enquiries")
-        .insert({
-          ...baseLeadFields(ctx),
-          name,
-          course: courseTitle,
-          course_id: courseId,
-        })
-        .select("id")
-        .single()
-
-      if (error) {
-        console.error("[tools] capture_lead failed:", error)
-        return { error: "Could not save the enquiry — please try again." }
-      }
-
-      return { success: true, leadId: data.id }
+      const result = await captureLead(
+        { waPhone: ctx.waPhone },
+        { name, courseTitle, courseId }
+      )
+      if (!result.success) return { error: result.error }
+      return { success: true, leadId: result.leadId }
     }
 
     case "request_callback": {
       const note = typeof args.note === "string" ? args.note : null
-
-      const { data: existing } = await supabase
-        .from("enquiries")
-        .select("id")
-        .eq("phone", ctx.waPhone)
-        .order("created_at", { ascending: false })
-        .limit(1)
-        .maybeSingle()
-
-      if (existing) {
-        const { error } = await supabase
-          .from("enquiries")
-          .update({ callback_requested: true, escalation_note: note })
-          .eq("id", existing.id)
-        if (error) return { error: "Could not flag the callback." }
-        return { success: true, leadId: existing.id }
-      }
-
-      const { data, error } = await supabase
-        .from("enquiries")
-        .insert({
-          ...baseLeadFields(ctx),
-          name: ctx.waName ?? "WhatsApp lead",
-          callback_requested: true,
-          escalation_note: note,
-        })
-        .select("id")
-        .single()
-
-      if (error) return { error: "Could not save the callback request." }
-      return { success: true, leadId: data.id }
+      const result = await requestCallback({ waPhone: ctx.waPhone }, { name: ctx.waName, note })
+      if (!result.success) return { error: result.error }
+      return { success: true, leadId: result.leadId }
     }
 
     default:

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 
 import { runAgentTurn } from "@/lib/gemini/agent"
 import { sendWhatsAppText } from "@/lib/whatsapp/send"
+import { sendWelcomeMenu, handleMenuSelection } from "@/lib/whatsapp/menu"
 import {
   appendMessage,
   getOrCreateConversation,
@@ -28,12 +29,19 @@ export async function GET(request: NextRequest) {
   return new NextResponse("Forbidden", { status: 403 })
 }
 
+interface WhatsAppInteractiveReply {
+  type: "button_reply" | "list_reply"
+  button_reply?: { id: string; title: string }
+  list_reply?: { id: string; title: string; description?: string }
+}
+
 interface WhatsAppTextMessage {
   from: string
   id: string
   timestamp: string
   type: string
   text?: { body: string }
+  interactive?: WhatsAppInteractiveReply
 }
 
 interface WhatsAppContact {
@@ -106,20 +114,44 @@ async function handleWebhookPayload(payload: WhatsAppWebhookPayload) {
     const waName = contact?.profile?.name ?? null
 
     for (const message of messages) {
+      if (await isDuplicateMessage(message.id)) continue // webhook retry
+
+      const conversation = await getOrCreateConversation(message.from, waName)
+      if (!conversation) {
+        console.error("[webhook] no conversation id (Supabase not configured?)")
+        continue
+      }
+      const conversationId = conversation.id
+
+      // Brand-new conversation: always greet with the menu first, regardless
+      // of what they typed -- don't send this first turn to Gemini at all.
+      if (conversation.isNew) {
+        const inboundLabel =
+          message.type === "text" ? message.text?.body ?? "" : `[${message.type} message]`
+        await appendMessage(conversationId, "user", inboundLabel, message.id)
+        const assistantId = await appendMessage(conversationId, "assistant", "[sent welcome menu]")
+        const sendResult = await sendWelcomeMenu(message.from)
+        if (assistantId) await recordSendResult(assistantId, sendResult)
+        continue
+      }
+
+      // Button/list tap -- deterministic menu navigation, no Gemini involved.
+      if (message.type === "interactive" && message.interactive) {
+        const reply = message.interactive.button_reply ?? message.interactive.list_reply
+        if (!reply) continue
+
+        await appendMessage(conversationId, "user", `[tapped: ${reply.title}]`, message.id)
+        const label = await handleMenuSelection(message.from, reply.id, waName)
+        await appendMessage(conversationId, "assistant", label)
+        continue
+      }
+
       if (message.type !== "text" || !message.text?.body) {
-        // Non-text message (image/audio/location/etc.) -- not handled yet.
+        // Non-text, non-interactive message (image/audio/location/etc.) -- not handled yet.
         await sendWhatsAppText(
           message.from,
           "I can only read text messages right now — could you type your question? 🙂"
         )
-        continue
-      }
-
-      if (await isDuplicateMessage(message.id)) continue // webhook retry
-
-      const conversationId = await getOrCreateConversation(message.from, waName)
-      if (!conversationId) {
-        console.error("[webhook] no conversation id (Supabase not configured?)")
         continue
       }
 
