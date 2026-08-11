@@ -3,15 +3,24 @@ import "server-only"
 import { getSupabaseAdmin } from "@/lib/supabase/server"
 import { sendWhatsAppButtons, sendWhatsAppList, sendWhatsAppText, type SendResult } from "@/lib/whatsapp/send"
 import { captureLead } from "@/lib/whatsapp/leads"
+import {
+  setPendingAction,
+  clearPendingAction,
+  type PendingAction,
+} from "@/lib/whatsapp/conversations"
 
-// ── Button/row id scheme (stateless -- everything we need is in the id) ──
+// ── Button/row id scheme (stateless through navigation -- only the final
+// free-text step needs conversation state, via pending_action). ──
 const ROOT_COURSES = "menu:courses"
 const ROOT_ENQUIRY = "menu:enquiry"
 const ROOT_REGISTRATION = "menu:registration"
+const MENU_MAIN = "menu:main"
 const CATEGORY_PREFIX = "cat:"
 const COURSE_PREFIX = "course:"
 const MORE_PREFIX = "more:"
-const ENQUIRE_PREFIX = "enquire:"
+const ENQUIRE_PREFIX = "enquire:" // enquire:<courseId>
+const REGISTER_PREFIX = "register:" // register:<courseId>
+const BATCH_PREFIX = "batch:" // batch:<mode>:<courseId>:<Morning|Evening|other>
 
 const MAX_LIST_ROWS = 10
 
@@ -19,11 +28,41 @@ function truncate(s: string, max: number): string {
   return s.length > max ? `${s.slice(0, max - 1).trimEnd()}…` : s
 }
 
+/**
+ * Typed "reset" words that always take the student back to the main menu,
+ * from anywhere in the conversation -- checked before Gemini or any
+ * pending_action, so no one can ever get stuck with no way back.
+ */
+const RESET_KEYWORDS = new Set([
+  "menu",
+  "main menu",
+  "home",
+  "start",
+  "restart",
+  "start over",
+  "hi",
+  "hii",
+  "hello",
+  "hey",
+])
+
+export function isMenuResetKeyword(text: string): boolean {
+  return RESET_KEYWORDS.has(text.trim().toLowerCase())
+}
+
+/** Splits "Rahul Sharma - 12th Pass" or "Rahul Sharma, 12th Pass" into trimmed parts. */
+function splitFields(text: string): string[] {
+  return text
+    .split(/[-,]/)
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0)
+}
+
 /** Sent on a brand-new conversation's first message, regardless of what they typed. */
 export async function sendWelcomeMenu(to: string): Promise<SendResult> {
   return sendWhatsAppButtons(
     to,
-    "👋 Welcome to CAD Desk Guwahati! We offer 66+ CAD/CAM & IT courses at our Noonmati centre. How can I help you today?",
+    "👋 Welcome to CAD Desk Guwahati! We're a CAD/CAM & IT training institute at our Noonmati centre. How can I help you today?",
     [
       { id: ROOT_COURSES, title: "📚 Courses" },
       { id: ROOT_ENQUIRY, title: "❓ Enquiry Desk" },
@@ -32,26 +71,23 @@ export async function sendWelcomeMenu(to: string): Promise<SendResult> {
   )
 }
 
-async function sendCategoryList(to: string) {
+async function sendCategoryList(to: string, intro: string) {
   const supabase = getSupabaseAdmin()
   if (!supabase) return sendWhatsAppText(to, "Sorry, our course list isn't available right now.")
 
   const { data, error } = await supabase.from("courses").select("category")
   if (error || !data) return sendWhatsAppText(to, "Sorry, I couldn't load the course categories right now.")
 
-  const counts = new Map<string, number>()
-  for (const row of data) {
-    const key = row.category ?? "Uncategorized"
-    counts.set(key, (counts.get(key) ?? 0) + 1)
-  }
+  const categories = Array.from(new Set(data.map((row) => row.category ?? "Uncategorized")))
 
-  const rows = Array.from(counts, ([category, count]) => ({
+  const rows = categories.map((category) => ({
     id: `${CATEGORY_PREFIX}${category}`,
     title: truncate(category, 24),
-    description: `${count} course${count === 1 ? "" : "s"}`,
+    description: "Tap to explore",
   }))
+  rows.push({ id: MENU_MAIN, title: "🏠 Main Menu", description: "Back to the start" })
 
-  await sendWhatsAppList(to, "Which field are you interested in?", "View Categories", [
+  await sendWhatsAppList(to, `${intro} (Or just type your question anytime.)`, "View Categories", [
     { rows },
   ])
 }
@@ -73,7 +109,8 @@ async function sendCourseList(to: string, category: string) {
     )
   }
 
-  const shown = data.slice(0, MAX_LIST_ROWS - 1) // leave room for a "more" row if needed
+  // Reserve 2 rows: one for "see more" (if needed) and one for Main Menu (always).
+  const shown = data.slice(0, MAX_LIST_ROWS - 2)
   const rows = shown.map((c) => ({
     id: `${COURSE_PREFIX}${c.id}`,
     title: truncate(c.title, 24),
@@ -84,9 +121,10 @@ async function sendCourseList(to: string, category: string) {
     rows.push({
       id: `${MORE_PREFIX}${category}`,
       title: "🔎 See more",
-      description: `${data.length - shown.length} more courses — type to search`,
+      description: "More courses available — type to search",
     })
   }
+  rows.push({ id: MENU_MAIN, title: "🏠 Main Menu", description: "Back to the start" })
 
   await sendWhatsAppList(to, `${category} courses:`, "View Courses", [{ rows }])
 }
@@ -116,22 +154,9 @@ async function sendCourseDetail(to: string, courseId: string) {
   await sendWhatsAppText(to, lines.join("\n"))
   await sendWhatsAppButtons(to, "Want to take this further?", [
     { id: `${ENQUIRE_PREFIX}${course.id}`, title: "❓ Enquire" },
-    { id: ROOT_COURSES, title: "⬅️ Categories" },
+    { id: `${REGISTER_PREFIX}${course.id}`, title: "📝 Register" },
+    { id: MENU_MAIN, title: "🏠 Main Menu" },
   ])
-}
-
-async function sendEnquiryPrompt(to: string) {
-  await sendWhatsAppText(
-    to,
-    "Sure! Tell me your name and what you'd like to know (a course, batch timings, anything) and I'll help right away. 😊"
-  )
-}
-
-async function sendRegistrationPrompt(to: string) {
-  await sendWhatsAppText(
-    to,
-    "Great! Please share your name and which course you'd like to register for, and our team will confirm your seat at the Noonmati centre."
-  )
 }
 
 async function sendMoreCoursesPrompt(to: string, category: string) {
@@ -141,28 +166,100 @@ async function sendMoreCoursesPrompt(to: string, category: string) {
   )
 }
 
-/** Deterministic capture when the student taps "Enquire" on a specific course. */
-async function handleEnquireTap(to: string, courseId: string, waName: string | null) {
-  const supabase = getSupabaseAdmin()
-  const { data: course } = supabase
-    ? await supabase.from("courses").select("title").eq("id", courseId).maybeSingle()
-    : { data: null }
+/** Step 1 of enquire/register: ask for batch timing via quick buttons, "other" opens free text. */
+async function sendBatchOptions(
+  to: string,
+  mode: PendingAction["mode"],
+  courseId: string,
+  courseTitle: string
+) {
+  const verb = mode === "register" ? "register for" : "ask about"
+  await sendWhatsAppButtons(to, `Great, you'd like to ${verb} *${courseTitle}*. Which batch timing works for you?`, [
+    { id: `${BATCH_PREFIX}${mode}:${courseId}:Morning`, title: "🌅 Morning" },
+    { id: `${BATCH_PREFIX}${mode}:${courseId}:Evening`, title: "🌇 Evening" },
+    { id: `${BATCH_PREFIX}${mode}:${courseId}:other`, title: "✍️ Type it" },
+  ])
+}
 
-  const name = waName ?? "WhatsApp lead"
+/** Step 2: batch is chosen (or not) -- now collect name (+ qualification) in one message. */
+async function startNameCollection(
+  to: string,
+  conversationId: string,
+  mode: PendingAction["mode"],
+  courseId: string,
+  courseTitle: string,
+  batch: string | null
+) {
+  if (batch) {
+    await setPendingAction(conversationId, { mode, courseId, courseTitle, batch })
+    await sendWhatsAppText(
+      to,
+      "Almost done — reply with your *Name - Qualification*, separated by a dash.\nExample: `Rahul Sharma - 12th Pass`\n(Qualification is optional, just your name works too.)"
+    )
+  } else {
+    await setPendingAction(conversationId, { mode, courseId, courseTitle, batch: null })
+    await sendWhatsAppText(
+      to,
+      "No problem — reply with your *Batch - Name - Qualification*, separated by dashes.\nExample: `Evening - Rahul Sharma - 12th Pass`\n(Qualification is optional.)"
+    )
+  }
+}
+
+/** Called when a free-text reply arrives while a pending_action is waiting on it. */
+export async function completePendingAction(
+  to: string,
+  conversationId: string,
+  pending: PendingAction,
+  rawText: string,
+  waName: string | null
+): Promise<void> {
+  const parts = splitFields(rawText)
+
+  let batch = pending.batch
+  let name: string
+  let qualification: string | null
+
+  if (batch) {
+    name = parts[0] || waName || "WhatsApp lead"
+    qualification = parts[1] || null
+  } else {
+    batch = parts[0] || "Flexible"
+    name = parts[1] || waName || "WhatsApp lead"
+    qualification = parts[2] || null
+  }
+
   const result = await captureLead(
     { waPhone: to },
-    { name, courseTitle: course?.title ?? null, courseId }
+    {
+      name,
+      courseTitle: pending.courseTitle,
+      courseId: pending.courseId,
+      qualification,
+      batchTime: batch,
+    }
   )
 
+  await clearPendingAction(conversationId)
+
   if (!result.success) {
-    await sendWhatsAppText(to, "Sorry, something went wrong saving that — could you type your question instead?")
+    await sendWhatsAppText(to, "Sorry, something went wrong saving that — could you try again in a moment?")
     return
   }
 
-  await sendWhatsAppText(
-    to,
-    `Thanks${waName ? ` ${waName}` : ""}! I've shared your interest in ${course?.title ?? "this course"} with our counseling team — they'll reach out with details. Anything else I can help with?`
-  )
+  const confirmation =
+    pending.mode === "register"
+      ? `Thanks ${name}! You're registered for *${pending.courseTitle}* (${batch} batch). Our team will confirm your seat at the Noonmati centre shortly. 🎉`
+      : `Thanks ${name}! I've shared your interest in *${pending.courseTitle}* (${batch} batch) with our counseling team — they'll reach out soon. 😊`
+
+  await sendWhatsAppText(to, confirmation)
+}
+
+async function sendEnquiryPrompt(to: string) {
+  await sendCategoryList(to, "Happy to help! Which field is your question about?")
+}
+
+async function sendRegistrationPrompt(to: string) {
+  await sendCategoryList(to, "Let's get you registered! Which field would you like to join?")
 }
 
 /**
@@ -172,10 +269,20 @@ async function handleEnquireTap(to: string, courseId: string, waName: string | n
 export async function handleMenuSelection(
   to: string,
   id: string,
-  waName: string | null
+  waName: string | null,
+  conversationId: string
 ): Promise<string> {
+  // Any fresh navigation tap abandons an in-progress collection flow.
+  if (!id.startsWith(BATCH_PREFIX)) {
+    await clearPendingAction(conversationId)
+  }
+
+  if (id === MENU_MAIN) {
+    await sendWelcomeMenu(to)
+    return "[tapped: Main Menu]"
+  }
   if (id === ROOT_COURSES) {
-    await sendCategoryList(to)
+    await sendCategoryList(to, "Which field are you interested in?")
     return "[tapped: Courses]"
   }
   if (id === ROOT_ENQUIRY) {
@@ -201,10 +308,30 @@ export async function handleMenuSelection(
     await sendMoreCoursesPrompt(to, category)
     return `[tapped: see more in ${category}]`
   }
-  if (id.startsWith(ENQUIRE_PREFIX)) {
-    const courseId = id.slice(ENQUIRE_PREFIX.length)
-    await handleEnquireTap(to, courseId, waName)
-    return `[tapped enquire: ${courseId}]`
+  if (id.startsWith(ENQUIRE_PREFIX) || id.startsWith(REGISTER_PREFIX)) {
+    const mode: PendingAction["mode"] = id.startsWith(REGISTER_PREFIX) ? "register" : "enquire"
+    const courseId = id.slice(mode === "register" ? REGISTER_PREFIX.length : ENQUIRE_PREFIX.length)
+
+    const supabase = getSupabaseAdmin()
+    const { data: course } = supabase
+      ? await supabase.from("courses").select("title").eq("id", courseId).maybeSingle()
+      : { data: null }
+
+    await sendBatchOptions(to, mode, courseId, course?.title ?? "this course")
+    return `[tapped ${mode}: ${courseId}]`
+  }
+  if (id.startsWith(BATCH_PREFIX)) {
+    const rest = id.slice(BATCH_PREFIX.length) // "<mode>:<courseId>:<batch>"
+    const [mode, courseId, batchRaw] = rest.split(":") as [PendingAction["mode"], string, string]
+
+    const supabase = getSupabaseAdmin()
+    const { data: course } = supabase
+      ? await supabase.from("courses").select("title").eq("id", courseId).maybeSingle()
+      : { data: null }
+
+    const batch = batchRaw === "other" ? null : batchRaw
+    await startNameCollection(to, conversationId, mode, courseId, course?.title ?? "this course", batch)
+    return `[tapped batch: ${batchRaw} for ${courseId}]`
   }
 
   // Unknown id (e.g. an old menu from before a deploy) -- fall back gracefully.

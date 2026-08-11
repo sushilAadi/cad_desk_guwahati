@@ -134,6 +134,54 @@ export async function recordSendResult(
   }
 }
 
+export interface PendingAction {
+  /** What the student is trying to do -- affects confirmation wording only. */
+  mode: "enquire" | "register"
+  courseId: string
+  courseTitle: string
+  /** Batch already picked via button; null means it's still being asked for as free text too. */
+  batch: string | null
+}
+
+/** Reads the in-progress menu flow (if any) waiting on a free-text reply. */
+export async function getPendingAction(conversationId: string): Promise<PendingAction | null> {
+  const supabase = getSupabaseAdmin()
+  if (!supabase) return null
+
+  const { data, error } = await supabase
+    .from("whatsapp_conversations")
+    .select("pending_action")
+    .eq("id", conversationId)
+    .maybeSingle()
+
+  if (error || !data?.pending_action) return null
+  return data.pending_action as PendingAction
+}
+
+export async function setPendingAction(conversationId: string, action: PendingAction): Promise<void> {
+  const supabase = getSupabaseAdmin()
+  if (!supabase) return
+
+  const { error } = await supabase
+    .from("whatsapp_conversations")
+    .update({ pending_action: action })
+    .eq("id", conversationId)
+
+  if (error) console.error("[conversations] setPendingAction failed:", error)
+}
+
+export async function clearPendingAction(conversationId: string): Promise<void> {
+  const supabase = getSupabaseAdmin()
+  if (!supabase) return
+
+  const { error } = await supabase
+    .from("whatsapp_conversations")
+    .update({ pending_action: null })
+    .eq("id", conversationId)
+
+  if (error) console.error("[conversations] clearPendingAction failed:", error)
+}
+
 /** True if a message with this WhatsApp message id has already been stored. */
 export async function isDuplicateMessage(waMessageId: string): Promise<boolean> {
   const supabase = getSupabaseAdmin()

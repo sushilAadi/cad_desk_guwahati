@@ -13,7 +13,13 @@ export interface LeadContext {
  */
 export async function captureLead(
   ctx: LeadContext,
-  fields: { name: string; courseTitle?: string | null; courseId?: string | null }
+  fields: {
+    name: string
+    courseTitle?: string | null
+    courseId?: string | null
+    qualification?: string | null
+    batchTime?: string | null
+  }
 ): Promise<{ success: boolean; leadId?: string; error?: string }> {
   const supabase = getSupabaseAdmin()
   if (!supabase) return { success: false, error: "The course database isn't configured right now." }
@@ -28,6 +34,8 @@ export async function captureLead(
       name: fields.name,
       course: fields.courseTitle ?? null,
       course_id: fields.courseId ?? null,
+      qualification: fields.qualification ?? null,
+      batch_time: fields.batchTime ?? null,
     })
     .select("id")
     .single()

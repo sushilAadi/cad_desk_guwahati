@@ -2,10 +2,17 @@ import { NextRequest, NextResponse } from "next/server"
 
 import { runAgentTurn } from "@/lib/gemini/agent"
 import { sendWhatsAppText } from "@/lib/whatsapp/send"
-import { sendWelcomeMenu, handleMenuSelection } from "@/lib/whatsapp/menu"
+import {
+  sendWelcomeMenu,
+  handleMenuSelection,
+  completePendingAction,
+  isMenuResetKeyword,
+} from "@/lib/whatsapp/menu"
 import {
   appendMessage,
+  clearPendingAction,
   getOrCreateConversation,
+  getPendingAction,
   getRecentMessages,
   isDuplicateMessage,
   recordSendResult,
@@ -141,7 +148,7 @@ async function handleWebhookPayload(payload: WhatsAppWebhookPayload) {
         if (!reply) continue
 
         await appendMessage(conversationId, "user", `[tapped: ${reply.title}]`, message.id)
-        const label = await handleMenuSelection(message.from, reply.id, waName)
+        const label = await handleMenuSelection(message.from, reply.id, waName, conversationId)
         await appendMessage(conversationId, "assistant", label)
         continue
       }
@@ -152,6 +159,28 @@ async function handleWebhookPayload(payload: WhatsAppWebhookPayload) {
           message.from,
           "I can only read text messages right now — could you type your question? 🙂"
         )
+        continue
+      }
+
+      // Typed "menu"/"hi"/"start" etc. always resets to the main menu, from
+      // anywhere -- checked before any in-progress flow or Gemini, so no one
+      // can get stuck mid-conversation with no way back.
+      if (isMenuResetKeyword(message.text.body)) {
+        await clearPendingAction(conversationId)
+        await appendMessage(conversationId, "user", message.text.body, message.id)
+        const assistantId = await appendMessage(conversationId, "assistant", "[sent welcome menu]")
+        const sendResult = await sendWelcomeMenu(message.from)
+        if (assistantId) await recordSendResult(assistantId, sendResult)
+        continue
+      }
+
+      // A registration/enquiry flow is waiting on this exact reply (name,
+      // qualification, maybe batch) -- handle it directly, skip Gemini.
+      const pending = await getPendingAction(conversationId)
+      if (pending) {
+        await appendMessage(conversationId, "user", message.text.body, message.id)
+        await completePendingAction(message.from, conversationId, pending, message.text.body, waName)
+        await appendMessage(conversationId, "assistant", "[completed pending registration/enquiry]")
         continue
       }
 
