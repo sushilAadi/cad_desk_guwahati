@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { createPortal } from "react-dom"
 import { motion, AnimatePresence } from "motion/react"
 import {
   Menu,
@@ -64,10 +65,12 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
         <Menu className="h-5 w-5" />
       </button>
 
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            {/* Backdrop */}
+      {typeof document !== "undefined" &&
+        createPortal(
+          <AnimatePresence>
+            {isOpen && (
+              <>
+                {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -245,9 +248,11 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
                 </a>
               </div>
             </motion.div>
-          </>
+              </>
+            )}
+          </AnimatePresence>,
+          document.body
         )}
-      </AnimatePresence>
     </>
   )
 }
