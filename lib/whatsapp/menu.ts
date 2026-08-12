@@ -111,28 +111,26 @@ export async function sendMainMenuHint(to: string): Promise<SendResult> {
 
 /**
  * Sent on a brand-new conversation's first message, regardless of what they typed.
- * Uses direct tappable buttons (max 3, shown inline -- no extra "View Options" tap)
- * rather than a list. When Registration is enabled that fills all 3 slots
- * (Courses / Enquiry / Registration); when it's disabled, "Ask a Question" takes
- * the third slot instead. Free typing always works regardless of what's shown.
+ * Shows Courses, Enquiry Desk, Registration (if enabled), then Ask a Question --
+ * as a list, since WhatsApp only shows buttons directly and caps those at 3.
  */
 export async function sendWelcomeMenu(to: string): Promise<SendResult> {
   const flags = getFeatureFlags()
 
-  const buttons = [
-    { id: ROOT_COURSES, title: "📚 Courses" },
-    { id: ROOT_ENQUIRY, title: "❓ Enquiry Desk" },
+  const rows = [
+    { id: ROOT_COURSES, title: "📚 Courses", description: "Browse by field" },
+    { id: ROOT_ENQUIRY, title: "❓ Enquiry Desk", description: "Ask us to reach out" },
   ]
   if (flags.enableRegistration) {
-    buttons.push({ id: ROOT_REGISTRATION, title: "📝 Registration" })
-  } else {
-    buttons.push({ id: ROOT_ASK, title: "💬 Ask a Question" })
+    rows.push({ id: ROOT_REGISTRATION, title: "📝 Registration", description: "Join a course" })
   }
+  rows.push({ id: ROOT_ASK, title: "💬 Ask a Question", description: "Type anything, anytime" })
 
-  return sendWhatsAppButtons(
+  return sendWhatsAppList(
     to,
     "👋 Welcome to CAD Desk Guwahati! We're a CAD/CAM & IT training institute at our Noonmati centre. How can I help you today?",
-    buttons
+    "View Options",
+    [{ rows }]
   )
 }
 
