@@ -137,15 +137,24 @@ export async function recordSendResult(
 export interface PendingAction {
   /** What the student is trying to do -- "register" writes to student_registrations, "enquire" to enquiries. */
   mode: "enquire" | "register"
-  courseId: string
-  courseTitle: string
+  /** One or more courses picked so far -- students can add multiple before continuing. */
+  courses: { id: string; title: string }[]
   /** Batch already picked via button; null means it's still being asked for as free text too. */
   batch: string | null
   /**
-   * Which free-text reply we're currently waiting on. "father_college" and
-   * "confirm" only occur in "register" mode -- enquire finishes after "address".
+   * Which step we're waiting on. "collect_courses" waits on a button tap
+   * (add another / continue); the rest wait on a free-text reply.
+   * "father_college", "confirm", and "payment_screenshot" only occur in
+   * "register" mode -- enquire finishes after "address".
    */
-  step: "name_qual" | "email_dob" | "address" | "father_college" | "confirm"
+  step:
+    | "collect_courses"
+    | "name_qual"
+    | "email_dob"
+    | "address"
+    | "father_college"
+    | "confirm"
+    | "payment_screenshot"
   /** Fields collected so far across steps -- only written to the DB once the flow finishes. */
   collected: {
     name?: string
@@ -156,6 +165,8 @@ export interface PendingAction {
     fathersName?: string
     college?: string
   }
+  /** Set once finalizeRegistration writes the row -- lets the payment_screenshot step attach the screenshot to the right registration. */
+  registrationId?: string
 }
 
 /** Reads the in-progress menu flow (if any) waiting on a free-text reply. */

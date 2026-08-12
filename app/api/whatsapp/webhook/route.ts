@@ -19,6 +19,8 @@ import {
   recordSendResult,
 } from "@/lib/whatsapp/conversations"
 import { verifyWhatsAppSignature } from "@/lib/whatsapp/verify"
+import { downloadAndStoreWhatsAppMedia } from "@/lib/whatsapp/media"
+import { attachPaymentScreenshot } from "@/lib/whatsapp/registrations"
 import { getSupabaseAdmin } from "@/lib/supabase/server"
 
 export const dynamic = "force-dynamic"
@@ -50,6 +52,7 @@ interface WhatsAppTextMessage {
   type: string
   text?: { body: string }
   interactive?: WhatsAppInteractiveReply
+  image?: { id: string; mime_type?: string; sha256?: string; caption?: string }
 }
 
 interface WhatsAppContact {
@@ -152,6 +155,36 @@ async function handleWebhookPayload(payload: WhatsAppWebhookPayload) {
         const label = await handleMenuSelection(message.from, reply.id, waName, conversationId)
         await appendMessage(conversationId, "assistant", label)
         continue
+      }
+
+      // Image reply while we're waiting on a payment screenshot -- download it
+      // from Meta, store it privately in Supabase, and flag the registration
+      // for staff to verify. Any other image (not expected) falls through to
+      // the generic "text only" message below.
+      if (message.type === "image" && message.image?.id) {
+        const pending = await getPendingAction(conversationId)
+        if (pending?.step === "payment_screenshot" && pending.registrationId) {
+          await appendMessage(conversationId, "user", "[sent payment screenshot]", message.id)
+
+          const upload = await downloadAndStoreWhatsAppMedia(
+            message.image.id,
+            `registrations/${pending.registrationId}`
+          )
+
+          let reply: string
+          if (upload.success && upload.path) {
+            await attachPaymentScreenshot(pending.registrationId, upload.path)
+            await clearPendingAction(conversationId)
+            reply = "Got it! ✅ We've received your payment screenshot — our team will verify and confirm your discount shortly. 🎉"
+          } else {
+            reply = "Sorry, I couldn't save that screenshot — could you try sending it again?"
+          }
+
+          const assistantId = await appendMessage(conversationId, "assistant", reply)
+          const sendResult = await sendWhatsAppText(message.from, reply)
+          if (assistantId) await recordSendResult(assistantId, sendResult)
+          continue
+        }
       }
 
       if (message.type !== "text" || !message.text?.body) {

@@ -50,6 +50,11 @@ export async function sendWhatsAppText(to: string, body: string): Promise<SendRe
   return postToGraph({ to, type: "text", text: { preview_url: false, body } })
 }
 
+/** Sends an image from a public URL (e.g. a UPI QR code), with an optional caption. */
+export async function sendWhatsAppImage(to: string, imageUrl: string, caption?: string): Promise<SendResult> {
+  return postToGraph({ to, type: "image", image: { link: imageUrl, caption } })
+}
+
 export interface QuickReplyButton {
   /** Echoed back in the button_reply webhook -- keep short, we route on this. */
   id: string

@@ -1,18 +1,20 @@
 import "server-only"
 
 import { getSupabaseAdmin } from "@/lib/supabase/server"
-import { sendWhatsAppButtons, sendWhatsAppList, sendWhatsAppText, type SendResult } from "@/lib/whatsapp/send"
+import { sendWhatsAppButtons, sendWhatsAppImage, sendWhatsAppList, sendWhatsAppText, type SendResult } from "@/lib/whatsapp/send"
 import { captureLead } from "@/lib/whatsapp/leads"
-import { createRegistration } from "@/lib/whatsapp/registrations"
+import { createRegistration, getPaymentSettings } from "@/lib/whatsapp/registrations"
 import { getFeatureFlags } from "@/lib/config/flags"
 import {
+  getPendingAction,
   setPendingAction,
   clearPendingAction,
   type PendingAction,
 } from "@/lib/whatsapp/conversations"
 
-// ── Button/row id scheme (stateless through navigation -- only the final
-// free-text step needs conversation state, via pending_action). ──
+// ── Button/row id scheme (stateless through navigation -- only the course
+// "cart" and the final free-text steps need conversation state, via
+// pending_action). ──
 const ROOT_COURSES = "menu:courses"
 const ROOT_ENQUIRY = "menu:enquiry"
 const ROOT_REGISTRATION = "menu:registration"
@@ -20,11 +22,14 @@ const ROOT_ASK = "ask:general"
 const MENU_MAIN = "menu:main"
 const CATEGORY_PREFIX = "cat:" // cat:<flow>:<category>
 const COURSE_PREFIX = "course:" // course:<flow>:<courseId>
-const MORE_PREFIX = "more:" // more:<flow>:<category>
+const MORE_PREFIX = "more:" // more:<flow>:<nextOffset>:<category> -- pagination, "show more courses"
+const TYPE_PREFIX = "type:" // type:<category> -- free-text search fallback ("Other")
 const ENQUIRE_PREFIX = "enquire:" // enquire:<courseId>
 const REGISTER_PREFIX = "register:" // register:<courseId>
-const BATCH_PREFIX = "batch:" // batch:<mode>:<courseId>:<Morning|Afternoon|Evening|other>
+const BATCH_PREFIX = "batch:" // batch:<mode>:<Morning|Afternoon|Evening|other>
 const ASK_PREFIX = "ask:" // ask:general | ask:category:<category> | ask:course:<courseId>
+const COURSES_ADD_PREFIX = "cadd:" // cadd:<flow> -- "add another course" from the course-selection cart
+const COURSES_CONTINUE = "ccontinue" // done adding courses, move to batch timing
 
 /**
  * What the student is browsing for -- carried through category/course ids so
@@ -185,7 +190,12 @@ async function sendCategoryList(to: string, intro: string, flow: BrowseFlow) {
   ])
 }
 
-async function sendCourseList(to: string, category: string, flow: BrowseFlow) {
+/**
+ * Paginates through every course in a category via a "More courses" row
+ * (WhatsApp lists cap at 10 rows total, so this is how a category with more
+ * than ~6 courses is still fully browsable -- not just the first page).
+ */
+async function sendCourseList(to: string, category: string, flow: BrowseFlow, offset = 0) {
   const supabase = getSupabaseAdmin()
   if (!supabase) return sendWhatsAppText(to, "Sorry, our course list isn't available right now.")
 
@@ -202,19 +212,28 @@ async function sendCourseList(to: string, category: string, flow: BrowseFlow) {
     )
   }
 
-  // Reserve 3 rows: "Other" (always -- covers both overflow and "not listed here"), "Ask a Question", and Main Menu.
-  const shown = data.slice(0, MAX_LIST_ROWS - 3)
-  const rows = shown.map((c) => ({
+  // Reserve up to 4 rows: "More courses" (only when another page remains), "Other", Ask a Question, Main Menu.
+  const pageSize = MAX_LIST_ROWS - 4
+  const page = data.slice(offset, offset + pageSize)
+  const rows = page.map((c) => ({
     id: `${COURSE_PREFIX}${flow}:${c.id}`,
     title: truncate(c.title, 24),
     description: `${c.duration ? `${c.duration} days` : "Flexible"}${c.certification ? " • Certified" : ""}`,
   }))
 
+  const nextOffset = offset + page.length
+  const hasMore = nextOffset < data.length
+  if (hasMore) {
+    rows.push({
+      id: `${MORE_PREFIX}${flow}:${nextOffset}:${category}`,
+      title: "➡️ More courses",
+      description: `${data.length - nextOffset} more in ${category}`,
+    })
+  }
   rows.push({
-    id: `${MORE_PREFIX}${flow}:${category}`,
+    id: `${TYPE_PREFIX}${category}`,
     title: "✍️ Other",
-    description:
-      data.length > shown.length ? "More courses available — type to search" : "Don't see it? Type the name",
+    description: "Don't see it? Type the name",
   })
   rows.push({
     id: `${ASK_PREFIX}category:${category}`,
@@ -223,7 +242,8 @@ async function sendCourseList(to: string, category: string, flow: BrowseFlow) {
   })
   rows.push({ id: MENU_MAIN, title: "🏠 Main Menu", description: "Back to the start" })
 
-  await sendWhatsAppList(to, `${category} courses:`, "View Courses", [{ rows }])
+  const pageLabel = offset > 0 ? ` (${offset + 1}-${nextOffset} of ${data.length})` : ` (${data.length} total)`
+  await sendWhatsAppList(to, `${category} courses:${pageLabel}`, "View Courses", [{ rows }])
 }
 
 /**
@@ -232,7 +252,7 @@ async function sendCourseList(to: string, category: string, flow: BrowseFlow) {
  * flow means they already told us that from the root menu -- skip straight
  * to the batch-timing question instead of asking again.
  */
-async function sendCourseDetail(to: string, courseId: string, flow: BrowseFlow) {
+async function sendCourseDetail(to: string, courseId: string, flow: BrowseFlow, conversationId: string) {
   const supabase = getSupabaseAdmin()
   if (!supabase) return sendWhatsAppText(to, "Sorry, course details aren't available right now.")
 
@@ -261,7 +281,7 @@ async function sendCourseDetail(to: string, courseId: string, flow: BrowseFlow) 
   if (effectiveFlow === "register" && !flags.enableRegistration) effectiveFlow = "enquire"
 
   if (effectiveFlow === "enquire" || effectiveFlow === "register") {
-    await sendBatchOptions(to, effectiveFlow, course.id, course.title)
+    await addCourseToSelection(to, conversationId, effectiveFlow, course.id, course.title)
     return
   }
 
@@ -284,26 +304,65 @@ async function sendMoreCoursesPrompt(to: string, category: string) {
   )
 }
 
-/** Step 1 of enquire/register: ask for batch timing. */
-async function sendBatchOptions(
+/**
+ * Adds a course to the in-progress enquire/register "cart" (creating it if
+ * this is the first course) and asks whether to add another or continue --
+ * this is what makes multi-course selection possible.
+ */
+async function addCourseToSelection(
   to: string,
-  mode: PendingAction["mode"],
+  conversationId: string,
+  flow: "enquire" | "register",
   courseId: string,
   courseTitle: string
 ) {
+  const existing = await getPendingAction(conversationId)
+
+  let courses: { id: string; title: string }[]
+  if (existing && existing.mode === flow && existing.step === "collect_courses") {
+    courses = existing.courses.some((c) => c.id === courseId)
+      ? existing.courses
+      : [...existing.courses, { id: courseId, title: courseTitle }]
+  } else {
+    courses = [{ id: courseId, title: courseTitle }]
+  }
+
+  await setPendingAction(conversationId, {
+    mode: flow,
+    courses,
+    batch: null,
+    step: "collect_courses",
+    collected: {},
+  })
+
+  const verb = flow === "register" ? "register for" : "ask about"
+  const list = courses.map((c) => c.title).join(", ")
+  await sendWhatsAppButtons(
+    to,
+    `Great, you'd like to ${verb} *${courseTitle}*. Your selection so far: ${list}.\nWant to add another course?`,
+    [
+      { id: `${COURSES_ADD_PREFIX}${flow}`, title: "➕ Add Another" },
+      { id: COURSES_CONTINUE, title: `➡️ Continue (${courses.length})` },
+    ]
+  )
+}
+
+/** Step 2 of enquire/register: ask for batch timing, once the course "cart" is finalized. */
+async function sendBatchOptions(to: string, mode: PendingAction["mode"], courses: { id: string; title: string }[]) {
   const verb = mode === "register" ? "register for" : "ask about"
+  const list = courses.map((c) => c.title).join(", ")
   await sendWhatsAppList(
     to,
-    `Great, you'd like to ${verb} *${courseTitle}*. Which batch timing works for you?`,
+    `Great, you'd like to ${verb} *${list}*. Which batch timing works for you?`,
     "View Timings",
     [
       {
         rows: [
-          { id: `${BATCH_PREFIX}${mode}:${courseId}:Morning`, title: "🌅 Morning" },
-          { id: `${BATCH_PREFIX}${mode}:${courseId}:Afternoon`, title: "🌤️ Afternoon" },
-          { id: `${BATCH_PREFIX}${mode}:${courseId}:Evening`, title: "🌇 Evening" },
+          { id: `${BATCH_PREFIX}${mode}:Morning`, title: "🌅 Morning" },
+          { id: `${BATCH_PREFIX}${mode}:Afternoon`, title: "🌤️ Afternoon" },
+          { id: `${BATCH_PREFIX}${mode}:Evening`, title: "🌇 Evening" },
           {
-            id: `${BATCH_PREFIX}${mode}:${courseId}:other`,
+            id: `${BATCH_PREFIX}${mode}:other`,
             title: "✍️ Type it",
             description: "e.g. 6 PM - 8 PM, or Weekend",
           },
@@ -314,19 +373,17 @@ async function sendBatchOptions(
   )
 }
 
-/** Step 2: batch is chosen (or not) -- now collect name (+ qualification) in one message. */
+/** Step 3: batch is chosen (or not) -- now collect name (+ qualification) in one message. */
 async function startNameCollection(
   to: string,
   conversationId: string,
   mode: PendingAction["mode"],
-  courseId: string,
-  courseTitle: string,
+  courses: { id: string; title: string }[],
   batch: string | null
 ) {
   await setPendingAction(conversationId, {
     mode,
-    courseId,
-    courseTitle,
+    courses,
     batch,
     step: "name_qual",
     collected: {},
@@ -387,7 +444,7 @@ async function askConfirm(to: string, conversationId: string, pending: PendingAc
     c.email ? `Email: ${c.email}` : null,
     c.dob ? `DOB: ${c.dob}` : null,
     c.address ? `Address: ${c.address}` : null,
-    `Course: ${pending.courseTitle} (${batch} batch)`,
+    `Course(s): ${pending.courses.map((course) => course.title).join(", ")} (${batch} batch)`,
   ]
     .filter(Boolean)
     .join("\n")
@@ -404,13 +461,13 @@ const NO_WORDS = new Set(["no", "n", "cancel", "nahi"])
 async function finalizeEnquiry(to: string, conversationId: string, pending: PendingAction) {
   const { name, qualification, email, dob, address } = pending.collected
   const batch = pending.batch || "Flexible"
+  const courseList = pending.courses.map((c) => c.title).join(", ")
 
   const result = await captureLead(
     { waPhone: to },
     {
       name: name || "WhatsApp lead",
-      courseTitle: pending.courseTitle,
-      courseId: pending.courseId,
+      courses: pending.courses.map((c) => ({ id: c.id, title: c.title })),
       qualification: qualification ?? null,
       batchTime: batch,
       email: email ?? null,
@@ -428,7 +485,7 @@ async function finalizeEnquiry(to: string, conversationId: string, pending: Pend
 
   await sendWhatsAppText(
     to,
-    `Thanks ${name}! I've shared your interest in *${pending.courseTitle}* (${batch} batch) with our counseling team — they'll reach out soon. 😊`
+    `Thanks ${name}! I've shared your interest in *${courseList}* (${batch} batch) with our counseling team — they'll reach out soon. 😊`
   )
 }
 
@@ -444,23 +501,45 @@ async function finalizeRegistration(to: string, conversationId: string, pending:
     email: email || "not-provided@caddeskguwahati.com",
     qualification: qualification || "Not provided",
     college: college || "Not provided",
-    courseId: pending.courseId,
-    courseTitle: pending.courseTitle,
+    courses: pending.courses,
     declaration,
   })
 
-  await clearPendingAction(conversationId)
-
-  if (!result.success) {
+  if (!result.success || !result.id) {
+    await clearPendingAction(conversationId)
     await sendWhatsAppText(to, "Sorry, something went wrong saving that — could you try again in a moment?")
     return
   }
 
   const batch = pending.batch || "Flexible"
+  const courseList = pending.courses.map((c) => c.title).join(", ")
   await sendWhatsAppText(
     to,
-    `You're registered, ${name}! 🎉\nRegistration No: *${result.regNo}*\nCourse: ${pending.courseTitle} (${batch} batch)\n\nOur team will confirm your seat and complete the paperwork at the Noonmati centre shortly.`
+    `You're registered, ${name}! 🎉\nRegistration No: *${result.regNo}*\nCourse(s): ${courseList} (${batch} batch)\n\nOur team will confirm your seat and complete the paperwork at the Noonmati centre shortly.`
   )
+
+  const settings = await getPaymentSettings()
+  if (settings && settings.registrationFee > 0) {
+    const discounted = Math.round(settings.registrationFee * (1 - settings.discountPercent / 100))
+    const upiLine = settings.upiId
+      ? `\nUPI ID: *${settings.upiId}*\nOr pay via: upi://pay?pa=${encodeURIComponent(settings.upiId)}&pn=CAD%20Desk%20Guwahati&am=${discounted}&cu=INR`
+      : ""
+    await sendWhatsAppText(
+      to,
+      `💳 Pay ₹${discounted} now (instead of ₹${settings.registrationFee}) to lock in a ${settings.discountPercent}% discount!${upiLine}\n\nOnce paid, just send a screenshot of the payment here and our team will confirm it.`
+    )
+    if (settings.qrImageUrl) {
+      await sendWhatsAppImage(to, settings.qrImageUrl, `Scan to pay ₹${discounted}`)
+    }
+    await setPendingAction(conversationId, {
+      ...pending,
+      step: "payment_screenshot",
+      registrationId: result.id,
+    })
+    return
+  }
+
+  await clearPendingAction(conversationId)
 }
 
 /**
@@ -477,6 +556,32 @@ export async function completePendingAction(
   waName: string | null
 ): Promise<string> {
   const isRegister = pending.mode === "register"
+
+  if (pending.step === "collect_courses") {
+    // They typed something instead of tapping a button -- re-show the choice.
+    const list = pending.courses.map((c) => c.title).join(", ")
+    await sendWhatsAppButtons(to, `Your selection so far: ${list}.\nTap below to add another course or continue:`, [
+      { id: `${COURSES_ADD_PREFIX}${pending.mode}`, title: "➕ Add Another" },
+      { id: COURSES_CONTINUE, title: `➡️ Continue (${pending.courses.length})` },
+    ])
+    return "[re-sent add/continue buttons]"
+  }
+
+  if (pending.step === "payment_screenshot") {
+    if (isSkip(rawText) || rawText.trim().toLowerCase() === "later") {
+      await clearPendingAction(conversationId)
+      await sendWhatsAppText(
+        to,
+        "No problem — you can pay later or at the centre. Our team will follow up. 😊"
+      )
+      return "[skipped payment screenshot]"
+    }
+    await sendWhatsAppText(
+      to,
+      "Once you've paid, please send a *screenshot/photo* of the payment here (or reply `skip` to pay later)."
+    )
+    return "[waiting for payment screenshot]"
+  }
 
   if (pending.step === "name_qual") {
     let batch = pending.batch
@@ -631,8 +736,17 @@ export async function handleMenuSelection(
   waName: string | null,
   conversationId: string
 ): Promise<string> {
-  // Any fresh navigation tap abandons an in-progress collection flow.
-  if (!id.startsWith(BATCH_PREFIX)) {
+  // Only a genuine "start over" tap abandons an in-progress course
+  // selection/collection flow -- category/course/batch/cart taps all need
+  // the pending_action to stay intact as students build up their selection.
+  const isResetTap =
+    id === MENU_MAIN ||
+    id === ROOT_COURSES ||
+    id === ROOT_ENQUIRY ||
+    id === ROOT_REGISTRATION ||
+    id === ROOT_ASK ||
+    id.startsWith(ASK_PREFIX)
+  if (isResetTap) {
     await clearPendingAction(conversationId)
   }
 
@@ -663,16 +777,27 @@ export async function handleMenuSelection(
   }
   if (id.startsWith(COURSE_PREFIX)) {
     const [flow, courseId] = splitFlow(id.slice(COURSE_PREFIX.length))
-    await sendCourseDetail(to, courseId, flow)
+    await sendCourseDetail(to, courseId, flow, conversationId)
     return `[tapped course: ${courseId}]`
   }
   if (id.startsWith(MORE_PREFIX)) {
-    const [, category] = splitFlow(id.slice(MORE_PREFIX.length))
+    // "<flow>:<nextOffset>:<category>" -- pagination, show the next page of courses.
+    const rest = id.slice(MORE_PREFIX.length)
+    const firstColon = rest.indexOf(":")
+    const secondColon = rest.indexOf(":", firstColon + 1)
+    const flow = rest.slice(0, firstColon) as BrowseFlow
+    const offset = Number(rest.slice(firstColon + 1, secondColon)) || 0
+    const category = rest.slice(secondColon + 1)
+    await sendCourseList(to, category, flow, offset)
+    return `[tapped: more courses in ${category} at ${offset}]`
+  }
+  if (id.startsWith(TYPE_PREFIX)) {
+    const category = id.slice(TYPE_PREFIX.length)
     await sendMoreCoursesPrompt(to, category)
-    return `[tapped: see more in ${category}]`
+    return `[tapped: type course name in ${category}]`
   }
   if (id.startsWith(ENQUIRE_PREFIX) || id.startsWith(REGISTER_PREFIX)) {
-    let mode: PendingAction["mode"] = id.startsWith(REGISTER_PREFIX) ? "register" : "enquire"
+    let mode: "enquire" | "register" = id.startsWith(REGISTER_PREFIX) ? "register" : "enquire"
     if (mode === "register" && !getFeatureFlags().enableRegistration) mode = "enquire"
     const courseId = id.slice(id.startsWith(REGISTER_PREFIX) ? REGISTER_PREFIX.length : ENQUIRE_PREFIX.length)
 
@@ -681,21 +806,39 @@ export async function handleMenuSelection(
       ? await supabase.from("courses").select("title").eq("id", courseId).maybeSingle()
       : { data: null }
 
-    await sendBatchOptions(to, mode, courseId, course?.title ?? "this course")
+    await addCourseToSelection(to, conversationId, mode, courseId, course?.title ?? "this course")
     return `[tapped ${mode}: ${courseId}]`
   }
+  if (id.startsWith(COURSES_ADD_PREFIX)) {
+    const flow = id.slice(COURSES_ADD_PREFIX.length) as "enquire" | "register"
+    await sendCategoryList(to, "Sure! Which field is the next course in?", flow)
+    return "[tapped: Add Another Course]"
+  }
+  if (id === COURSES_CONTINUE) {
+    const pending = await getPendingAction(conversationId)
+    if (!pending || pending.step !== "collect_courses" || pending.courses.length === 0) {
+      await sendWelcomeMenu(to)
+      return "[tapped: Continue (no active selection, showed menu)]"
+    }
+    await sendBatchOptions(to, pending.mode, pending.courses)
+    return "[tapped: Continue with course selection]"
+  }
   if (id.startsWith(BATCH_PREFIX)) {
-    const rest = id.slice(BATCH_PREFIX.length) // "<mode>:<courseId>:<batch>"
-    const [mode, courseId, batchRaw] = rest.split(":") as [PendingAction["mode"], string, string]
+    // "<mode>:<Morning|Afternoon|Evening|other>" -- course list lives in pending_action, not the id.
+    const rest = id.slice(BATCH_PREFIX.length)
+    const sepIdx = rest.indexOf(":")
+    const mode = rest.slice(0, sepIdx) as PendingAction["mode"]
+    const batchRaw = rest.slice(sepIdx + 1)
 
-    const supabase = getSupabaseAdmin()
-    const { data: course } = supabase
-      ? await supabase.from("courses").select("title").eq("id", courseId).maybeSingle()
-      : { data: null }
+    const pending = await getPendingAction(conversationId)
+    if (!pending || pending.step !== "collect_courses" || pending.courses.length === 0) {
+      await sendWelcomeMenu(to)
+      return "[tapped: batch (no active selection, showed menu)]"
+    }
 
     const batch = batchRaw === "other" ? null : batchRaw
-    await startNameCollection(to, conversationId, mode, courseId, course?.title ?? "this course", batch)
-    return `[tapped batch: ${batchRaw} for ${courseId}]`
+    await startNameCollection(to, conversationId, mode, pending.courses, batch)
+    return `[tapped batch: ${batchRaw}]`
   }
   if (id.startsWith(ASK_PREFIX)) {
     const rest = id.slice(ASK_PREFIX.length) // "general" | "category:<category>" | "course:<courseId>"

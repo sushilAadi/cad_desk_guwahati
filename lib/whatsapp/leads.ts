@@ -15,6 +15,8 @@ export async function captureLead(
   ctx: LeadContext,
   fields: {
     name: string
+    /** Multiple courses (from the WhatsApp menu flow). Takes precedence over courseTitle/courseId when set. */
+    courses?: { id?: string | null; title: string }[]
     courseTitle?: string | null
     courseId?: string | null
     qualification?: string | null
@@ -27,6 +29,8 @@ export async function captureLead(
   const supabase = getSupabaseAdmin()
   if (!supabase) return { success: false, error: "The course database isn't configured right now." }
 
+  const courses = fields.courses ?? (fields.courseTitle ? [{ id: fields.courseId, title: fields.courseTitle }] : [])
+
   const { data, error } = await supabase
     .from("enquiries")
     .insert({
@@ -35,8 +39,10 @@ export async function captureLead(
       status: "New",
       sources: ["WhatsApp Bot"],
       name: fields.name,
-      course: fields.courseTitle ?? null,
-      course_id: fields.courseId ?? null,
+      course: courses[0]?.title ?? null,
+      course_id: courses[0]?.id ?? null,
+      // Full multi-course list -- course/course_id above only capture the first, for back-compat with joins/filters.
+      courses: courses.length ? courses.map((c) => ({ id: c.id ?? null, name: c.title })) : null,
       qualification: fields.qualification ?? null,
       batch_time: fields.batchTime ?? null,
       email: fields.email ?? null,
