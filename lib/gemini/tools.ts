@@ -3,10 +3,12 @@ import type { FunctionDeclaration } from "@google/genai"
 
 import { getSupabaseAdmin } from "@/lib/supabase/server"
 import { captureLead, requestCallback } from "@/lib/whatsapp/leads"
+import { startGuidedFlow } from "@/lib/whatsapp/menu"
 
 export interface ToolContext {
   waPhone: string
   waName: string | null
+  conversationId: string
 }
 
 // NOTE: course rows intentionally never select "price" -- the strict
@@ -92,6 +94,22 @@ export const toolDeclarations: FunctionDeclaration[] = [
           description: "Brief context for staff, e.g. what the student needs help with.",
         },
       },
+    },
+  },
+  {
+    name: "start_guided_flow",
+    description:
+      "Switches the conversation into our real, structured Registration or Enquiry flow -- this immediately sends the student a tappable list of course categories, the same one they'd get from the main menu, and starts properly collecting their details (name, batch, etc.) step by step. Call this the MOMENT the student expresses clear intent to register/enroll/sign up for a course, or to submit an enquiry / have our team reach out -- e.g. 'help me register', 'I want to enroll', 'sign me up', 'can you register me', 'can someone contact me about this'. Do not just reply in text describing what registration involves -- call this tool instead so they get the real interactive flow. Do not call this for casual browsing questions like 'what courses do you have' or 'tell me about X' -- only when they want to take the concrete next step.",
+    parametersJsonSchema: {
+      type: "object",
+      properties: {
+        mode: {
+          type: "string",
+          enum: ["register", "enquire"],
+          description: "'register' if they want to join/enroll in a course, 'enquire' if they just want us to reach out with more info.",
+        },
+      },
+      required: ["mode"],
     },
   },
 ]
@@ -187,6 +205,15 @@ export async function executeTool(
       const result = await requestCallback({ waPhone: ctx.waPhone }, { name: ctx.waName, note })
       if (!result.success) return { error: result.error }
       return { success: true, leadId: result.leadId }
+    }
+
+    case "start_guided_flow": {
+      const mode = args.mode === "register" ? "register" : "enquire"
+      await startGuidedFlow(ctx.waPhone, ctx.conversationId, mode)
+      return {
+        success: true,
+        note: "The interactive category list has already been sent directly to the student. Do not send any further reply of your own -- respond with an empty message.",
+      }
     }
 
     default:

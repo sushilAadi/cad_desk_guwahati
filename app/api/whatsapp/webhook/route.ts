@@ -4,7 +4,6 @@ import { runAgentTurn } from "@/lib/gemini/agent"
 import { sendWhatsAppText } from "@/lib/whatsapp/send"
 import {
   sendWelcomeMenu,
-  sendMainMenuHint,
   handleMenuSelection,
   completePendingAction,
   isMenuResetKeyword,
@@ -231,14 +230,22 @@ async function handleWebhookPayload(payload: WhatsAppWebhookPayload) {
       const reply = await runAgentTurn(history, message.text.body, {
         waPhone: message.from,
         waName,
+        conversationId,
       })
+
+      // null means a tool (e.g. start_guided_flow) already sent its own
+      // WhatsApp message directly -- nothing left to send, and no menu hint
+      // either, since that message has its own navigation built in.
+      if (reply === null) {
+        await appendMessage(conversationId, "assistant", "[handed off to guided flow]")
+        continue
+      }
 
       const assistantMessageId = await appendMessage(conversationId, "assistant", reply)
       const sendResult = await sendWhatsAppText(message.from, reply)
       if (assistantMessageId) {
         await recordSendResult(assistantMessageId, sendResult)
       }
-      await sendMainMenuHint(message.from)
     }
   }
 }

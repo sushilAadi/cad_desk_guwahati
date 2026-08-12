@@ -28,12 +28,18 @@ function toGeminiContents(history: ConversationMessage[]): Content[] {
  * Runs one WhatsApp turn end to end: sends the conversation history + new
  * message to Gemini, executes any tool calls it makes (looping until it
  * settles on a plain-text reply), and returns that reply.
+ *
+ * Returns null when the turn was already fully handled by a tool that sends
+ * its own WhatsApp message directly (currently just start_guided_flow) --
+ * the caller should send nothing further in that case, not even the usual
+ * "back to menu" hint, since the interactive list that was sent already
+ * has its own navigation.
  */
 export async function runAgentTurn(
   history: ConversationMessage[],
   userText: string,
   ctx: ToolContext
-): Promise<string> {
+): Promise<string | null> {
   const ai = getGeminiClient()
   if (!ai) {
     console.error("[agent] GEMINI_API_KEY is not configured")
@@ -43,6 +49,7 @@ export async function runAgentTurn(
   const flags = getFeatureFlags()
   const systemInstruction = buildSystemInstruction(flags)
   const contents: Content[] = [...toGeminiContents(history), createUserContent(userText)]
+  let guidedFlowTriggered = false
 
   try {
     for (let round = 0; round < MAX_TOOL_ROUNDS; round++) {
@@ -57,8 +64,13 @@ export async function runAgentTurn(
 
       const functionCalls = response.functionCalls
       if (!functionCalls || functionCalls.length === 0) {
+        if (guidedFlowTriggered) return null
         const text = response.text?.trim()
         return text && text.length > 0 ? text : FALLBACK_REPLY
+      }
+
+      if (functionCalls.some((call) => call.name === "start_guided_flow")) {
+        guidedFlowTriggered = true
       }
 
       // Echo the model's function-call turn back into history, then run
@@ -76,7 +88,7 @@ export async function runAgentTurn(
     }
 
     console.error("[agent] hit MAX_TOOL_ROUNDS without a final reply")
-    return FALLBACK_REPLY
+    return guidedFlowTriggered ? null : FALLBACK_REPLY
   } catch (err) {
     console.error("[agent] generateContent failed:", err)
     return FALLBACK_REPLY

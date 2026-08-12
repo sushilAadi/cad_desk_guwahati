@@ -148,8 +148,12 @@ function parseDob(raw: string): string | null {
 }
 
 /**
- * Sent after every free-text (Gemini) reply, so there's always a visible,
- * tappable way back to the menu -- not just the hidden "type menu" keyword.
+ * NOT currently called -- was sent after every single free-text (Gemini)
+ * reply, but that meant it showed up instantly after every message with no
+ * regard for whether the student was still typing, which felt spammy.
+ * Kept here in case we want a real idle-timeout nudge later (e.g. only sent
+ * if the student hasn't replied in ~40s), which needs a delayed job/queue
+ * to implement properly -- this function is the "send it" half of that.
  */
 export async function sendMainMenuHint(to: string): Promise<SendResult> {
   return sendWhatsAppButtons(to, "Anything else? You can also jump back anytime:", [
@@ -737,6 +741,27 @@ async function sendAskPrompt(to: string, context: string) {
 
 async function sendRegistrationPrompt(to: string) {
   await sendCategoryList(to, "Let's get you registered! Which field would you like to join?", "register")
+}
+
+/**
+ * Lets the Gemini agent hand off to the same structured Registration/Enquiry
+ * flow a menu tap would start, when the student expresses that intent in
+ * free text (e.g. "can you help me register") instead of tapping a button.
+ * Mirrors handleMenuSelection's ROOT_ENQUIRY/ROOT_REGISTRATION branches,
+ * including clearing any stale pending_action first.
+ */
+export async function startGuidedFlow(
+  to: string,
+  conversationId: string,
+  mode: "enquire" | "register"
+): Promise<void> {
+  await clearPendingAction(conversationId)
+
+  if (mode === "register" && getFeatureFlags().enableRegistration) {
+    await sendRegistrationPrompt(to)
+    return
+  }
+  await sendEnquiryPrompt(to)
 }
 
 /**
