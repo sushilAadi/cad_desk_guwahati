@@ -212,7 +212,7 @@ async function sendCategoryList(to: string, intro: string, flow: BrowseFlow) {
  * (WhatsApp lists cap at 10 rows total, so this is how a category with more
  * than ~6 courses is still fully browsable -- not just the first page).
  */
-async function sendCourseList(to: string, category: string, flow: BrowseFlow, offset = 0) {
+export async function sendCourseList(to: string, category: string, flow: BrowseFlow, offset = 0) {
   const supabase = getSupabaseAdmin()
   if (!supabase) return sendWhatsAppText(to, "Sorry, our course list isn't available right now.")
 

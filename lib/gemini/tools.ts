@@ -3,7 +3,7 @@ import type { FunctionDeclaration } from "@google/genai"
 
 import { getSupabaseAdmin } from "@/lib/supabase/server"
 import { captureLead, requestCallback } from "@/lib/whatsapp/leads"
-import { startGuidedFlow } from "@/lib/whatsapp/menu"
+import { startGuidedFlow, sendCourseList } from "@/lib/whatsapp/menu"
 
 export interface ToolContext {
   waPhone: string
@@ -33,7 +33,7 @@ export const toolDeclarations: FunctionDeclaration[] = [
   {
     name: "search_courses",
     description:
-      "Searches the course catalog by free-text keyword and/or exact category. Returns matching titles, captions, categories, and durations. Never returns fees.",
+      "Searches the course catalog by free-text keyword, for when the student describes what they want in their own words (e.g. 'something with 3D modelling'). Returns up to 8 matches -- NOT the full catalog, so never use this (or its result) to answer 'what courses do you have in <category>' -- call show_course_list for that instead, since a category can have far more than 8 courses and listing only a partial set makes the catalog look smaller than it is. Never returns fees.",
     parametersJsonSchema: {
       type: "object",
       properties: {
@@ -94,6 +94,21 @@ export const toolDeclarations: FunctionDeclaration[] = [
           description: "Brief context for staff, e.g. what the student needs help with.",
         },
       },
+    },
+  },
+  {
+    name: "show_course_list",
+    description:
+      "Sends the student the REAL, complete, tappable list of every course in one category -- paginated with a 'More courses' option, exactly like tapping Courses from the main menu. Call this whenever the student asks what courses/options exist in a category (e.g. 'what courses in civil', 'show me electrical courses', 'what do you offer in mechanical') -- do NOT answer this yourself in text by naming a handful of courses, since categories can have 15-20+ courses and a partial text list makes the catalog look small and gives no tappable options. Only use search_courses instead when they describe a specific topic/keyword, not a whole category.",
+    parametersJsonSchema: {
+      type: "object",
+      properties: {
+        category: {
+          type: "string",
+          description: "Exact category name: 'Civil / Architecture', 'Mechanical', 'Electrical', 'CS/IT', or 'Creative Arts'.",
+        },
+      },
+      required: ["category"],
     },
   },
   {
@@ -205,6 +220,16 @@ export async function executeTool(
       const result = await requestCallback({ waPhone: ctx.waPhone }, { name: ctx.waName, note })
       if (!result.success) return { error: result.error }
       return { success: true, leadId: result.leadId }
+    }
+
+    case "show_course_list": {
+      const category = typeof args.category === "string" ? args.category.trim() : undefined
+      if (!category) return { error: "category is required" }
+      await sendCourseList(ctx.waPhone, category, "browse")
+      return {
+        success: true,
+        note: "The complete interactive course list for this category has already been sent to the student. Do not list courses yourself in text -- respond with an empty message.",
+      }
     }
 
     case "start_guided_flow": {

@@ -15,6 +15,10 @@ const MAX_TOOL_ROUNDS = 5
 const FALLBACK_REPLY =
   "Sorry, I'm having trouble responding right now. Please try again in a moment, or ask to speak with our counseling team."
 
+// Tools that send their own WhatsApp message directly (an interactive list),
+// so any further plain-text reply from the model would be redundant/wrong.
+const SELF_SENDING_TOOLS = new Set(["start_guided_flow", "show_course_list"])
+
 function toGeminiContents(history: ConversationMessage[]): Content[] {
   return history
     .filter((m) => m.role !== "tool")
@@ -30,10 +34,9 @@ function toGeminiContents(history: ConversationMessage[]): Content[] {
  * settles on a plain-text reply), and returns that reply.
  *
  * Returns null when the turn was already fully handled by a tool that sends
- * its own WhatsApp message directly (currently just start_guided_flow) --
- * the caller should send nothing further in that case, not even the usual
- * "back to menu" hint, since the interactive list that was sent already
- * has its own navigation.
+ * its own WhatsApp message directly (see SELF_SENDING_TOOLS) -- the caller
+ * should send nothing further in that case, since the interactive list that
+ * was sent already has its own navigation.
  */
 export async function runAgentTurn(
   history: ConversationMessage[],
@@ -69,7 +72,7 @@ export async function runAgentTurn(
         return text && text.length > 0 ? text : FALLBACK_REPLY
       }
 
-      if (functionCalls.some((call) => call.name === "start_guided_flow")) {
+      if (functionCalls.some((call) => SELF_SENDING_TOOLS.has(call.name ?? ""))) {
         guidedFlowTriggered = true
       }
 

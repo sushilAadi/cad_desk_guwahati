@@ -179,7 +179,8 @@ async function handleWebhookPayload(payload: WhatsAppWebhookPayload) {
               whatsappMessageId: message.id,
             })
             await clearPendingAction(conversationId)
-            reply = "Got it! ✅ We've received your payment screenshot — our team will verify it and send you a unique discount code once confirmed. 🎉"
+            reply =
+              "Got it! ✅ We've received your payment screenshot — our team will verify it and send you a unique discount code once confirmed. 🎉\n\nEven if the code doesn't reach you right away, don't worry — we already have your details and payment screenshot safely on record, so nothing is lost. Our team can always look it up for you."
           } else {
             reply = "Sorry, I couldn't save that screenshot — could you try sending it again?"
           }
