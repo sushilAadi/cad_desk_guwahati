@@ -114,7 +114,18 @@ function isSkip(text: string): boolean {
   return text.trim().toLowerCase() === "skip"
 }
 
-/** Parses DD/MM/YYYY, DD-MM-YYYY, or YYYY-MM-DD into an ISO yyyy-mm-dd string. */
+/**
+ * True only if y-mo-d is a real calendar date (rejects things like
+ * "31/04/1990" -- April has 30 days -- which regex matching alone lets
+ * through and Postgres then rejects at insert time with a 400).
+ */
+function isRealDate(y: number, mo: number, d: number): boolean {
+  if (mo < 1 || mo > 12 || d < 1 || d > 31 || y < 1900 || y > new Date().getFullYear()) return false
+  const date = new Date(y, mo - 1, d)
+  return date.getFullYear() === y && date.getMonth() === mo - 1 && date.getDate() === d
+}
+
+/** Parses DD/MM/YYYY, DD-MM-YYYY, or YYYY-MM-DD into an ISO yyyy-mm-dd string, or null if not a real date. */
 function parseDob(raw: string): string | null {
   const s = raw.trim()
   if (!s) return null
@@ -122,12 +133,14 @@ function parseDob(raw: string): string | null {
   let m = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/)
   if (m) {
     const [, d, mo, y] = m
+    if (!isRealDate(Number(y), Number(mo), Number(d))) return null
     return `${y}-${mo.padStart(2, "0")}-${d.padStart(2, "0")}`
   }
 
   m = s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})$/)
   if (m) {
     const [, y, mo, d] = m
+    if (!isRealDate(Number(y), Number(mo), Number(d))) return null
     return `${y}-${mo.padStart(2, "0")}-${d.padStart(2, "0")}`
   }
 
