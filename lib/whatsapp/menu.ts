@@ -520,21 +520,21 @@ async function finalizeRegistration(to: string, conversationId: string, pending:
 
   const settings = await getPaymentSettings()
   if (settings && settings.registrationFee > 0) {
-    const discounted = Math.round(settings.registrationFee * (1 - settings.discountPercent / 100))
     const upiLine = settings.upiId
-      ? `\nUPI ID: *${settings.upiId}*\nOr pay via: upi://pay?pa=${encodeURIComponent(settings.upiId)}&pn=CAD%20Desk%20Guwahati&am=${discounted}&cu=INR`
+      ? `\nUPI ID: *${settings.upiId}*\nOr pay via: upi://pay?pa=${encodeURIComponent(settings.upiId)}&pn=CAD%20Desk%20Guwahati&am=${settings.registrationFee}&cu=INR`
       : ""
     await sendWhatsAppText(
       to,
-      `💳 Pay ₹${discounted} now (instead of ₹${settings.registrationFee}) to lock in a ${settings.discountPercent}% discount!${upiLine}\n\nOnce paid, just send a screenshot of the payment here and our team will confirm it.`
+      `💳 Pay ₹${settings.registrationFee} now to confirm your seat — this also unlocks a *${settings.discountPercent}% discount on your course fee*.${upiLine}\n\nOnce paid, just send a screenshot of the payment here. Our team will verify it and send you a unique discount code to redeem at the centre.`
     )
     if (settings.qrImageUrl) {
-      await sendWhatsAppImage(to, settings.qrImageUrl, `Scan to pay ₹${discounted}`)
+      await sendWhatsAppImage(to, settings.qrImageUrl, `Scan to pay ₹${settings.registrationFee}`)
     }
     await setPendingAction(conversationId, {
       ...pending,
       step: "payment_screenshot",
       registrationId: result.id,
+      paymentAmount: settings.registrationFee,
     })
     return
   }

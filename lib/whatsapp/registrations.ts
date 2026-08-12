@@ -67,22 +67,48 @@ export async function createRegistration(
   return { success: true, id: data.id, regNo }
 }
 
-/** Attaches a payment screenshot URL to an existing registration and flags it for staff review. */
-export async function attachPaymentScreenshot(
-  registrationId: string,
+export interface PaymentSubmissionFields {
+  registrationId: string
+  amount: number
   screenshotUrl: string
+  whatsappMessageId?: string | null
+}
+
+/**
+ * Records a payment screenshot as a row in the `payments` audit table (source
+ * of truth for verification -- amount, screenshot, and the WhatsApp message
+ * id it came in on, so staff can cross-check against the chat if a student
+ * disputes "I paid but you never got it"). Also mirrors the quick-glance
+ * status/screenshot fields onto student_registrations so existing admin list
+ * views don't need a join for the common case.
+ */
+export async function recordPaymentSubmission(
+  fields: PaymentSubmissionFields
 ): Promise<{ success: boolean; error?: string }> {
   const supabase = getSupabaseAdmin()
   if (!supabase) return { success: false, error: "The registration database isn't configured right now." }
 
-  const { error } = await supabase
-    .from("student_registrations")
-    .update({ payment_screenshot_url: screenshotUrl, payment_status: "pending_verification" })
-    .eq("id", registrationId)
+  const { error: paymentError } = await supabase.from("payments").insert({
+    registration_id: fields.registrationId,
+    amount: fields.amount,
+    screenshot_url: fields.screenshotUrl,
+    whatsapp_message_id: fields.whatsappMessageId ?? null,
+    status: "pending_verification",
+  })
 
-  if (error) {
-    console.error("[registrations] attachPaymentScreenshot failed:", error)
-    return { success: false, error: "Could not save the payment screenshot — please try again." }
+  if (paymentError) {
+    console.error("[registrations] recordPaymentSubmission failed:", paymentError)
+    return { success: false, error: "Could not save the payment record — please try again." }
+  }
+
+  const { error: regError } = await supabase
+    .from("student_registrations")
+    .update({ payment_screenshot_url: fields.screenshotUrl, payment_status: "pending_verification" })
+    .eq("id", fields.registrationId)
+
+  if (regError) {
+    // Non-fatal -- the payments row (source of truth) is already saved.
+    console.error("[registrations] recordPaymentSubmission (registration sync) failed:", regError)
   }
 
   return { success: true }

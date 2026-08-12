@@ -20,7 +20,7 @@ import {
 } from "@/lib/whatsapp/conversations"
 import { verifyWhatsAppSignature } from "@/lib/whatsapp/verify"
 import { downloadAndStoreWhatsAppMedia } from "@/lib/whatsapp/media"
-import { attachPaymentScreenshot } from "@/lib/whatsapp/registrations"
+import { recordPaymentSubmission } from "@/lib/whatsapp/registrations"
 import { getSupabaseAdmin } from "@/lib/supabase/server"
 
 export const dynamic = "force-dynamic"
@@ -173,9 +173,14 @@ async function handleWebhookPayload(payload: WhatsAppWebhookPayload) {
 
           let reply: string
           if (upload.success && upload.path) {
-            await attachPaymentScreenshot(pending.registrationId, upload.path)
+            await recordPaymentSubmission({
+              registrationId: pending.registrationId,
+              amount: pending.paymentAmount ?? 0,
+              screenshotUrl: upload.path,
+              whatsappMessageId: message.id,
+            })
             await clearPendingAction(conversationId)
-            reply = "Got it! ✅ We've received your payment screenshot — our team will verify and confirm your discount shortly. 🎉"
+            reply = "Got it! ✅ We've received your payment screenshot — our team will verify it and send you a unique discount code once confirmed. 🎉"
           } else {
             reply = "Sorry, I couldn't save that screenshot — could you try sending it again?"
           }

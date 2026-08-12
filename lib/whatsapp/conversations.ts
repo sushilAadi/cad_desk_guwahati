@@ -167,6 +167,8 @@ export interface PendingAction {
   }
   /** Set once finalizeRegistration writes the row -- lets the payment_screenshot step attach the screenshot to the right registration. */
   registrationId?: string
+  /** Snapshot of the registration fee at the moment the payment prompt was sent, so a later admin fee change doesn't retroactively change what this student owed. */
+  paymentAmount?: number
 }
 
 /** Reads the in-progress menu flow (if any) waiting on a free-text reply. */
