@@ -18,13 +18,30 @@ const ROOT_ENQUIRY = "menu:enquiry"
 const ROOT_REGISTRATION = "menu:registration"
 const ROOT_ASK = "ask:general"
 const MENU_MAIN = "menu:main"
-const CATEGORY_PREFIX = "cat:"
-const COURSE_PREFIX = "course:"
-const MORE_PREFIX = "more:"
+const CATEGORY_PREFIX = "cat:" // cat:<flow>:<category>
+const COURSE_PREFIX = "course:" // course:<flow>:<courseId>
+const MORE_PREFIX = "more:" // more:<flow>:<category>
 const ENQUIRE_PREFIX = "enquire:" // enquire:<courseId>
 const REGISTER_PREFIX = "register:" // register:<courseId>
-const BATCH_PREFIX = "batch:" // batch:<mode>:<courseId>:<Morning|Evening|other>
+const BATCH_PREFIX = "batch:" // batch:<mode>:<courseId>:<Morning|Afternoon|Evening|other>
 const ASK_PREFIX = "ask:" // ask:general | ask:category:<category> | ask:course:<courseId>
+
+/**
+ * What the student is browsing for -- carried through category/course ids so
+ * a course tap can skip straight to the right next step instead of asking
+ * "want to take this further?" again when they already said Enquiry or
+ * Registration up front. "browse" is the plain Courses menu (still shows the
+ * full Ask/Enquire/Register options on the course detail screen).
+ */
+type BrowseFlow = "browse" | "enquire" | "register"
+
+/** Splits "<flow>:<rest>" (rest may itself contain ":") from a tapped id's remainder. */
+function splitFlow(rest: string): [BrowseFlow, string] {
+  const sepIdx = rest.indexOf(":")
+  const flow = (sepIdx === -1 ? rest : rest.slice(0, sepIdx)) as BrowseFlow
+  const remainder = sepIdx === -1 ? "" : rest.slice(sepIdx + 1)
+  return [flow, remainder]
+}
 
 const MAX_LIST_ROWS = 10
 
@@ -73,6 +90,19 @@ function splitInto(text: string, count: number): string[] {
   const head = parts.slice(0, count - 1)
   const tail = parts.slice(count - 1).join(" - ")
   return [...head, tail]
+}
+
+/**
+ * Like splitInto, but folds overflow into the FIRST field instead of the
+ * last. Used when the first field (a typed batch timing, e.g. "6 PM - 8 PM")
+ * is the one likely to contain the delimiter, not the trailing fields.
+ */
+function splitFromEnd(text: string, count: number): string[] {
+  const parts = splitFields(text)
+  if (parts.length <= count) return parts
+  const tail = parts.slice(-(count - 1))
+  const head = parts.slice(0, parts.length - (count - 1)).join(" - ")
+  return [head, ...tail]
 }
 
 function isSkip(text: string): boolean {
@@ -134,7 +164,7 @@ export async function sendWelcomeMenu(to: string): Promise<SendResult> {
   )
 }
 
-async function sendCategoryList(to: string, intro: string) {
+async function sendCategoryList(to: string, intro: string, flow: BrowseFlow) {
   const supabase = getSupabaseAdmin()
   if (!supabase) return sendWhatsAppText(to, "Sorry, our course list isn't available right now.")
 
@@ -144,7 +174,7 @@ async function sendCategoryList(to: string, intro: string) {
   const categories = Array.from(new Set(data.map((row) => row.category ?? "Uncategorized")))
 
   const rows = categories.map((category) => ({
-    id: `${CATEGORY_PREFIX}${category}`,
+    id: `${CATEGORY_PREFIX}${flow}:${category}`,
     title: truncate(category, 24),
     description: "Tap to explore",
   }))
@@ -155,7 +185,7 @@ async function sendCategoryList(to: string, intro: string) {
   ])
 }
 
-async function sendCourseList(to: string, category: string) {
+async function sendCourseList(to: string, category: string, flow: BrowseFlow) {
   const supabase = getSupabaseAdmin()
   if (!supabase) return sendWhatsAppText(to, "Sorry, our course list isn't available right now.")
 
@@ -175,13 +205,13 @@ async function sendCourseList(to: string, category: string) {
   // Reserve 3 rows: "Other" (always -- covers both overflow and "not listed here"), "Ask a Question", and Main Menu.
   const shown = data.slice(0, MAX_LIST_ROWS - 3)
   const rows = shown.map((c) => ({
-    id: `${COURSE_PREFIX}${c.id}`,
+    id: `${COURSE_PREFIX}${flow}:${c.id}`,
     title: truncate(c.title, 24),
     description: `${c.duration ? `${c.duration} days` : "Flexible"}${c.certification ? " • Certified" : ""}`,
   }))
 
   rows.push({
-    id: `${MORE_PREFIX}${category}`,
+    id: `${MORE_PREFIX}${flow}:${category}`,
     title: "✍️ Other",
     description:
       data.length > shown.length ? "More courses available — type to search" : "Don't see it? Type the name",
@@ -196,7 +226,13 @@ async function sendCourseList(to: string, category: string) {
   await sendWhatsAppList(to, `${category} courses:`, "View Courses", [{ rows }])
 }
 
-async function sendCourseDetail(to: string, courseId: string) {
+/**
+ * "browse" flow (came from the plain Courses menu) still asks "want to take
+ * this further?" since we don't know their intent yet. "enquire"/"register"
+ * flow means they already told us that from the root menu -- skip straight
+ * to the batch-timing question instead of asking again.
+ */
+async function sendCourseDetail(to: string, courseId: string, flow: BrowseFlow) {
   const supabase = getSupabaseAdmin()
   if (!supabase) return sendWhatsAppText(to, "Sorry, course details aren't available right now.")
 
@@ -221,6 +257,14 @@ async function sendCourseDetail(to: string, courseId: string) {
   await sendWhatsAppText(to, lines.join("\n"))
 
   const flags = getFeatureFlags()
+  let effectiveFlow = flow
+  if (effectiveFlow === "register" && !flags.enableRegistration) effectiveFlow = "enquire"
+
+  if (effectiveFlow === "enquire" || effectiveFlow === "register") {
+    await sendBatchOptions(to, effectiveFlow, course.id, course.title)
+    return
+  }
+
   const rows = [
     { id: `${ASK_PREFIX}course:${course.id}`, title: "💬 Ask a Question", description: `About ${truncate(course.title, 40)}` },
     { id: `${ENQUIRE_PREFIX}${course.id}`, title: "❓ Enquire", description: "Get a callback" },
@@ -240,7 +284,7 @@ async function sendMoreCoursesPrompt(to: string, category: string) {
   )
 }
 
-/** Step 1 of enquire/register: ask for batch timing via quick buttons, "other" opens free text. */
+/** Step 1 of enquire/register: ask for batch timing. */
 async function sendBatchOptions(
   to: string,
   mode: PendingAction["mode"],
@@ -248,11 +292,26 @@ async function sendBatchOptions(
   courseTitle: string
 ) {
   const verb = mode === "register" ? "register for" : "ask about"
-  await sendWhatsAppButtons(to, `Great, you'd like to ${verb} *${courseTitle}*. Which batch timing works for you?`, [
-    { id: `${BATCH_PREFIX}${mode}:${courseId}:Morning`, title: "🌅 Morning" },
-    { id: `${BATCH_PREFIX}${mode}:${courseId}:Evening`, title: "🌇 Evening" },
-    { id: `${BATCH_PREFIX}${mode}:${courseId}:other`, title: "✍️ Type it" },
-  ])
+  await sendWhatsAppList(
+    to,
+    `Great, you'd like to ${verb} *${courseTitle}*. Which batch timing works for you?`,
+    "View Timings",
+    [
+      {
+        rows: [
+          { id: `${BATCH_PREFIX}${mode}:${courseId}:Morning`, title: "🌅 Morning" },
+          { id: `${BATCH_PREFIX}${mode}:${courseId}:Afternoon`, title: "🌤️ Afternoon" },
+          { id: `${BATCH_PREFIX}${mode}:${courseId}:Evening`, title: "🌇 Evening" },
+          {
+            id: `${BATCH_PREFIX}${mode}:${courseId}:other`,
+            title: "✍️ Type it",
+            description: "e.g. 6 PM - 8 PM, or Weekend",
+          },
+          { id: MENU_MAIN, title: "🏠 Main Menu", description: "Back to the start" },
+        ],
+      },
+    ]
+  )
 }
 
 /** Step 2: batch is chosen (or not) -- now collect name (+ qualification) in one message. */
@@ -284,7 +343,7 @@ async function startNameCollection(
   } else {
     await sendWhatsAppText(
       to,
-      `No problem — reply with your *Batch - Name - Qualification*, separated by dashes ${qualNote}.\nExample: \`Evening - Rahul Sharma - 12th Pass\``
+      `No problem — reply with your *Batch timing - Name - Qualification*, separated by dashes ${qualNote}.\nExample: \`6 PM - 8 PM - Rahul Sharma - 12th Pass\` (batch timing can be anything, e.g. \`6 PM - 8 PM\`, \`Weekend\`, \`Afternoon\`)`
     )
   }
 }
@@ -429,7 +488,9 @@ export async function completePendingAction(
       name = parts[0] || waName || "WhatsApp lead"
       qualification = parts[1] || undefined
     } else {
-      const parts = splitInto(rawText, 3)
+      // Batch was typed freely and may itself contain a dash (e.g. "6 PM - 8 PM"),
+      // so fold overflow into the batch field, not the trailing name/qualification.
+      const parts = splitFromEnd(rawText, 3)
       batch = parts[0] || "Flexible"
       name = parts[1] || waName || "WhatsApp lead"
       qualification = parts[2] || undefined
@@ -548,7 +609,7 @@ export async function completePendingAction(
 }
 
 async function sendEnquiryPrompt(to: string) {
-  await sendCategoryList(to, "Happy to help! Which field is your question about?")
+  await sendCategoryList(to, "Happy to help! Which field is your question about?", "enquire")
 }
 
 /** Invites free text after "Ask a Question" is tapped -- the reply flows to the Gemini agent as normal. */
@@ -557,7 +618,7 @@ async function sendAskPrompt(to: string, context: string) {
 }
 
 async function sendRegistrationPrompt(to: string) {
-  await sendCategoryList(to, "Let's get you registered! Which field would you like to join?")
+  await sendCategoryList(to, "Let's get you registered! Which field would you like to join?", "register")
 }
 
 /**
@@ -580,7 +641,7 @@ export async function handleMenuSelection(
     return "[tapped: Main Menu]"
   }
   if (id === ROOT_COURSES) {
-    await sendCategoryList(to, "Which field are you interested in?")
+    await sendCategoryList(to, "Which field are you interested in?", "browse")
     return "[tapped: Courses]"
   }
   if (id === ROOT_ENQUIRY) {
@@ -596,17 +657,17 @@ export async function handleMenuSelection(
     return "[tapped: Registration]"
   }
   if (id.startsWith(CATEGORY_PREFIX)) {
-    const category = id.slice(CATEGORY_PREFIX.length)
-    await sendCourseList(to, category)
+    const [flow, category] = splitFlow(id.slice(CATEGORY_PREFIX.length))
+    await sendCourseList(to, category, flow)
     return `[tapped category: ${category}]`
   }
   if (id.startsWith(COURSE_PREFIX)) {
-    const courseId = id.slice(COURSE_PREFIX.length)
-    await sendCourseDetail(to, courseId)
+    const [flow, courseId] = splitFlow(id.slice(COURSE_PREFIX.length))
+    await sendCourseDetail(to, courseId, flow)
     return `[tapped course: ${courseId}]`
   }
   if (id.startsWith(MORE_PREFIX)) {
-    const category = id.slice(MORE_PREFIX.length)
+    const [, category] = splitFlow(id.slice(MORE_PREFIX.length))
     await sendMoreCoursesPrompt(to, category)
     return `[tapped: see more in ${category}]`
   }
