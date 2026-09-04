@@ -2,7 +2,7 @@ import "server-only"
 import type { FunctionDeclaration } from "@google/genai"
 
 import { getSupabaseAdmin } from "@/lib/supabase/server"
-import { captureLead, requestCallback } from "@/lib/whatsapp/leads"
+import { captureLead, requestCallback, flagUnmatchedCourse } from "@/lib/whatsapp/leads"
 import { startGuidedFlow, sendCourseList } from "@/lib/whatsapp/menu"
 
 export interface ToolContext {
@@ -109,6 +109,25 @@ export const toolDeclarations: FunctionDeclaration[] = [
         },
       },
       required: ["category"],
+    },
+  },
+  {
+    name: "flag_unmatched_course",
+    description:
+      "Logs that the student asked about a course/topic you could not confirm we offer, and alerts the institute's own WhatsApp number so staff can call the student directly. Call this EVERY TIME you give the 'not sure this is offered' fallback reply (per rule 2b) -- always call it together with that reply, never one without the other, so the lead is never silently lost even if the student doesn't call in themselves.",
+    parametersJsonSchema: {
+      type: "object",
+      properties: {
+        query_text: {
+          type: "string",
+          description: "What the student asked about, in their own words or the topic/course name, e.g. 'Angular' or 'do you teach drone piloting'.",
+        },
+        name: {
+          type: "string",
+          description: "The student's name, if already known from this conversation.",
+        },
+      },
+      required: ["query_text"],
     },
   },
   {
@@ -230,6 +249,15 @@ export async function executeTool(
         success: true,
         note: "The complete interactive course list for this category has already been sent to the student. Do not list courses yourself in text -- respond with an empty message.",
       }
+    }
+
+    case "flag_unmatched_course": {
+      const queryText = typeof args.query_text === "string" ? args.query_text.trim() : ""
+      if (!queryText) return { error: "query_text is required" }
+      const name = typeof args.name === "string" ? args.name.trim() : ctx.waName
+      const result = await flagUnmatchedCourse({ waPhone: ctx.waPhone }, { name, queryText })
+      if (!result.success) return { error: result.error }
+      return { success: true }
     }
 
     case "start_guided_flow": {

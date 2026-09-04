@@ -55,6 +55,36 @@ export async function sendWhatsAppImage(to: string, imageUrl: string, caption?: 
   return postToGraph({ to, type: "image", image: { link: imageUrl, caption } })
 }
 
+/**
+ * Sends an approved WhatsApp message template. Required for business-initiated
+ * messages to a number that hasn't messaged us in the last 24h (e.g. the
+ * institute's own alert number) -- plain text (sendWhatsAppText) only works
+ * within that 24h customer-service window, templates work regardless.
+ */
+export async function sendWhatsAppTemplate(
+  to: string,
+  templateName: string,
+  languageCode: string,
+  bodyParams: string[]
+): Promise<SendResult> {
+  return postToGraph({
+    to,
+    type: "template",
+    template: {
+      name: templateName,
+      language: { code: languageCode },
+      components: bodyParams.length
+        ? [
+            {
+              type: "body",
+              parameters: bodyParams.map((text) => ({ type: "text", text })),
+            },
+          ]
+        : undefined,
+    },
+  })
+}
+
 export interface QuickReplyButton {
   /** Echoed back in the button_reply webhook -- keep short, we route on this. */
   id: string

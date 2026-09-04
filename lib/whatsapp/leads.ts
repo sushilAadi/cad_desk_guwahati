@@ -1,6 +1,7 @@
 import "server-only"
 
 import { getSupabaseAdmin } from "@/lib/supabase/server"
+import { sendWhatsAppTemplate } from "@/lib/whatsapp/send"
 
 export interface LeadContext {
   waPhone: string
@@ -100,4 +101,54 @@ export async function requestCallback(
 
   if (error) return { success: false, error: "Could not save the callback request." }
   return { success: true, leadId: data.id }
+}
+
+/**
+ * Logs a "bot couldn't confirm this course exists" moment and pings the
+ * institute's own WhatsApp number so staff can call the student directly --
+ * the student may never call in themselves, so this makes sure the lead
+ * isn't silently lost. Uses an approved template because the institute
+ * number won't generally have messaged the bot in the last 24h.
+ */
+export async function flagUnmatchedCourse(
+  ctx: LeadContext,
+  fields: { name?: string | null; queryText: string }
+): Promise<{ success: boolean; error?: string }> {
+  const supabase = getSupabaseAdmin()
+  if (!supabase) return { success: false, error: "The course database isn't configured right now." }
+
+  const alertNumber = process.env.INSTITUTE_ALERT_WHATSAPP_NUMBER
+  const templateName = process.env.INSTITUTE_ALERT_TEMPLATE_NAME
+
+  let whatsappAlertSent = false
+  let whatsappAlertError: string | null = null
+
+  if (alertNumber && templateName) {
+    const result = await sendWhatsAppTemplate(alertNumber, templateName, "en_US", [
+      fields.name?.trim() || "Unknown",
+      ctx.waPhone,
+      fields.queryText.slice(0, 200),
+    ])
+    whatsappAlertSent = result.ok
+    if (!result.ok) whatsappAlertError = result.error ?? "Unknown send error"
+  } else {
+    whatsappAlertError = "INSTITUTE_ALERT_WHATSAPP_NUMBER or INSTITUTE_ALERT_TEMPLATE_NAME not configured"
+  }
+
+  const { error } = await supabase.from("unmatched_queries").insert({
+    phone: ctx.waPhone,
+    name: fields.name?.trim() || null,
+    query_text: fields.queryText.slice(0, 500),
+    whatsapp_alert_sent: whatsappAlertSent,
+    whatsapp_alert_error: whatsappAlertError,
+  })
+
+  if (error) {
+    console.error("[leads] flagUnmatchedCourse insert failed:", error)
+    return { success: false, error: "Could not log the unmatched query." }
+  }
+
+  if (whatsappAlertError) console.error("[leads] institute alert send failed:", whatsappAlertError)
+
+  return { success: true }
 }
