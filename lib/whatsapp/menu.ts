@@ -496,7 +496,10 @@ async function finalizeEnquiry(to: string, conversationId: string, pending: Pend
   await clearPendingAction(conversationId)
 
   if (!result.success) {
-    await sendWhatsAppText(to, "Sorry, something went wrong saving that — could you try again in a moment?")
+    await sendWhatsAppText(
+      to,
+      "Sorry, something went wrong saving that — could you try again in a moment? If it keeps failing, please call us directly at +91 86382 70013."
+    )
     return
   }
 
@@ -524,7 +527,10 @@ async function finalizeRegistration(to: string, conversationId: string, pending:
 
   if (!result.success || !result.id) {
     await clearPendingAction(conversationId)
-    await sendWhatsAppText(to, "Sorry, something went wrong saving that — could you try again in a moment?")
+    await sendWhatsAppText(
+      to,
+      "Sorry, something went wrong saving that — could you try again in a moment? If it keeps failing, please call us directly at +91 86382 70013."
+    )
     return
   }
 

@@ -13,7 +13,7 @@ import type { ConversationMessage } from "@/lib/whatsapp/conversations"
 
 const MAX_TOOL_ROUNDS = 5
 const FALLBACK_REPLY =
-  "Sorry, I'm having trouble responding right now. Please try again in a moment, or ask to speak with our counseling team."
+  "Sorry, I'm having trouble responding right now. Please try again in a moment, or call our counseling team directly at +91 86382 70013."
 
 // Tools that send their own WhatsApp message directly (an interactive list),
 // so any further plain-text reply from the model would be redundant/wrong.
