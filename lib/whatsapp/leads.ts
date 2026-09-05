@@ -68,6 +68,29 @@ export async function requestCallback(
   const supabase = getSupabaseAdmin()
   if (!supabase) return { success: false, error: "The course database isn't configured right now." }
 
+  // Ping the institute's own WhatsApp number the same way flagUnmatchedCourse
+  // does, so a callback request is never just a silent database row -- staff
+  // get an immediate heads-up even if they don't have the admin panel open.
+  const alertNumber = process.env.INSTITUTE_ALERT_WHATSAPP_NUMBER
+  const templateName = process.env.INSTITUTE_CALLBACK_ALERT_TEMPLATE_NAME
+
+  let whatsappAlertSent = false
+  let whatsappAlertError: string | null = null
+
+  if (alertNumber && templateName) {
+    const result = await sendWhatsAppTemplate(alertNumber, templateName, "en_US", [
+      fields.name?.trim() || "Unknown",
+      ctx.waPhone,
+      fields.note?.slice(0, 200) || "No additional details",
+    ])
+    whatsappAlertSent = result.ok
+    if (!result.ok) whatsappAlertError = result.error ?? "Unknown send error"
+  } else {
+    whatsappAlertError = "INSTITUTE_ALERT_WHATSAPP_NUMBER or INSTITUTE_CALLBACK_ALERT_TEMPLATE_NAME not configured"
+  }
+
+  if (whatsappAlertError) console.error("[leads] institute callback alert failed:", whatsappAlertError)
+
   const { data: existing } = await supabase
     .from("enquiries")
     .select("id")
@@ -79,7 +102,12 @@ export async function requestCallback(
   if (existing) {
     const { error } = await supabase
       .from("enquiries")
-      .update({ callback_requested: true, escalation_note: fields.note ?? null })
+      .update({
+        callback_requested: true,
+        escalation_note: fields.note ?? null,
+        whatsapp_alert_sent: whatsappAlertSent,
+        whatsapp_alert_error: whatsappAlertError,
+      })
       .eq("id", existing.id)
     if (error) return { success: false, error: "Could not flag the callback." }
     return { success: true, leadId: existing.id }
@@ -95,6 +123,8 @@ export async function requestCallback(
       name: fields.name ?? "WhatsApp lead",
       callback_requested: true,
       escalation_note: fields.note ?? null,
+      whatsapp_alert_sent: whatsappAlertSent,
+      whatsapp_alert_error: whatsappAlertError,
     })
     .select("id")
     .single()
