@@ -78,7 +78,7 @@ export async function requestCallback(
   let whatsappAlertError: string | null = null
 
   if (alertNumber && templateName) {
-    const result = await sendWhatsAppTemplate(alertNumber, templateName, "en_US", [
+    const result = await sendWhatsAppTemplate(alertNumber, templateName, "en", [
       fields.name?.trim() || "Unknown",
       ctx.waPhone,
       fields.note?.slice(0, 200) || "No additional details",
@@ -154,7 +154,7 @@ export async function flagUnmatchedCourse(
   let whatsappAlertError: string | null = null
 
   if (alertNumber && templateName) {
-    const result = await sendWhatsAppTemplate(alertNumber, templateName, "en_US", [
+    const result = await sendWhatsAppTemplate(alertNumber, templateName, "en", [
       fields.name?.trim() || "Unknown",
       ctx.waPhone,
       fields.queryText.slice(0, 200),
