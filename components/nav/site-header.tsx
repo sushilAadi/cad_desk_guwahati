@@ -14,7 +14,6 @@ import { EnquiryMenuContent } from "@/components/nav/enquiry-menu-content"
 import { ContactMenuContent } from "@/components/nav/contact-menu-content"
 import { MobileNavDrawer } from "@/components/nav/mobile-nav-drawer"
 import type { PublicCourse } from "@/lib/public-courses"
-import { GraduationCap } from "lucide-react"
 
 const WHATSAPP_NUMBER = "919127281610"
 const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
@@ -63,27 +62,13 @@ export function SiteHeader({ groups, totalCount }: SiteHeaderProps) {
   ]
 
   return (
-    <header className="sticky top-0 z-50 w-full max-w-6xl mx-auto  backdrop-blur">
-      <MotionNavigationMenu topGap={16} roundedStyle="none">
-        <NavigationBar>
-          {/* Brand Logo */}
-          <Link href="/" className="flex items-center gap-2.5 cursor-pointer">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-tr from-amber-500 via-amber-600 to-amber-400 text-zinc-950 shadow-md font-extrabold">
-              <GraduationCap className="h-5 w-5" />
-            </div>
-            <div className="flex flex-col">
-              <div className="flex items-center gap-1.5">
-                <span className="text-sm font-black tracking-wider uppercase text-white">
-                  CAD DESK
-                </span>
-                <span className="rounded bg-amber-500/20 px-1.5 py-0.5 text-[9px] font-bold text-amber-700">
-                  {totalCount}+ Courses
-                </span>
-              </div>
-              <span className="text-[10px] text-zinc-200 -mt-0.5 tracking-tight hidden sm:inline">
-                Guwahati, Noonmati
-              </span>
-            </div>
+    <header className="sticky top-0 z-50 w-full border-b border-line bg-paper">
+      <MotionNavigationMenu topGap={0} roundedStyle="none">
+        <NavigationBar className="mx-auto w-full max-w-[1640px] px-5 md:px-[60px] lg:px-[100px]">
+          {/* Brand */}
+          <Link href="/" className="flex items-baseline gap-2">
+            <span className="text-lg font-medium text-ink">CAD Desk</span>
+            <span className="hidden font-mono text-xs text-ink-3 sm:inline">Guwahati</span>
           </Link>
 
           {/* Navigation Items */}
@@ -100,9 +85,9 @@ export function SiteHeader({ groups, totalCount }: SiteHeaderProps) {
               href={WHATSAPP_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center rounded-lg bg-zinc-900 px-3.5 py-2 text-xs font-bold text-white hover:bg-zinc-800 transition-colors"
+              className="hidden h-9 items-center rounded-lg bg-brand px-4 text-sm font-medium text-white transition-colors hover:bg-brand/90 sm:inline-flex"
             >
-              Chat on WhatsApp
+              Enquire
             </a>
             <MobileNavDrawer groups={groups} totalCount={totalCount} />
           </div>

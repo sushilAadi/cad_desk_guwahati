@@ -145,7 +145,7 @@ export function NavigationBar({ children, className }: NavigationBarProps) {
   return (
     <div
       className={cn(
-        "relative flex items-center justify-between  px-6 py-3.5 shadow-md transition-all duration-200 rounded-none",
+        "relative flex items-center justify-between  px-6 py-3.5 transition-all duration-200 rounded-none",
         className
       )}
     >
@@ -219,22 +219,22 @@ export function NavigationMenuItem({
         type="button"
         onClick={handleClick}
         className={cn(
-          "relative flex items-center gap-1.5 px-3.5 py-1.5 text-sm font-bold tracking-tight transition-all focus:outline-none cursor-pointer select-none",
+          "relative flex items-center gap-1.5 rounded-lg px-3.5 py-1.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 cursor-pointer select-none",
           isActive
-            ? "text-zinc-950 font-black"
-            : "text-white hover:text-zinc-900 opacity-70 hover:opacity-100"
+            ? "text-ink"
+            : "text-ink-2 hover:text-ink"
         )}
       >
         {isActive && (
           <motion.div
             layoutId="active-nav-pill"
-            className="absolute inset-0 border-b-2 border-amber-500 bg-zinc-100 -z-10"
+            className="absolute inset-0 rounded-lg bg-paper-raised -z-10"
             transition={{ type: "spring", stiffness: 450, damping: 35 }}
           />
         )}
         <span>{title}</span>
         {badge && (
-          <span className="ml-1 font-mono text-[9px] font-extrabold uppercase tracking-widest bg-zinc-900 text-white px-1.5 py-0.5">
+          <span className="ml-1 font-mono text-xs text-ink-3">
             {badge}
           </span>
         )}
@@ -288,17 +288,20 @@ export function NavigationMenuViewport({ items, className }: NavigationMenuViewp
   }, [activeTab]);
 
   const activeTabElement = activeTab ? tabElements.get(activeTab) : null;
-  const parentContainer = containerRef.current?.parentElement;
+  const container = containerRef.current;
 
+  // The panel sits inside the container's side padding, so the arrow is measured from the panel's own left edge.
   let pointerLeft = 0;
-  if (activeTabElement && parentContainer) {
+  let panelWidth = 800;
+  if (activeTabElement && container) {
     const activeRect = activeTabElement.getBoundingClientRect();
-    const parentRect = parentContainer.getBoundingClientRect();
-    pointerLeft = activeRect.left + activeRect.width / 2 - parentRect.left;
+    const pad = parseFloat(getComputedStyle(container).paddingLeft);
+    pointerLeft = activeRect.left + activeRect.width / 2 - (container.getBoundingClientRect().left + pad);
+    panelWidth = container.clientWidth - pad * 2;
   }
 
   return (
-    <div ref={containerRef} className="relative w-full">
+    <div ref={containerRef} className="relative mx-auto w-full max-w-[1640px] px-5 md:px-[60px] lg:px-[100px]">
       <AnimatePresence>
         {activeTab && activeItem && (
           <motion.div
@@ -306,7 +309,7 @@ export function NavigationMenuViewport({ items, className }: NavigationMenuViewp
             animate={{ opacity: 1, y: 0, scaleY: 1 }}
             exit={{ opacity: 0, y: -6, scaleY: 0.98 }}
             transition={{ type: "spring", stiffness: 400, damping: 32 }}
-            className="absolute top-2 left-0 w-full z-50 pointer-events-auto"
+            className="absolute inset-x-5 top-2 z-50 pointer-events-auto md:inset-x-[60px] lg:inset-x-[100px]"
           >
             {/* Single Full-Width Submenu Container Box */}
             <motion.div
@@ -315,16 +318,16 @@ export function NavigationMenuViewport({ items, className }: NavigationMenuViewp
               }}
               transition={{ type: "spring", stiffness: 350, damping: 32 }}
               className={cn(
-                "relative w-full overflow-hidden border border-zinc-200 bg-white text-zinc-900 p-0 shadow-xl rounded-none",
+                "relative w-full overflow-hidden rounded-2xl border border-line bg-paper-card text-ink p-0 shadow-[0_8px_24px_rgba(0,0,0,0.06)]",
                 className
               )}
             >
               {/* Arrow Pointer */}
               {pointerLeft > 0 && (
                 <motion.div
-                  className="absolute -top-1.5 h-3 w-3 rotate-45 border-t border-l border-zinc-200 bg-white z-10"
+                  className="absolute -top-1.5 h-3 w-3 rotate-45 border-t border-l border-line bg-paper-card z-10"
                   animate={{
-                    left: `${Math.max(24, Math.min(pointerLeft - 6, (parentContainer?.clientWidth || 800) - 24))}px`,
+                    left: `${Math.max(24, Math.min(pointerLeft - 6, panelWidth - 24))}px`,
                   }}
                   transition={{ type: "spring", stiffness: 450, damping: 32 }}
                 />

@@ -98,7 +98,7 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-tr from-amber-500 via-amber-600 to-amber-400 text-zinc-950">
                     <GraduationCap className="h-4 w-4" />
                   </div>
-                  <span className="text-sm font-black tracking-wider uppercase">CAD DESK</span>
+                  <span className="text-sm font-semibold">CAD DESK</span>
                 </div>
                 <button
                   type="button"
@@ -115,7 +115,7 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
                 {/* Courses accordion */}
                 <div className="border-b border-zinc-200 px-4 py-3">
                   <div className="flex items-center justify-between py-1">
-                    <span className="text-[11px] font-mono font-bold tracking-widest text-zinc-500">
+                    <span className="text-[11px] font-mono font-bold text-zinc-500">
                       COURSES ({totalCount})
                     </span>
                   </div>
@@ -309,7 +309,7 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={close}
-                  className="flex w-full items-center justify-center gap-2 bg-zinc-900 px-4 py-3 text-xs font-black uppercase tracking-wider text-white"
+                  className="flex w-full items-center justify-center gap-2 bg-zinc-900 px-4 py-3 text-xs font-semibold text-white"
                 >
                   <MessageCircle className="h-4 w-4" />
                   Chat on WhatsApp

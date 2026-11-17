@@ -38,6 +38,41 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
+:root {
+  --ds-amber-600: oklch(80.25% 0.1953 73.59);
+  --ds-gray-1000: hsla(0, 0%, 9%, 1);
+  --ds-gray-alpha-400: hsla(0, 0%, 0%, 0.08);
+  --ds-background-200: hsla(0, 0%, 98%, 1);
+  --ds-book-bind: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0) 12%, rgba(255, 255, 255, 0.25) 29.25%, rgba(255, 255, 255, 0) 50.5%, rgba(255, 255, 255, 0) 75.25%, rgba(255, 255, 255, 0.25) 91%, rgba(255, 255, 255, 0)), linear-gradient(90deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.1) 12%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.02) 50%, rgba(0, 0, 0, 0.2) 73.5%, rgba(0, 0, 0, 0.5) 75.25%, rgba(0, 0, 0, 0.15) 85.25%, rgba(0, 0, 0, 0));
+  --ds-shadow-book: 0 1px 1px 0 rgba(0, 0, 0, .02), 0 4px 8px -4px rgba(0, 0, 0, .1), 0 16px 24px -8px rgba(0, 0, 0, .03);
+  --ds-shadow-book-border: inset 0 1px 2px 0 rgba(255, 255, 255, .3);
+}
+
+@utility bg-book-gradient {
+  background: linear-gradient(180deg, var(--ds-background-200), #f0f0f0);
+}
+
+/* Entrance: one short fade and rise, staggered by --i */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+.rise {
+  animation: rise 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 60ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  .rise { animation: none; }
+}
+
+.book-tilt .book-rotate { transform: rotateY(-24deg); }
+
+/* Tilt the book when its card is hovered/focused */
+.book-card:hover .book-rotate,
+.book-card:focus-visible .book-rotate {
+  transform: rotateY(-22deg) translateX(4px);
+}
+
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
@@ -75,8 +110,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-plex-sans);
+  --font-mono: var(--font-plex-mono);
+  --font-display: var(--font-display);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -110,6 +146,19 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --color-paper: #ffffff;
+  --color-paper-card: #ffffff;
+  --color-paper-raised: #f4f4f5;
+  --color-ink: #171717;
+  --color-ink-2: #525252;
+  --color-ink-3: #737373;
+  --color-line: rgba(23, 23, 23, 0.1);
+  --color-brand: #d92d20;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --color-gray-alpha-400: var(--ds-gray-alpha-400);
+  --color-background-200: var(--ds-background-200);
+  --shadow-book: var(--ds-shadow-book);
+  --shadow-book-border: var(--ds-shadow-book-border);
 }
 
 @layer base {
@@ -119,4 +168,28 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+
+/* Ribbon: two bands crossing, each scrolling its own way */
+@keyframes marquee { to { transform: translateX(-50%); } }
+.marquee { display: flex; width: max-content; animation: marquee 40s linear infinite; }
+.marquee.rev { animation-direction: reverse; animation-duration: 55s; }
+@media (prefers-reduced-motion: reduce) { .marquee { animation: none; } }
+
+/* Track books rest turned a little and swing flat, lifting, on hover */
+.track-book .book-rotate { transform: rotateY(-16deg); transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1); }
+.track-book:hover .book-rotate, .track-book:focus-visible .book-rotate { transform: rotateY(-4deg) translateY(-8px) scale(1.03); }
+@media (prefers-reduced-motion: reduce) { .track-book .book-rotate { transition: none; } }
+
+/* Smooth in-page scrolling (anchors, track cards) */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* Skeleton shimmer for books that are about to appear */
+@keyframes shimmer { to { background-position: -200% 0; } }
+.skeleton {
+  background: linear-gradient(100deg, #ececec 30%, #f7f7f7 50%, #ececec 70%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s linear infinite;
 }
