@@ -193,3 +193,22 @@ html { scroll-behavior: smooth; }
   background-size: 200% 100%;
   animation: shimmer 1.2s linear infinite;
 }
+
+/* navbar toggle: hide the hairlines and hatched strips */
+html[data-frame="off"] .frame-deco { display: none; }
+
+/* Tailwind v4 resets buttons to the default cursor; clickable things should show a pointer */
+button:not(:disabled), [role="button"]:not([aria-disabled="true"]), summary, [role="tab"] { cursor: pointer; }
+
+/* course book and title morph between the catalogue and a course page */
+::view-transition-group(.morph) { animation-duration: 500ms; animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1); }
+/* supporting text eases up a few pixels as the page arrives */
+::view-transition-new(.text-rise) { animation: text-rise 380ms cubic-bezier(0.22, 1, 0.36, 1) 120ms both; }
+@keyframes text-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+/* the header stays put while the page changes under it */
+::view-transition-group(site-header) { animation: none; z-index: 100; }
+::view-transition-old(site-header) { display: none; }
+::view-transition-new(site-header) { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}

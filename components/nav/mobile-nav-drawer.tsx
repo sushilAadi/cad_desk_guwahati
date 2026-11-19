@@ -18,6 +18,7 @@ import { getCategoryDisplay } from "./category-config"
 import { RegistrationMenuContent } from "./registration-menu-content"
 import { EnquiryMenuContent } from "./enquiry-menu-content"
 import { ContactMenuContent } from "./contact-menu-content"
+import { webp } from "@/lib/webp"
 
 const WHATSAPP_NUMBER = "919127281610"
 const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
@@ -135,7 +136,7 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
                             <div className="flex items-center gap-2 min-w-0">
                               <div className="h-8 w-8 shrink-0 overflow-hidden border border-zinc-300">
                                 <img
-                                  src={display.image}
+                                  src={webp(display.image)}
                                   alt={g.category}
                                   className="w-full h-full object-cover"
                                 />

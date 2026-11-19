@@ -15,6 +15,7 @@ import {
 } from "lucide-react"
 import type { PublicCourse } from "@/lib/public-courses"
 import { getCategoryDisplay } from "./category-config"
+import { webp } from "@/lib/webp"
 
 const ICONS = { Building2, Code, Cpu, Palette, Zap, BookOpen } as const
 
@@ -124,7 +125,7 @@ export function CoursesMegaMenu({
                     {/* Category Thumbnail / Icon */}
                     <div className="h-10 w-10 shrink-0 overflow-hidden border border-zinc-300 relative bg-zinc-200">
                       <img
-                        src={display.image}
+                        src={webp(display.image)}
                         alt={g.category}
                         className="w-full h-full object-cover"
                       />
@@ -169,7 +170,7 @@ export function CoursesMegaMenu({
             {/* Category Image Preview */}
             <div className="h-24 w-28 shrink-0 overflow-hidden border-2 border-brand relative bg-zinc-800">
               <img
-                src={selectedDisplay.image}
+                src={webp(selectedDisplay.image)}
                 alt={activeGroup?.category ?? ""}
                 className="w-full h-full object-cover"
               />
@@ -218,7 +219,7 @@ export function CoursesMegaMenu({
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <img
-                      src={course.image || selectedDisplay.image}
+                      src={webp(course.image || selectedDisplay.image)}
                       alt={course.title}
                       className="h-12 w-16 object-cover border border-zinc-300 shrink-0"
                     />

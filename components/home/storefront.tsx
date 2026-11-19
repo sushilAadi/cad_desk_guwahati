@@ -1,14 +1,19 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
-import { FrameLines } from "@/components/home/frame-lines"
+import { ViewTransition, useEffect, useRef, useState } from "react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { FrameLines, FrameStrips } from "@/components/home/frame-lines"
 import { MaskedMosaic, type MosaicTile } from "@/components/home/masked-mosaic"
 import { Book } from "@/components/ui/book"
+import { RibbonTwist } from "@/components/home/ribbon-twist"
 import { useResponsive } from "@/components/ui/use-responsive"
 import { AnimatePresence, motion } from "motion/react"
 import { ArrowRight, Check, ChevronDown, MessageCircle, Plus, Search, X } from "lucide-react"
 import { COVER_COLORS, CoverBook, sharedImages } from "@/components/home/course-cover"
 import type { PublicCourse } from "@/lib/public-courses"
+import { courseSlugs } from "@/lib/course-slug"
+import { webp } from "@/lib/webp"
 
 type Groups = { category: string; courses: PublicCourse[] }[]
 
@@ -56,24 +61,26 @@ const TRACK_IMG: Record<string, string> = {
 }
 const DISPLAY = "font-[family-name:var(--font-display)] uppercase tracking-[-0.01em]"
 const BAND_A = ["Civil / Architecture", "Mechanical", "Electrical", "CS/IT", "Creative Arts"]
-const BAND_B = ["Hands-on projects", "Certificate", "Classroom", "Live online", "Noonmati, Guwahati"]
 // page margin 20 / 60 / 100; every direct child of a section is a centred 1440px column, so left and right edges always match
 const GUTTER = "relative px-5 md:px-[60px] lg:px-[100px] [&>*]:mx-auto [&>*]:max-w-[1440px]"
 const PRIMARY = "inline-flex h-12 items-center gap-2 rounded-lg bg-brand px-5 text-sm font-medium text-white transition-colors hover:bg-[#b42318]"
-const SECONDARY = "inline-flex h-12 items-center gap-2 rounded-lg border border-line px-5 text-sm font-medium text-ink transition-colors hover:bg-paper-raised"
 
 const GAP = 24 // gap between books in the course grid
 
 /** A course as a book: poster (or generated cover) on the front, title and length underneath. */
-function BookCard({ course, img, w, added, onOpen, onToggle }: { course: PublicCourse; img?: string; w: number; added: boolean; onOpen: () => void; onToggle: () => void }) {
+function BookCard({ course, img, w, added, href, onToggle }: { course: PublicCourse; img?: string; w: number; added: boolean; href: string; onToggle: () => void }) {
   return (
     <div className="shrink-0" style={{ width: w }}>
-      <button onClick={onOpen} aria-label={`View ${course.title}`} className="book-card block rounded-sm outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">
-        <CoverBook course={course} img={img ?? null} width={w} />
-      </button>
+      <Link href={href} transitionTypes={["nav-forward"]} aria-label={`View ${course.title}`} className="book-card block rounded-sm outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">
+        <ViewTransition name={`course-book-${course.id}`} share="morph">
+          <div><CoverBook course={course} img={img ?? null} width={w} /></div>
+        </ViewTransition>
+      </Link>
       <div className="mt-3 flex items-start gap-2">
         <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-medium text-ink">{course.title}</p>
+          <ViewTransition name={`course-title-${course.id}`} share="morph">
+            <p className="truncate text-sm font-medium text-ink">{course.title}</p>
+          </ViewTransition>
           <p className="mt-1 truncate font-mono text-xs text-ink-3">{code(course.category)} · {days(course)}</p>
         </div>
         <button
@@ -204,7 +211,7 @@ const HERO_TEXT: Record<number, { cls: string; node: React.ReactNode }> = {
   11: {
     cls: "bg-paper-raised",
     node: (
-      <a href="#courses" className="group flex h-full flex-col justify-between p-3 sm:p-4">
+      <Link href="/courses" className="group flex h-full flex-col justify-between p-3 sm:p-4">
         <span>
           <span className="block text-[clamp(13px,1.3vw,19px)] font-medium leading-tight text-ink">Hands-on training</span>
           <span className="mt-1 block text-[clamp(10px,0.85vw,13px)] leading-snug text-ink-2">Real projects as you learn, with internships encouraged.</span>
@@ -212,7 +219,7 @@ const HERO_TEXT: Record<number, { cls: string; node: React.ReactNode }> = {
         <span className="flex items-center gap-1 text-[11px] font-medium text-ink">
           Browse courses <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.75} />
         </span>
-      </a>
+      </Link>
     ),
   },
   15: {
@@ -322,9 +329,12 @@ function StickyBar({ target, title, index, total, dark = false, size = "clamp(26
   )
 }
 
-export function Storefront({ groups }: { groups: Groups }) {
+export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "home" | "catalogue" }) {
+  const page = mode === "catalogue" // /courses: just the catalogue, centred
+
   const all = groups.flatMap((g) => g.courses)
   const shared = sharedImages(all)
+  const slugs = courseSlugs(all)
   // ponytail: only our own uploads (".../course-images/...") are portrait posters; the older hotlinked
   // thumbnails are small landscape logos that a 2:3 cover would letterbox, so those courses get a
   // drawing-sheet cover instead. Switch to real image dimensions if the image sources ever change.
@@ -333,10 +343,16 @@ export function Storefront({ groups }: { groups: Groups }) {
 
   const [active, setActive] = useState(groups[0]?.category ?? "all")
   const [query, setQuery] = useState("")
+  useEffect(() => {
+    const t = new URLSearchParams(window.location.search).get("track")
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- reading the URL must wait until after hydration
+    if (t && groups.some((g) => g.category === t)) setActive(t)
+  }, [groups])
   // ponytail: the list lives in memory only and resets on reload. Persist to localStorage if people ask.
   const [list, setList] = useState<string[]>([])
   const [listOpen, setListOpen] = useState(false)
-  const [view, setView] = useState<PublicCourse | null>(null)
+  const router = useRouter()
+  const open = (c: PublicCourse) => router.push(`/courses/${slugs.get(c.id)}`)
   // The course grid is exactly 6 books per row on desktop (4 / 3 / 2 as it narrows); each book is sized to fill its column.
   const gridRef = useRef<HTMLDivElement>(null)
   const [grid, setGrid] = useState({ cols: 6, w: 150 })
@@ -373,36 +389,15 @@ export function Storefront({ groups }: { groups: Groups }) {
   const listed = all.filter((c) => list.includes(c.id))
   const tabs = groups.map((g) => ({ category: g.category, label: g.category, count: g.courses.length }))
 
-  useEffect(() => {
-    if (!view) return
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setView(null)
-    window.addEventListener("keydown", onKey)
-    document.body.style.overflow = "hidden"
-    return () => {
-      window.removeEventListener("keydown", onKey)
-      document.body.style.overflow = ""
-    }
-  }, [view])
-
   return (
     <div className="relative bg-white">
       <FrameLines />
 
-      {/* The frame: hatched strips hug both sides of the content column, as on tailwindcss.com. Neutral lines read on light and dark. */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 z-0 hidden lg:block">
-        <div className="absolute inset-y-0 left-1/2 w-[min(1440px,100%-200px)] -translate-x-1/2">
-          {["-left-7", "-right-7"].map((side) => (
-            <span
-              key={side}
-              className={`absolute inset-y-0 ${side} w-7 border-x border-[rgba(115,115,115,0.3)]`}
-              style={{ backgroundImage: "repeating-linear-gradient(135deg, rgba(115,115,115,0.32) 0 1px, transparent 1px 6px)" }}
-            />
-          ))}
-        </div>
-      </div>
+      <FrameStrips />
 
+      {!page && (<>
       {/* 01 Hero: a mosaic of tiles, then a line of text, two pills and a large light headline */}
-      <section className={`${GUTTER} pb-10 pt-6 lg:pb-14 lg:pt-8`}>
+      <section className={`${GUTTER} pb-2 pt-6 lg:pb-4 lg:pt-8`}>
         <div data-rule className="rise">
           <MaskedMosaic
             src={HERO_IMAGE}
@@ -428,9 +423,9 @@ export function Storefront({ groups }: { groups: Groups }) {
         </div>
 
         <div data-rule className="mt-5 flex flex-wrap gap-3">
-          <a href="#courses" className="inline-flex h-11 items-center rounded-full bg-ink px-6 text-sm font-medium text-white transition-colors hover:bg-ink-2">
+          <Link href="/courses" className="inline-flex h-11 items-center rounded-full bg-ink px-6 text-sm font-medium text-white transition-colors hover:bg-ink-2">
             Browse courses
-          </a>
+          </Link>
           <a href={waLink([])} target="_blank" rel="noopener noreferrer" className="inline-flex h-11 items-center rounded-full border border-ink/25 px-6 text-sm font-medium text-ink transition-colors hover:border-ink">
             Ask on WhatsApp
           </a>
@@ -443,30 +438,13 @@ export function Storefront({ groups }: { groups: Groups }) {
         </h1>
       </section>
 
-      {/* 02 Ribbon: two bands cross at a slant */}
-      <div aria-hidden className="relative my-6 h-[150px] overflow-hidden sm:h-[190px]">
-        {[
-          { words: BAND_A, cls: "bg-brand text-white -rotate-[2.2deg]", rev: false },
-          { words: BAND_B, cls: "bg-ink text-white rotate-[1.6deg]", rev: true },
-        ].map((b, i) => (
-          <div key={i} className={`absolute inset-x-[-5%] top-1/2 -mt-5 overflow-hidden py-3 sm:-mt-6 sm:py-4 ${b.cls}`}>
-            <div className={`marquee ${b.rev ? "rev" : ""}`}>
-              {[0, 1].map((k) => (
-                <div key={k} className={`${DISPLAY} flex shrink-0 items-center gap-8 pr-8 text-xl sm:text-3xl`}>
-                  {[...b.words, ...b.words].map((w, j) => (
-                    <span key={j} className="flex items-center gap-8 whitespace-nowrap">
-                      {w} <span className="text-white/50">/</span>
-                    </span>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
+      {/* 02 Ribbon: two satin ribbons that wave and twist, weaving over and under each other */}
+      <div className="relative -mb-2 overflow-hidden">
+        <RibbonTwist text={BAND_A.join("   ✦   ")} className="h-[190px] sm:h-[230px]" />
       </div>
 
       {/* 03 Train your way: tracks */}
-      <section className={`${GUTTER} py-16 lg:py-24`}>
+      <section className={`${GUTTER} pb-16 pt-6 lg:pb-24 lg:pt-8`}>
         <SideLabel>Tracks</SideLabel>
         <StickyBar target="h-tracks" title="Train your way" index={1} total={5} />
         <Note>/ tracks · pick one</Note>
@@ -489,13 +467,7 @@ export function Storefront({ groups }: { groups: Groups }) {
               transition={{ duration: 0.6, delay: i * 0.09, ease: [0.22, 1, 0.36, 1] }}
            >
               <a
-                href="#courses"
-                onClick={(e) => {
-                  e.preventDefault()
-                  setActive(g.category)
-                  setQuery("")
-                  document.getElementById("courses")?.scrollIntoView({ behavior: "smooth" })
-                }}
+                href={`/courses?track=${encodeURIComponent(g.category)}`}
                 aria-label={`${g.category}, ${g.courses.length} courses`}
                 className="track-book book-card group block rounded-sm outline-none focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-ink"
              >
@@ -508,7 +480,7 @@ export function Storefront({ groups }: { groups: Groups }) {
                     illustration={
                       TRACK_IMG[g.category] ? (
                         // eslint-disable-next-line @next/next/no-img-element
-                        <img src={TRACK_IMG[g.category]} alt="" draggable={false} className="h-full w-full object-cover" />
+                        <img src={webp(TRACK_IMG[g.category])} alt="" draggable={false} className="h-full w-full object-cover" />
                       ) : undefined
                     }
                   />
@@ -537,8 +509,11 @@ export function Storefront({ groups }: { groups: Groups }) {
         </ul>
       </section>
 
-      {/* Sheet 03: every course, under tabs */}
-      <section id="courses" className={`${GUTTER} scroll-mt-16 border-t border-line pb-32 pt-16 lg:pt-24`}>
+      </>)}
+
+      {/* Sheet 03: every course, under tabs (own page: /courses) */}
+      {page && (
+      <section id="courses" className={`${GUTTER} scroll-mt-16 pb-32 pt-12 lg:pt-16`}>
         <SideLabel>Catalogue</SideLabel>
         <StickyBar target="h-courses" title="Find your course" index={2} total={5} />
         <Note>/ catalogue · five tracks</Note>
@@ -608,16 +583,17 @@ export function Storefront({ groups }: { groups: Groups }) {
                         aria-hidden
                         className="skeleton absolute left-0 top-0 block rounded-md"
                         style={{ width: grid.w, height: grid.w * 1.5 }}
-                        initial={{ opacity: 1 }}
+                        initial={seed === 1 ? false : { opacity: 1 }}
                         animate={{ opacity: 0 }}
                         transition={{ duration: 0.3, delay: d + 0.25 }}
                       />
                       <motion.div
-                        initial={{ opacity: 0, y: 28, scale: 0.94 }}
+                        // staggered reveal only when switching tabs; on first show (and when returning from a course) the book is already there so the shared-element morph has something to land on
+                        initial={seed === 1 ? false : { opacity: 0, y: 28, scale: 0.94 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         transition={{ duration: 0.55, delay: d + 0.12, ease: [0.22, 1, 0.36, 1] }}
                       >
-                        <BookCard course={c} img={posterOf(c)} w={grid.w} added={list.includes(c.id)} onOpen={() => setView(c)} onToggle={() => toggle(c.id)} />
+                        <BookCard course={c} img={posterOf(c)} w={grid.w} added={list.includes(c.id)} href={`/courses/${slugs.get(c.id)}`} onToggle={() => toggle(c.id)} />
                       </motion.div>
                     </li>
                   )
@@ -633,7 +609,9 @@ export function Storefront({ groups }: { groups: Groups }) {
             )}
         </div>
       </section>
+      )}
 
+      {!page && (<>
       {/* 04 More than a classroom: numbered rows, the open one fills with its own colour */}
       <section className={`${GUTTER} border-t border-line py-16 lg:py-24`}>
         <SideLabel>Why CAD Desk</SideLabel>
@@ -727,7 +705,7 @@ export function Storefront({ groups }: { groups: Groups }) {
                     onMouseEnter={pick}
                     onFocus={pick}
                     onBlur={() => setDot(null)}
-                    onClick={() => setView(c)}
+                    onClick={() => open(c)}
                     aria-label={c.title}
                     className={`relative aspect-square rounded-full outline-none transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:ring-2 focus-visible:ring-white ${
                       on ? "z-10 scale-[1.9]" : "scale-100"
@@ -738,7 +716,7 @@ export function Storefront({ groups }: { groups: Groups }) {
                       aria-hidden
                       className={`absolute inset-0 grid place-items-center overflow-hidden rounded-full bg-cover bg-center shadow-[0_0_0_2px_#fff] transition-opacity duration-300 ${on ? "opacity-100" : "opacity-0"}`}
                       style={{
-                        backgroundImage: img ? `url(${img})` : undefined,
+                        backgroundImage: img ? `url(${webp(img)})` : undefined,
                         background: img ? undefined : (COVER_COLORS[c.category] ?? "#171717"),
                       }}
                     >
@@ -797,6 +775,8 @@ export function Storefront({ groups }: { groups: Groups }) {
           ))}
         </ol>
       </section>
+
+      </>)}
 
       {/* 07 Call to action + centre + footer wordmark */}
       <section className={`${GUTTER} border-t border-line pt-16 lg:pt-24`}>
@@ -868,67 +848,6 @@ export function Storefront({ groups }: { groups: Groups }) {
               </a>
             </div>
           </motion.aside>
-        )}
-      </AnimatePresence>
-
-      {/* Course sheet */}
-      <AnimatePresence>
-        {view && (
-          <motion.div
-            className="fixed inset-0 z-[60] grid place-items-center overflow-y-auto bg-ink/50 p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            onClick={() => setView(null)}
-         >
-            <motion.div
-              role="dialog"
-              aria-modal="true"
-              aria-label={view.title}
-              onClick={(e) => e.stopPropagation()}
-              initial={{ y: 12 }}
-              animate={{ y: 0 }}
-              exit={{ y: 12 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              className="relative grid w-full max-w-3xl gap-8 rounded-xl bg-white p-6 sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] sm:p-8"
-           >
-              <button
-                autoFocus
-                onClick={() => setView(null)}
-                aria-label="Close"
-                className="absolute right-4 top-4 z-10 grid h-9 w-9 place-items-center rounded-lg text-ink transition-colors hover:bg-paper-raised"
-             >
-                <X className="h-4 w-4" strokeWidth={1.5} />
-              </button>
-              <div className="mx-auto w-full max-w-[220px] sm:max-w-none">
-                <CoverBook course={view} img={posterOf(view) ?? null} width={200} />
-              </div>
-              <div className="flex min-w-0 flex-col">
-                <p className="font-mono text-xs text-ink-3">
-                  {code(view.category)} / {view.category}
-                </p>
-                <h2 className="mt-2 pr-10 text-2xl font-medium leading-tight tracking-[-0.02em] text-ink sm:text-3xl">{view.title}</h2>
-                <p className="mt-3 font-mono text-xs text-ink-2">
-                  {[days(view), Number(view.lessons) > 1 ? `${view.lessons} lessons` : null, "Offline and online", view.certification ? "Certificate" : null]
-                    .filter(Boolean)
-                    .join(" · ")}
-                </p>
-                <p className="mt-4 max-h-48 overflow-y-auto pr-2 text-sm leading-6 text-ink-2">
-                  {view.caption ?? `${view.title} training at CAD Desk Guwahati, taught hands-on.`}
-                </p>
-                <div className="mt-auto flex flex-wrap gap-3 pt-8">
-                  <a href={waLink([view.title])} target="_blank" rel="noopener noreferrer" className={PRIMARY}>
-                    <MessageCircle className="h-4 w-4" strokeWidth={1.5} /> Enquire on WhatsApp
-                  </a>
-                  <button onClick={() => toggle(view.id)} className={SECONDARY}>
-                    {list.includes(view.id) ? <Check className="h-4 w-4" strokeWidth={1.5} /> : <Plus className="h-4 w-4" strokeWidth={1.5} />}
-                    {list.includes(view.id) ? "In your list" : "Add to list"}
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
         )}
       </AnimatePresence>
     </div>

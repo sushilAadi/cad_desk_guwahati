@@ -2,6 +2,7 @@
 
 import { Book } from "@/components/ui/book"
 import type { PublicCourse } from "@/lib/public-courses"
+import { webp } from "@/lib/webp"
 
 // One quiet gradient per category: the colour tells you which track a book is on.
 export const COVER_COLORS: Record<string, string> = {
@@ -44,7 +45,7 @@ export function CoverBook({
         img ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={img}
+            src={webp(img)}
             alt={`${course.title} course at CAD Desk Guwahati`}
             loading="lazy"
             draggable={false}

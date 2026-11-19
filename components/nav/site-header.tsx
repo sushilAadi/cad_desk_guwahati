@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import {
   MotionNavigationMenu,
   NavigationBar,
@@ -12,6 +13,7 @@ import { CoursesMegaMenu } from "@/components/nav/courses-mega-menu"
 import { RegistrationMenuContent } from "@/components/nav/registration-menu-content"
 import { EnquiryMenuContent } from "@/components/nav/enquiry-menu-content"
 import { ContactMenuContent } from "@/components/nav/contact-menu-content"
+import { FrameToggle } from "@/components/nav/frame-toggle"
 import { MobileNavDrawer } from "@/components/nav/mobile-nav-drawer"
 import type { PublicCourse } from "@/lib/public-courses"
 
@@ -30,11 +32,8 @@ interface SiteHeaderProps {
   totalCount: number
 }
 
-function scrollToCourses() {
-  document.getElementById("courses")?.scrollIntoView({ behavior: "smooth" })
-}
-
 export function SiteHeader({ groups, totalCount }: SiteHeaderProps) {
+  const router = useRouter()
   const megaMenuItems = [
     {
       id: "courses",
@@ -42,8 +41,8 @@ export function SiteHeader({ groups, totalCount }: SiteHeaderProps) {
         <CoursesMegaMenu
           groups={groups}
           totalCount={totalCount}
-          onSelectCategory={() => scrollToCourses()}
-          onOpenCatalog={() => scrollToCourses()}
+          onSelectCategory={(cat) => router.push(cat ? `/courses?track=${encodeURIComponent(cat)}` : "/courses")}
+          onOpenCatalog={() => router.push("/courses")}
         />
       ),
     },
@@ -62,7 +61,7 @@ export function SiteHeader({ groups, totalCount }: SiteHeaderProps) {
   ]
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-line bg-paper">
+    <header style={{ viewTransitionName: "site-header" }} className="sticky top-0 z-50 w-full border-b border-line bg-paper">
       <MotionNavigationMenu topGap={0} roundedStyle="none">
         <NavigationBar className="mx-auto w-full max-w-[1640px] px-5 md:px-[60px] lg:px-[100px]">
           {/* Brand */}
@@ -73,7 +72,7 @@ export function SiteHeader({ groups, totalCount }: SiteHeaderProps) {
 
           {/* Navigation Items */}
           <NavigationMenuList className="hidden md:flex">
-            <NavigationMenuItem id="courses" title="Courses" badge={`${totalCount}`} />
+            <NavigationMenuItem id="courses" title="Courses" badge={`${totalCount}`} onClick={() => router.push("/courses")} />
             <NavigationMenuItem id="registration" title="Registration" />
             <NavigationMenuItem id="enquiry" title="Enquiry Desk" />
             <NavigationMenuItem id="contact" title="Contact Us" />
@@ -81,6 +80,7 @@ export function SiteHeader({ groups, totalCount }: SiteHeaderProps) {
 
           {/* Action Button (desktop) + Hamburger (mobile) */}
           <div className="flex items-center gap-2">
+            <FrameToggle />
             <a
               href={WHATSAPP_LINK}
               target="_blank"

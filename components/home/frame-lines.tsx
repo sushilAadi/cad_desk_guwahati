@@ -73,8 +73,25 @@ export function FrameLines() {
         <span key={b.top} className="absolute inset-x-0 bg-ink" style={{ top: b.top, height: b.height }} />
       ))}
       {ys.map((y) => (
-        <span key={y} className="absolute inset-x-0 h-px bg-[rgba(115,115,115,0.3)]" style={{ top: y }} />
+        <span key={y} className="frame-deco absolute inset-x-0 h-px bg-[rgba(115,115,115,0.3)]" style={{ top: y }} />
       ))}
+    </div>
+  )
+}
+
+/** The hatched strips that hug both sides of the 1440px content column (hidden by the navbar toggle). */
+export function FrameStrips() {
+  return (
+    <div aria-hidden className="frame-deco pointer-events-none absolute inset-0 z-0 hidden lg:block">
+      <div className="absolute inset-y-0 left-1/2 w-[min(1440px,100%-200px)] -translate-x-1/2">
+        {["-left-7", "-right-7"].map((side) => (
+          <span
+            key={side}
+            className={`absolute inset-y-0 ${side} w-7 border-x border-[rgba(115,115,115,0.3)]`}
+            style={{ backgroundImage: "repeating-linear-gradient(135deg, rgba(115,115,115,0.32) 0 1px, transparent 1px 6px)" }}
+          />
+        ))}
+      </div>
     </div>
   )
 }
