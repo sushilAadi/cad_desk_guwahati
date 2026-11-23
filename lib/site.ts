@@ -48,7 +48,8 @@ export const ORG_LD = {
     postalCode: "781020",
     addressCountry: "IN",
   },
-  areaServed: "Guwahati",
+  // Guwahati first (the centre), India for live-online students from other states.
+  areaServed: [{ "@type": "City", name: "Guwahati" }, { "@type": "State", name: "Assam" }, { "@type": "Country", name: "India" }],
   openingHoursSpecification: [{
     "@type": "OpeningHoursSpecification",
     dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],

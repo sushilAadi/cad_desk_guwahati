@@ -33,13 +33,15 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { course } = await load((await params).slug)
   if (!course) return {}
-  const full = (await getCourseDetail(course.id))?.description ?? course.caption
-  const desc = (full ?? `${course.title} course at ${SITE_NAME}: hands-on training with a certificate, in Noonmati or live online.`).replace(/\s+/g, " ").slice(0, 160)
+  const full = ((await getCourseDetail(course.id))?.description ?? course.caption ?? "").replace(/\s+/g, " ").trim()
+  // Lead with the city so every course page targets Guwahati, then make clear online students from any state can join.
+  const lead = `${course.title} course in Guwahati at CAD Desk, Noonmati. Classroom or live online for students from Assam and across India.`
+  const desc = `${lead} ${full}`.slice(0, 160).replace(/\s+\S*$/, "")
   return {
     title: `${course.title} Course in Guwahati`,
     description: desc,
     alternates: { canonical: `/courses/${(await params).slug}` },
-    openGraph: { title: `${course.title} | ${SITE_NAME}`, description: desc, images: course.image ? [webp(course.image, 1200, true)] : undefined },
+    openGraph: { title: `${course.title} Course in Guwahati | ${SITE_NAME}`, description: desc, images: course.image ? [webp(course.image, 1200, true)] : undefined },
   }
 }
 
@@ -86,7 +88,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
         hasCourseInstance: {
           "@type": "CourseInstance",
           courseMode: ["onsite", "online"],
-          location: "Noonmati, Guwahati",
+          location: { "@type": "Place", name: `${SITE_NAME}, Noonmati`, address: ORG_LD.address },
         },
       },
       {
