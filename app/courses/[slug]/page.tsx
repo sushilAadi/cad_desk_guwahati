@@ -11,7 +11,7 @@ import { getCourseDetail, getPublicCourses, groupByCategory, type PublicCourse }
 import { preload } from "react-dom"
 import { webp, webpSet } from "@/lib/webp"
 import { courseSlugs } from "@/lib/course-slug"
-import { SITE_NAME, SITE_PHONE, SITE_URL } from "@/lib/site"
+import { ORG_LD, SITE_NAME, SITE_URL } from "@/lib/site"
 
 export const revalidate = 300
 
@@ -81,13 +81,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
           ? detail.toc.map((m) => ({ "@type": "Syllabus", name: m.title, description: m.detail.join(", ") }))
           : undefined,
         image: webp(banner ?? course.image ?? "", 1200, true) || undefined,
-        provider: {
-          "@type": "EducationalOrganization",
-          name: SITE_NAME,
-          url: SITE_URL,
-          telephone: SITE_PHONE,
-          address: { "@type": "PostalAddress", addressLocality: "Guwahati", addressRegion: "Assam", addressCountry: "IN" },
-        },
+        provider: ORG_LD,
         educationalCredentialAwarded: course.certification ? "CAD Desk certificate" : undefined,
         hasCourseInstance: {
           "@type": "CourseInstance",

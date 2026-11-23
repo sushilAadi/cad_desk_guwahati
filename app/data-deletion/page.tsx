@@ -1,7 +1,8 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Data Deletion | CAD Desk Guwahati",
+  title: "Data Deletion",
+  alternates: { canonical: "/data-deletion" },
   description: "How to request deletion of your data from CAD Desk Guwahati.",
 }
 

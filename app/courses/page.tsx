@@ -6,8 +6,8 @@ import { getPublicCourses, groupByCategory } from "@/lib/public-courses"
 export const revalidate = 300
 
 export const metadata: Metadata = {
-  title: "Courses",
-  description: "Every CAD/CAM and IT course at CAD Desk Guwahati, by track.",
+  title: "CAD, CAM & IT Courses in Guwahati",
+  description: "All CAD/CAM and IT courses at CAD Desk Guwahati, Noonmati: AutoCAD, Revit, SOLIDWORKS, 3ds Max and more, grouped by track. Classroom or live online.",
   alternates: { canonical: "/courses" },
 }
 

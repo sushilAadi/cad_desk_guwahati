@@ -1,7 +1,8 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | CAD Desk Guwahati",
+  title: "Privacy Policy",
+  alternates: { canonical: "/privacy" },
   description: "How CAD Desk Guwahati (Noonmati Centre) collects and uses your data.",
 }
 

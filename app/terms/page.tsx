@@ -1,7 +1,8 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Terms of Service | CAD Desk Guwahati",
+  title: "Terms of Service",
+  alternates: { canonical: "/terms" },
   description: "Terms for using the CAD Desk Guwahati WhatsApp assistant and website.",
 }
 

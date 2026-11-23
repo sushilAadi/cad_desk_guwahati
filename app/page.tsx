@@ -1,7 +1,7 @@
 import { SiteHeader } from "@/components/nav/site-header"
 import { Storefront } from "@/components/home/storefront"
 import { getPublicCourses, groupByCategory } from "@/lib/public-courses"
-import { SITE_NAME, SITE_PHONE, SITE_URL } from "@/lib/site"
+import { FAQ, ORG_LD, SITE_NAME } from "@/lib/site"
 
 export const revalidate = 300
 
@@ -9,24 +9,15 @@ export default async function Home() {
   const courses = await getPublicCourses()
   const groups = groupByCategory(courses)
 
-  const provider = {
-    "@type": "EducationalOrganization",
-    name: SITE_NAME,
-    alternateName: "NEEED ASSOCIATES",
-    url: SITE_URL,
-    telephone: SITE_PHONE,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "Noonmati",
-      addressLocality: "Guwahati",
-      addressRegion: "Assam",
-      addressCountry: "IN",
-    },
-  }
+  const provider = { "@id": ORG_LD["@id"] }
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
-      provider,
+      ORG_LD,
+      {
+        "@type": "FAQPage",
+        mainEntity: FAQ.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+      },
       {
         "@type": "ItemList",
         name: "CAD/CAM & IT courses",

@@ -11,7 +11,7 @@ import { useResponsive } from "@/components/ui/use-responsive"
 import { AnimatePresence, motion } from "motion/react"
 import { UNIVERSITIES, type University } from "@/lib/universities"
 import { ScrollRevealText } from "@/components/ui/scroll-reveal-text"
-import { CAD_DESK_NETWORK } from "@/lib/site"
+import { CAD_DESK_NETWORK, FAQ } from "@/lib/site"
 import { ArrowRight, Check, ChevronDown, MessageCircle, Plus, Search, X } from "lucide-react"
 import { COVER_COLORS, CoverBook, sharedImages } from "@/components/home/course-cover"
 import type { PublicCourse } from "@/lib/public-courses"
@@ -604,7 +604,7 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
         <StickyBar target="h-courses" title="Find your course" index={3} total={7} />
         <Note>/ 03 · choose · five tracks</Note>
         <div data-rule className="flex flex-wrap items-start justify-between gap-x-10 gap-y-6">
-          <h2 id="h-courses" className={`${DISPLAY} text-[clamp(44px,6vw,88px)] leading-[0.95] text-ink`}>Find your course<span className="text-brand">.</span></h2>
+          <h1 id="h-courses" className={`${DISPLAY} text-[clamp(44px,6vw,88px)] leading-[0.95] text-ink`}>Find your course<span className="text-brand">.</span></h1>
           <div className="w-full sm:w-[360px] lg:pt-4">
             <label className="flex w-full max-w-[420px] items-center gap-3 border-b border-ink pb-2 text-ink">
               <Search className="h-4 w-4 shrink-0" strokeWidth={1.5} />
@@ -918,6 +918,25 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
       </section>
 
       </>)}
+
+      {!page && (
+      <section aria-labelledby="h-faq" className={`${GUTTER} border-t border-line py-16 lg:py-24`}>
+        <div>
+          <h2 id="h-faq" className={`${DISPLAY} text-[clamp(40px,5vw,72px)] leading-[0.95] text-ink`}>Questions, answered<span className="text-brand">.</span></h2>
+          <div className="mt-10 divide-y divide-line border-y border-line">
+            {FAQ.map((f) => (
+              <details key={f.q} className="group py-5">
+                <summary className="flex cursor-pointer list-none items-start justify-between gap-6 text-lg font-medium text-ink">
+                  <h3>{f.q}</h3>
+                  <span aria-hidden className="text-brand transition-transform group-open:rotate-45">+</span>
+                </summary>
+                <p className="mt-3 max-w-[760px] text-ink-2">{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+      )}
 
       {/* 07 Call to action + centre + footer wordmark */}
       <section className={`${GUTTER} border-t border-line pt-16 lg:pt-24`}>
