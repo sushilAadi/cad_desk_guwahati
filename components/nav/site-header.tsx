@@ -10,17 +10,12 @@ import {
   NavigationMenuViewport,
 } from "@/components/ui/motion-navigation-menu"
 import { CoursesMegaMenu } from "@/components/nav/courses-mega-menu"
-import { RegistrationMenuContent } from "@/components/nav/registration-menu-content"
-import { EnquiryMenuContent } from "@/components/nav/enquiry-menu-content"
+import { RegistrationEnquiryMenuContent } from "@/components/nav/registration-enquiry-menu-content"
 import { ContactMenuContent } from "@/components/nav/contact-menu-content"
+import { TopBar } from "@/components/nav/top-bar"
 import { FrameToggle } from "@/components/nav/frame-toggle"
 import { MobileNavDrawer } from "@/components/nav/mobile-nav-drawer"
 import type { PublicCourse } from "@/lib/public-courses"
-
-const WHATSAPP_NUMBER = "919127281610"
-const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-  "Hi! I'd like to know more about courses at CAD Desk Guwahati."
-)}`
 
 interface CategoryGroup {
   category: string
@@ -47,12 +42,8 @@ export function SiteHeader({ groups, totalCount }: SiteHeaderProps) {
       ),
     },
     {
-      id: "registration",
-      content: <RegistrationMenuContent />,
-    },
-    {
-      id: "enquiry",
-      content: <EnquiryMenuContent />,
+      id: "register",
+      content: <RegistrationEnquiryMenuContent />,
     },
     {
       id: "contact",
@@ -61,34 +52,34 @@ export function SiteHeader({ groups, totalCount }: SiteHeaderProps) {
   ]
 
   return (
-    <header style={{ viewTransitionName: "site-header" }} className="sticky top-0 z-50 w-full border-b border-line bg-paper">
+    // the top bar and the header pin together as one block
+    <div data-site-header style={{ viewTransitionName: "site-header" }} className="sticky top-0 z-50 w-full">
+    <TopBar />
+    <header className="relative w-full border-b border-line bg-paper">
       <MotionNavigationMenu topGap={0} roundedStyle="none">
         <NavigationBar className="mx-auto w-full max-w-[1640px] px-5 md:px-[60px] lg:px-[100px]">
           {/* Brand */}
           <Link href="/" className="flex items-baseline gap-2">
-            <span className="text-lg font-medium text-ink">CAD Desk</span>
-            <span className="hidden font-mono text-xs text-ink-3 sm:inline">Guwahati</span>
+            <span className="font-sans text-lg font-medium text-ink">CAD Desk</span>
+            <span className="hidden text-xs text-ink-3 sm:inline">Guwahati</span>
           </Link>
 
           {/* Navigation Items */}
           <NavigationMenuList className="hidden md:flex">
             <NavigationMenuItem id="courses" title="Courses" badge={`${totalCount}`} onClick={() => router.push("/courses")} />
-            <NavigationMenuItem id="registration" title="Registration" />
-            <NavigationMenuItem id="enquiry" title="Enquiry Desk" />
+            <NavigationMenuItem id="register" title="Registration / Enquiry" />
             <NavigationMenuItem id="contact" title="Contact Us" />
           </NavigationMenuList>
 
           {/* Action Button (desktop) + Hamburger (mobile) */}
           <div className="flex items-center gap-2">
             <FrameToggle />
-            <a
-              href={WHATSAPP_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/enquiry"
               className="hidden h-9 items-center rounded-lg bg-brand px-4 text-sm font-medium text-white transition-colors hover:bg-brand/90 sm:inline-flex"
             >
               Enquire
-            </a>
+            </Link>
             <MobileNavDrawer groups={groups} totalCount={totalCount} />
           </div>
         </NavigationBar>
@@ -97,5 +88,6 @@ export function SiteHeader({ groups, totalCount }: SiteHeaderProps) {
         <NavigationMenuViewport items={megaMenuItems} />
       </MotionNavigationMenu>
     </header>
+    </div>
   )
 }

@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
+import Link from "next/link"
 import {
   Building2,
   Code,
@@ -12,18 +13,14 @@ import {
   GraduationCap,
   Clock,
   ChevronRight,
+  Layers,
 } from "lucide-react"
 import type { PublicCourse } from "@/lib/public-courses"
 import { getCategoryDisplay } from "./category-config"
 import { webp } from "@/lib/webp"
+import { courseSlugs } from "@/lib/course-slug"
 
 const ICONS = { Building2, Code, Cpu, Palette, Zap, BookOpen } as const
-
-const WHATSAPP_NUMBER = "919127281610"
-function whatsappLinkFor(courseTitle: string) {
-  const text = `Hi! I'd like to know more about the ${courseTitle} course at CAD Desk Guwahati.`
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`
-}
 
 interface CategoryGroup {
   category: string
@@ -44,10 +41,14 @@ export function CoursesMegaMenu({
   onOpenCatalog,
 }: CoursesMegaMenuProps) {
   const [activeCatId, setActiveCatId] = useState<string>(groups[0]?.category ?? "")
+  // the course under the pointer (or keyboard focus): its details replace the category banner, and clicking it opens its page
+  const [hoverId, setHoverId] = useState<string | null>(null)
+  const slugs = useMemo(() => courseSlugs(groups.flatMap((g) => g.courses)), [groups])
 
   const activeGroup = groups.find((g) => g.category === activeCatId) ?? groups[0]
   const selectedDisplay = getCategoryDisplay(activeGroup?.category ?? "")
   const categoryCourses = activeGroup?.courses ?? []
+  const hoverCourse = categoryCourses.find((c) => c.id === hoverId)
 
   const getIcon = (catName: string) => {
     const meta = getCategoryDisplay(catName)
@@ -79,7 +80,7 @@ export function CoursesMegaMenu({
             <span className="font-extrabold text-sm tracking-wide text-zinc-900 block leading-tight">
               {totalCount}+ Certified Technical Courses
             </span>
-            <span className="text-[10px] font-mono text-zinc-600">
+            <span className="text-xs text-zinc-600">
               Hover over a category on the left to inspect its courses
             </span>
           </div>
@@ -88,7 +89,7 @@ export function CoursesMegaMenu({
         <button
           type="button"
           onClick={onOpenCatalog}
-          className="px-3 py-1.5 bg-zinc-900 text-white hover:bg-zinc-800 font-mono text-xs font-bold cursor-pointer flex items-center gap-1"
+          className="px-3 py-1.5 bg-zinc-900 text-white hover:bg-zinc-800 text-xs font-bold cursor-pointer flex items-center gap-1"
         >
           View Full Catalog <ArrowRight className="h-3.5 w-3.5" />
         </button>
@@ -98,7 +99,7 @@ export function CoursesMegaMenu({
       <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-start">
         {/* Left Column: Vertical Categories Stack */}
         <div className="md:col-span-4 space-y-2 border-r-0 md:border-r-2 border-zinc-200 pr-0 md:pr-4">
-          <div className="text-[11px] font-mono font-bold text-zinc-500 pb-1 flex items-center justify-between">
+          <div className="text-xs font-bold text-zinc-500 pb-1 flex items-center justify-between">
             <span>Select Category</span>
             <span>{groups.length} Streams</span>
           </div>
@@ -110,7 +111,10 @@ export function CoursesMegaMenu({
               return (
                 <div
                   key={g.category}
-                  onMouseEnter={() => setActiveCatId(g.category)}
+                  onMouseEnter={() => {
+                    setActiveCatId(g.category)
+                    setHoverId(null)
+                  }}
                   onClick={() => {
                     setActiveCatId(g.category)
                     onSelectCategory(g.category)
@@ -138,7 +142,7 @@ export function CoursesMegaMenu({
                         {g.category}
                       </h4>
                       <p
-                        className={`text-[10px] font-mono leading-tight truncate ${isActive ? "text-zinc-300" : "text-zinc-600"}`}
+                        className={`text-xs leading-tight truncate ${isActive ? "text-zinc-300" : "text-zinc-600"}`}
                       >
                         {display.slogan}
                       </p>
@@ -147,7 +151,7 @@ export function CoursesMegaMenu({
 
                   <div className="flex items-center gap-1 shrink-0">
                     <span
-                      className={`font-mono text-[10px] font-bold px-1.5 py-0.5 border ${
+                      className={`text-xs font-bold px-1.5 py-0.5 border ${
                         isActive
                           ? "bg-amber-400 text-zinc-950 border-amber-300"
                           : "bg-zinc-200 text-zinc-800 border-zinc-300"
@@ -166,7 +170,39 @@ export function CoursesMegaMenu({
         {/* Right Column: Hovered Category Details & Courses Grid */}
         <div className="md:col-span-8 space-y-4">
           {/* Active Category Header Banner */}
-          <div className="border border-zinc-200 bg-zinc-900 text-white p-4 flex flex-col sm:flex-row items-center gap-4 relative overflow-hidden">
+          <div className="border border-zinc-200 bg-zinc-900 text-white p-4 flex flex-col sm:flex-row items-center gap-4 relative overflow-hidden min-h-[8.5rem]">
+            {hoverCourse ? (
+              <>
+                <div className="h-24 w-28 shrink-0 overflow-hidden border-2 border-brand relative bg-zinc-800">
+                  <img src={webp(hoverCourse.image || selectedDisplay.image)} alt="" className="w-full h-full object-cover" />
+                </div>
+                <div className="space-y-1.5 flex-1 min-w-0 text-center sm:text-left">
+                  <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-3 gap-y-1 text-xs">
+                    <span className="bg-amber-400 text-zinc-950 font-extrabold px-2 py-0.5">{activeGroup?.category}</span>
+                    <span className="flex items-center gap-1 text-zinc-200">
+                      <Clock className="h-3 w-3 text-amber-400" /> {hoverCourse.duration ? `${hoverCourse.duration} days` : "Flexible"}
+                    </span>
+                    {hoverCourse.lessons && (
+                      <span className="flex items-center gap-1 text-zinc-200">
+                        <Layers className="h-3 w-3 text-amber-400" /> {hoverCourse.lessons} modules
+                      </span>
+                    )}
+                    {hoverCourse.certification && <span className="font-bold text-emerald-400">Certificate</span>}
+                  </div>
+                  <h3 className="text-lg font-semibold tracking-wide text-white truncate">{hoverCourse.title}</h3>
+                  <p className="text-xs text-zinc-300 line-clamp-2">{hoverCourse.caption ?? "Practical, project-based training."}</p>
+                </div>
+                <div className="flex sm:flex-col gap-2 shrink-0">
+                  <Link
+                    href={`/courses/${slugs.get(hoverCourse.id)}`}
+                    className="px-3 py-1.5 bg-amber-400 hover:bg-amber-300 text-zinc-950 font-extrabold text-xs cursor-pointer text-center border border-amber-300"
+                  >
+                    View details →
+                  </Link>
+                </div>
+              </>
+            ) : (
+              <>
             {/* Category Image Preview */}
             <div className="h-24 w-28 shrink-0 overflow-hidden border-2 border-brand relative bg-zinc-800">
               <img
@@ -178,10 +214,10 @@ export function CoursesMegaMenu({
 
             <div className="space-y-1 flex-1 text-center sm:text-left">
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
-                <span className="bg-amber-400 text-zinc-950 font-mono text-[10px] font-extrabold px-2 py-0.5">
+                <span className="bg-amber-400 text-zinc-950 text-xs font-extrabold px-2 py-0.5">
                   {activeGroup?.category}
                 </span>
-                <span className="text-emerald-400 font-mono text-[10px] font-bold">
+                <span className="text-emerald-400 text-xs font-bold">
                   {categoryCourses.length} Courses Available
                 </span>
               </div>
@@ -200,24 +236,32 @@ export function CoursesMegaMenu({
             >
               Explore Stream →
             </button>
+              </>
+            )}
           </div>
 
           {/* Courses List in Right Column */}
           <div className="space-y-2">
-            <div className="flex items-center justify-between text-[11px] font-mono text-zinc-600 font-bold pb-1 border-b border-zinc-200">
+            <div className="flex items-center justify-between text-xs text-zinc-600 font-bold pb-1 border-b border-zinc-200">
               <span>
                 Courses in {activeGroup?.category} ({categoryCourses.length})
               </span>
               <span>Scroll for full list ↓</span>
             </div>
 
-            <div className="max-h-[340px] overflow-y-auto pr-1 space-y-2">
+            <div onMouseLeave={() => setHoverId(null)} className="max-h-[340px] overflow-y-auto pr-1 space-y-2">
               {categoryCourses.map((course) => (
                 <div
                   key={course.id}
-                  className="p-3 bg-zinc-50 hover:bg-paper-raised border border-zinc-200 hover:border-brand transition-colors flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 group"
+                  onMouseEnter={() => setHoverId(course.id)}
+                  onFocus={() => setHoverId(course.id)}
+                  className={`relative p-3 border transition-colors flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 group ${
+                    hoverId === course.id ? "bg-paper-raised border-brand" : "bg-zinc-50 border-zinc-200 hover:border-brand"
+                  }`}
                 >
-                  <div className="flex items-center gap-3 min-w-0">
+                  {/* the whole row opens the course page */}
+                  <Link href={`/courses/${slugs.get(course.id)}`} aria-label={`View details for ${course.title}`} className="absolute inset-0 z-0 outline-none focus-visible:ring-2 focus-visible:ring-brand" />
+                  <div className="relative pointer-events-none flex items-center gap-3 min-w-0">
                     <img
                       src={webp(course.image || selectedDisplay.image)}
                       alt={course.title}
@@ -227,10 +271,10 @@ export function CoursesMegaMenu({
                       <h5 className="font-bold text-xs text-zinc-900 group-hover:text-amber-700 transition-colors truncate">
                         {course.title}
                       </h5>
-                      <p className="text-[11px] text-zinc-600 line-clamp-1">
+                      <p className="text-xs text-zinc-600 line-clamp-1">
                         {course.caption ?? "Practical, project-based training."}
                       </p>
-                      <div className="flex items-center gap-3 text-[10px] font-mono text-zinc-500 mt-0.5">
+                      <div className="flex items-center gap-3 text-xs text-zinc-500 mt-0.5">
                         <span className="flex items-center gap-1">
                           <Clock className="h-3 w-3 text-amber-600" />{" "}
                           {course.duration ? `${course.duration} Days` : "Flexible"}
@@ -242,16 +286,6 @@ export function CoursesMegaMenu({
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
-                    <a
-                      href={whatsappLinkFor(course.title)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-2.5 py-1 bg-zinc-900 hover:bg-brand hover:text-white text-white font-mono text-[10px] font-bold cursor-pointer transition-colors"
-                    >
-                      Enquire
-                    </a>
-                  </div>
                 </div>
               ))}
               {categoryCourses.length === 0 && (

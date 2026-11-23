@@ -1,0 +1,6693 @@
+[
+ {
+  "id": "e7519e47-ce83-4b9d-b106-be60461a9466",
+  "title": "3DS Max",
+  "caption": "Model, texture, light and render interior and architectural scenes in 3ds Max, then bring them to life with a walkthrough animation.",
+  "description": "This course takes you from the 3ds Max workspace to finished, rendered scenes. You will model rooms and furniture, work with materials and lighting, and finish with a simple walkthrough animation. It suits architecture, interior design and civil students who want to present their designs as realistic images.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "5",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Civil / Architecture",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Getting started",
+    "detail": [
+     "Course plan and orientation",
+     "The 3ds Max interface and workspace",
+     "Navigating the viewports"
+    ]
+   },
+   {
+    "title": "Modelling basics",
+    "detail": [
+     "Standard and extended primitives",
+     "Building shapes from primitives",
+     "Grid and snap settings",
+     "Organising objects with layers",
+     "Boolean and ProBoolean operations",
+     "Grouping and hierarchy",
+     "Editable Poly modelling"
+    ]
+   },
+   {
+    "title": "Building a scene",
+    "detail": [
+     "Modelling a bed",
+     "Sofa set and dining table",
+     "Tables and chairs",
+     "Doors and windows",
+     "Stairs and other interior elements"
+    ]
+   },
+   {
+    "title": "Materials, lighting and rendering",
+    "detail": [
+     "Lighting a scene",
+     "Shading surfaces",
+     "Applying materials and texture maps",
+     "Organising the scene",
+     "Producing the final render"
+    ]
+   },
+   {
+    "title": "Animation",
+    "detail": [
+     "Creating a walkthrough animation"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:23.005412+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "cf8cc8a0-3e74-403d-abde-2e8ee3d428c8",
+  "title": "Adobe Photoshop",
+  "caption": "Edit and compose images in Photoshop, from layers and selections to retouching and collages, for clear design presentations.",
+  "description": "Photoshop is a common tool for finishing images before they are shown to a client. This course covers the workspace, layers, selections, brushes and retouching, and ends with building a collage. It is useful for preparing presentation boards and for polishing renders and photographs.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "4",
+  "students": null,
+  "duration": "10",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Civil / Architecture",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Workspace and files",
+    "detail": [
+     "The Photoshop workspace",
+     "Importing images and files"
+    ]
+   },
+   {
+    "title": "Layers and selections",
+    "detail": [
+     "Working with layers",
+     "Selecting and transforming"
+    ]
+   },
+   {
+    "title": "Painting and retouching",
+    "detail": [
+     "Brushes with masks",
+     "Fill options and the Paint Bucket tool",
+     "Shape tools",
+     "Custom shapes",
+     "Clone Stamp retouching"
+    ]
+   },
+   {
+    "title": "Putting it together",
+    "detail": [
+     "Collaging images into one composition",
+     "Editing drawings"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:21.275535+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "af54cca0-d9bf-41d6-bd6e-285e2ab09f7b",
+  "title": "ArcGIS",
+  "caption": "Learn to build, analyse and share maps with ArcGIS, from GIS fundamentals to spatial analysis.",
+  "description": "This course introduces geographic information systems and the ArcGIS platform. You will learn how spatial data is structured, how to load and view it, work with coordinate systems and collect data, and carry out basic spatial analysis before publishing your results as maps. It suits civil, planning and environmental students working with location data.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "3",
+  "students": null,
+  "duration": "25",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Civil / Architecture",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "GIS foundations",
+    "detail": [
+     "Introduction to ArcGIS",
+     "The ArcGIS platform",
+     "GIS basics",
+     "GIS data models"
+    ]
+   },
+   {
+    "title": "Working with data",
+    "detail": [
+     "Viewing data",
+     "Coordinate systems",
+     "Acquiring data"
+    ]
+   },
+   {
+    "title": "Analysis and sharing",
+    "detail": [
+     "Spatial analysis",
+     "Sharing results"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:23.617243+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "3cf84f67-9067-42cf-bfa2-f199b0be6927",
+  "title": "AutoCAD for Civil",
+  "caption": "Draft civil drawings in AutoCAD, from basic 2D tools to plans, elevations and a first look at 3D.",
+  "description": "You will learn AutoCAD drafting the way civil drawings are produced: precise 2D tools, layers and blocks, dimensions and annotation, and sheets ready to print. Later modules cover templates, external references, plan and elevation drawings, a staircase drawing, and an introduction to 3D modelling and rendering.",
+  "image": "https://res.cloudinary.com/doetgopgw/image/upload/v1773324270/course-images/ierjd0tg3twfcmzpbfyp.png",
+  "banner": "https://res.cloudinary.com/doetgopgw/image/upload/v1773323662/course-images/mxytetdmblfhzotcpwdl.jpg",
+  "price": "10000",
+  "lessons": "6",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Civil / Architecture",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "2D drafting essentials",
+    "detail": [
+     "The AutoCAD interface",
+     "Drawing and modifying objects",
+     "Dimensions and annotation",
+     "Layer Properties Manager"
+    ]
+   },
+   {
+    "title": "Blocks, attributes and printing",
+    "detail": [
+     "Creating and inserting blocks",
+     "Defining and editing attributes",
+     "Page setup and plotting",
+     "Setting up a drawing sheet"
+    ]
+   },
+   {
+    "title": "Layouts and templates",
+    "detail": [
+     "Layouts",
+     "Creating templates",
+     "Linking and data extraction",
+     "Tool palettes and DesignCenter",
+     "Parameterising drawings"
+    ]
+   },
+   {
+    "title": "Tables, hatching and references",
+    "detail": [
+     "Creating tables",
+     "Hatch and gradient fills",
+     "External references (XREFs)",
+     "Annotation style managers"
+    ]
+   },
+   {
+    "title": "Civil drawings",
+    "detail": [
+     "Drawing a plan and front elevation",
+     "Staircase drawing"
+    ]
+   },
+   {
+    "title": "Introduction to 3D",
+    "detail": [
+     "Building basic 3D models",
+     "Assigning materials",
+     "Rendering"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:22.373976+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "ee403523-d3cc-470f-ad7d-6b18a3b5776c",
+  "title": "AutoCAD for Land Surveyors",
+  "caption": "Use AutoCAD, Excel and Google Earth together to draw survey plans, contours and plot layouts.",
+  "description": "Designed for people who prepare land survey drawings, this course shows how to speed up survey drafting in AutoCAD with LISP routines, automatic dimensions and area calculations. You will import survey points, draw contours, divide irregular plots, and connect the work with Excel and Google Earth. It ends with minor and major project discussions.",
+  "image": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1774594001/course-images/fed3dntcltvzkmtaufcj.png",
+  "banner": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1774593995/course-images/ibonhbmkp0mtbmyefzlf.png",
+  "price": "10000",
+  "lessons": "7",
+  "students": null,
+  "duration": "15",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Civil / Architecture",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Survey tools in AutoCAD",
+    "detail": [
+     "LISP routines",
+     "Automatic dimensions",
+     "Automatic area calculation",
+     "File conversion"
+    ]
+   },
+   {
+    "title": "Survey data and drawing management",
+    "detail": [
+     "Lengths and perimeters",
+     "Working with coordinates",
+     "Creating a legend",
+     "Layer management",
+     "Importing survey points"
+    ]
+   },
+   {
+    "title": "Contours and plots",
+    "detail": [
+     "Creating contours",
+     "Dividing irregular plots"
+    ]
+   },
+   {
+    "title": "Excel for surveyors",
+    "detail": [
+     "Excel for survey applications",
+     "The CONCATENATE formula"
+    ]
+   },
+   {
+    "title": "Google Earth for surveying",
+    "detail": [
+     "Introduction to Google Earth",
+     "Combining Google Earth with survey data",
+     "Toolbars and views"
+    ]
+   },
+   {
+    "title": "AutoCAD, Excel and Google Earth together",
+    "detail": [
+     "Importing RL points",
+     "Exporting survey data",
+     "Contour lines"
+    ]
+   },
+   {
+    "title": "Project work",
+    "detail": [
+     "Minor project discussion",
+     "Major project discussion"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:14.301622+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "4ea08ad7-2ced-401c-b5ea-8b4d0a378aa4",
+  "title": "Autodesk Civil 3D",
+  "caption": "Design surfaces, alignments, profiles and corridors in Civil 3D and calculate quantities for roads and sites.",
+  "description": "This course follows a typical road and site design workflow in Civil 3D. You will set up a project, import points, build surfaces, lay out alignments and profiles, define assemblies and corridors, take cross sections and calculate earthwork and pavement quantities, then produce reports and a junction design.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "6",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Civil / Architecture",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Basics and project setup",
+    "detail": [
+     "Interface",
+     "Objects",
+     "Styles",
+     "Creating a new project",
+     "Data shortcuts"
+    ]
+   },
+   {
+    "title": "Points and surfaces",
+    "detail": [
+     "Importing points",
+     "Point groups",
+     "Point styles",
+     "Description keys",
+     "Surface styles",
+     "Surface boundaries",
+     "Surface analysis",
+     "Labelling surfaces"
+    ]
+   },
+   {
+    "title": "Alignments and profiles",
+    "detail": [
+     "Creating alignments",
+     "Widening",
+     "Alignment labelling",
+     "Alignment reports",
+     "Ground profiles",
+     "Roadway profiles",
+     "Data band sets"
+    ]
+   },
+   {
+    "title": "Assemblies and corridors",
+    "detail": [
+     "Subassemblies",
+     "Managing assemblies",
+     "Corridor parameters",
+     "Corridor targets",
+     "Corridor regions",
+     "Corridor surfaces"
+    ]
+   },
+   {
+    "title": "Sections and quantities",
+    "detail": [
+     "Section styles",
+     "Volume tables",
+     "Pavement materials",
+     "Earthwork",
+     "Volume reports"
+    ]
+   },
+   {
+    "title": "Reports and junctions",
+    "detail": [
+     "Reports Manager",
+     "Toolbox",
+     "Junction design tool"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:17.351096+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "6eb52e69-55f5-4ad4-ba4a-ae5f707c2fb4",
+  "title": "BIM Modelling (3D BIM)",
+  "caption": "A full programme from AutoCAD drafting through Revit Architecture, Structure and MEP for building information modelling.",
+  "description": "This is a long programme that builds a complete BIM skill set. You start with AutoCAD drafting and 3D, then move into Revit: architectural models, structural models with levels, columns, foundations and reinforcement, and MEP systems for electrical, mechanical, plumbing and fire protection. It suits students aiming at BIM and design coordination work.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "6",
+  "students": null,
+  "duration": "90",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Civil / Architecture",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "AutoCAD 2D drafting",
+    "detail": [
+     "The AutoCAD interface",
+     "Drawing tools",
+     "Dimensions",
+     "Layer Manager",
+     "Blocks",
+     "Attributes",
+     "Printing"
+    ]
+   },
+   {
+    "title": "AutoCAD advanced tools",
+    "detail": [
+     "Layouts",
+     "Creating templates",
+     "External references (XREFs)",
+     "Plan and elevation drawings",
+     "Staircase drawing"
+    ]
+   },
+   {
+    "title": "3D modelling and presentation",
+    "detail": [
+     "Materials",
+     "Rendering",
+     "Animation"
+    ]
+   },
+   {
+    "title": "Revit Architecture",
+    "detail": [
+     "BIM concepts and templates",
+     "Walls, doors and windows",
+     "Linking CAD files",
+     "Modification tools",
+     "Family creation"
+    ]
+   },
+   {
+    "title": "Revit Structure",
+    "detail": [
+     "Linking the architectural model",
+     "Levels",
+     "Columns",
+     "Foundations",
+     "Reinforcement",
+     "Schedules"
+    ]
+   },
+   {
+    "title": "Revit MEP",
+    "detail": [
+     "Electrical systems",
+     "Mechanical systems",
+     "Plumbing",
+     "Fire protection",
+     "Detailed views",
+     "Fabrication parts"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:17.502016+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "a3b41ed3-e309-44ae-aa15-c324db788e26",
+  "title": "Enscape",
+  "caption": "Walk through your models in real time and produce images, videos and panoramas with Enscape.",
+  "description": "Enscape renders directly from your design model, so you can review it as you work. This course covers navigating a model, creating still images, batch renders, videos and panoramas, and adjusting perspective, exposure, backgrounds, fog, clouds and sky, sound and the advanced settings.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "4",
+  "students": null,
+  "duration": "15",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Civil / Architecture",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Getting started",
+    "detail": [
+     "Introduction to Enscape",
+     "Navigating the model"
+    ]
+   },
+   {
+    "title": "Producing output",
+    "detail": [
+     "Still images",
+     "Batch rendering",
+     "Video rendering",
+     "Panoramas"
+    ]
+   },
+   {
+    "title": "Look and atmosphere",
+    "detail": [
+     "Perspective",
+     "Exposure",
+     "Backgrounds",
+     "Fog, clouds and sky",
+     "Sounds"
+    ]
+   },
+   {
+    "title": "Advanced settings",
+    "detail": [
+     "Advanced settings"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:15.466739+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "f3ad19ed-21c5-4fb7-9419-54cdafe9c296",
+  "title": "ETABS",
+  "caption": "Model multi-storey buildings in ETABS, apply loads, run the analysis and check the results.",
+  "description": "ETABS is used to analyse and design multi-storey buildings. In this course you set up grids and stories, draw structural, floor and wall objects, define loads and load cases, run the analysis and verify the output, and finish with detailing.",
+  "image": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775582632/course-images/xn7nee4qrga7xkqzmcdv.png",
+  "banner": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775582640/course-images/zukrgxdqdjsypx6qwgli.png",
+  "price": "10000",
+  "lessons": "4",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Civil / Architecture",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Introduction and setup",
+    "detail": [
+     "Introduction to ETABS",
+     "Grid system",
+     "Model geometry"
+    ]
+   },
+   {
+    "title": "Building the model",
+    "detail": [
+     "Drawing tools",
+     "Floor and wall objects",
+     "Structural objects",
+     "Engineering calculations"
+    ]
+   },
+   {
+    "title": "Loads and analysis",
+    "detail": [
+     "Load modelling",
+     "Load cases",
+     "Analysis and verification"
+    ]
+   },
+   {
+    "title": "Detailing",
+    "detail": [
+     "Detailing"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:17.657295+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "753bbb12-6f81-4831-b918-60af3bfd0254",
+  "title": "Lumion",
+  "caption": "Turn 3D models into polished visualisations and animations with Lumion.",
+  "description": "Lumion helps architects present designs as realistic images and films. The course covers setting up a scene and terrain, importing and updating models, materials such as glass, landscaping, lighting and weather, effects, artistic styles, camera animation, and the model library with animated characters and sound.",
+  "image": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1774593197/course-images/hzwzrl7xhbxhka90fy5k.png",
+  "banner": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1774593203/course-images/doyp1xucyk3qa36gcdxb.png",
+  "price": "10000",
+  "lessons": "5",
+  "students": null,
+  "duration": "15",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Civil / Architecture",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Interface and project setup",
+    "detail": [
+     "Camera and hotkeys",
+     "Settings",
+     "Scenes",
+     "Terrain",
+     "Layers"
+    ]
+   },
+   {
+    "title": "Importing and materials",
+    "detail": [
+     "Importing 3D models",
+     "Updating and replacing models",
+     "Special materials",
+     "Glass",
+     "Bump maps"
+    ]
+   },
+   {
+    "title": "Landscape and lighting",
+    "detail": [
+     "Placing content",
+     "Grass",
+     "Scattering objects",
+     "Weather system",
+     "Spotlights",
+     "Reflections"
+    ]
+   },
+   {
+    "title": "Effects and styles",
+    "detail": [
+     "Fire, smoke and fog",
+     "Sun study",
+     "Shadows",
+     "Artistic effects",
+     "Sketch effect",
+     "Manga and cartoon styles"
+    ]
+   },
+   {
+    "title": "Animation and library",
+    "detail": [
+     "Camera paths",
+     "Clips",
+     "Layer control",
+     "Model library",
+     "Animated characters",
+     "Sound effects",
+     "Weather effects"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:13.766279+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "3e273795-3ec4-458d-97c0-3d7114098f89",
+  "title": "MS Project",
+  "caption": "Plan and track projects in Microsoft Project with tasks, calendars, resources, costs and baselines.",
+  "description": "This course teaches how to build a project schedule in Microsoft Project. You will set preferences and calendars, create tasks and a work breakdown structure, read Gantt charts, apply constraints, assign resources and costs, save a baseline, and print and exchange reports.",
+  "image": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775582471/course-images/skcgakufdtbqq7ruqbpx.png",
+  "banner": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775582478/course-images/kehknqzslynr6if8neot.png",
+  "price": "10000",
+  "lessons": "4",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Civil / Architecture",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Interface and settings",
+    "detail": [
+     "Interface",
+     "Preferences",
+     "Calendars"
+    ]
+   },
+   {
+    "title": "Tasks and structure",
+    "detail": [
+     "Creating tasks",
+     "Work breakdown structure (WBS)",
+     "Gantt charts",
+     "Constraints"
+    ]
+   },
+   {
+    "title": "Resources and cost",
+    "detail": [
+     "Resources",
+     "Cost"
+    ]
+   },
+   {
+    "title": "Tracking and reporting",
+    "detail": [
+     "Baseline",
+     "Printing reports",
+     "Importing and exporting"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:16.579852+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "5c13b646-069c-4a21-bf09-79a171d76cfe",
+  "title": "Primavera",
+  "caption": "Plan and control construction schedules in Primavera P6, from project setup to resource levelling and reports.",
+  "description": "Primavera P6 is widely used by planning engineers on construction projects. You will learn to set up the enterprise project structure, create projects, activities and relationships, build a work breakdown structure, assign resources and costs, set a baseline, update progress and produce reports.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "9",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Civil / Architecture",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Introduction and setup",
+    "detail": [
+     "Introduction to Primavera and project management",
+     "User interface",
+     "Currencies"
+    ]
+   },
+   {
+    "title": "Enterprise structure",
+    "detail": [
+     "EPS setup",
+     "Sub-EPS levels and user preferences",
+     "Calendars",
+     "OBS"
+    ]
+   },
+   {
+    "title": "Creating a project",
+    "detail": [
+     "Creating a new project",
+     "Project titles and details",
+     "Activities, start and finish dates and durations",
+     "Predecessors, successors and dependencies",
+     "Task relationships",
+     "Activity scheduling"
+    ]
+   },
+   {
+    "title": "Work breakdown and activities",
+    "detail": [
+     "Defining a work breakdown structure",
+     "WBS hierarchy",
+     "Adding activities",
+     "Activity types",
+     "Assigning calendars",
+     "Gantt chart",
+     "Activity codes"
+    ]
+   },
+   {
+    "title": "Relationships",
+    "detail": [
+     "Creating relationships",
+     "Relationship types",
+     "Network logic diagram"
+    ]
+   },
+   {
+    "title": "Resources and cost",
+    "detail": [
+     "Assigning resources",
+     "Adjusting budgeted units and time",
+     "Budgeted cost",
+     "Expenses",
+     "Resource sheet"
+    ]
+   },
+   {
+    "title": "Analysing resources",
+    "detail": [
+     "Resource usage spreadsheet",
+     "Cost accounts",
+     "Activity and resource usage spreadsheet",
+     "Activity and resource-based curves"
+    ]
+   },
+   {
+    "title": "Baseline and execution",
+    "detail": [
+     "Creating a baseline plan",
+     "Assigning a baseline",
+     "Baseline bars on the Gantt chart",
+     "Methods for updating the schedule",
+     "Monitoring progress",
+     "Updating the project"
+    ]
+   },
+   {
+    "title": "Resource levelling and reports",
+    "detail": [
+     "Resource codes",
+     "Resource assignments window",
+     "Manual resource allocation",
+     "Levelling resources",
+     "Schedule reports",
+     "Report Wizard",
+     "Printing",
+     "Importing and exporting",
+     "Project codes",
+     "Project notes",
+     "Activity usage profile"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:16.735557+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "0d50d0fb-4bac-4a18-be08-6ff6e66b8e07",
+  "title": "Revit Architecture",
+  "caption": "Create building models in Revit Architecture and turn them into documented plans, schedules and sheets.",
+  "description": "This course teaches building design in Revit Architecture, where plans, sections and schedules all come from one model. You will start a project from templates, model walls, doors, windows, floors, roofs, stairs and openings, add rooms, areas and annotation, then produce views, schedules and sheets. Massing, site design and family creation are covered at the end.",
+  "image": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1774460022/course-images/cxke8o1umaskspvtuelc.png",
+  "banner": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1774459759/course-images/x5apayz0yt96mzmcwh08.jpg",
+  "price": "10000",
+  "lessons": "7",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Civil / Architecture",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Getting started",
+    "detail": [
+     "Course plan and orientation",
+     "Introduction to Revit Architecture",
+     "Project templates",
+     "User interface",
+     "Starting a project"
+    ]
+   },
+   {
+    "title": "Building elements",
+    "detail": [
+     "Walls and curtain walls",
+     "Doors and windows",
+     "Components",
+     "Floors and roofs",
+     "Ceilings and lighting"
+    ]
+   },
+   {
+    "title": "Stairs, ramps and openings",
+    "detail": [
+     "Stairs",
+     "Ramps",
+     "Railings",
+     "Vertical openings",
+     "Shaft openings",
+     "Dormer openings",
+     "Wall openings",
+     "Openings by face"
+    ]
+   },
+   {
+    "title": "Annotation and imports",
+    "detail": [
+     "Dimensions",
+     "Text",
+     "Model text",
+     "Model lines",
+     "Inserting decals",
+     "Inserting CAD files",
+     "Loading families"
+    ]
+   },
+   {
+    "title": "Rooms and areas",
+    "detail": [
+     "Room plans",
+     "Area boundaries",
+     "Area tags",
+     "Colour fill legends"
+    ]
+   },
+   {
+    "title": "Views and documentation",
+    "detail": [
+     "Schedules",
+     "Material takeoff",
+     "Detailing",
+     "Sheets",
+     "Visibility and graphics",
+     "Legends"
+    ]
+   },
+   {
+    "title": "Massing, sites and families",
+    "detail": [
+     "Mass families",
+     "In-place masses",
+     "Site design",
+     "Family creation"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:13.583055+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "e3a65c2c-5397-4c98-baf2-50f83750838b",
+  "title": "Revit MEP",
+  "caption": "Model ductwork, piping, plumbing, fire protection and electrical systems in Revit MEP.",
+  "description": "Revit MEP is used to design and coordinate the services of a building. The course introduces BIM and the Revit environment, then covers ductwork and HVAC equipment, piping, plumbing and drainage, sprinklers and fire protection, and lighting, cable trays and electrical equipment, followed by families, annotation, schedules and team collaboration.",
+  "image": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775582376/course-images/hvyda1wsnahw6ueqaqag.png",
+  "banner": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775582392/course-images/rmnzjegum4dg5yqujqad.png",
+  "price": "10000",
+  "lessons": "7",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Civil / Architecture",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "BIM and Revit MEP basics",
+    "detail": [
+     "Introduction to BIM",
+     "Revit MEP fundamentals",
+     "Viewing the model"
+    ]
+   },
+   {
+    "title": "HVAC",
+    "detail": [
+     "Creating an HVAC system",
+     "Mechanical equipment and air terminals",
+     "Creating and modifying ductwork",
+     "Ducts and duct fittings",
+     "Duct accessories",
+     "Overview of energy analysis"
+    ]
+   },
+   {
+    "title": "Piping and plumbing",
+    "detail": [
+     "Hydraulic piping",
+     "Pipes and pipe fittings",
+     "Pipe accessories",
+     "Plumbing systems",
+     "Plumbing pipes and fittings",
+     "Sloping drainage pipes"
+    ]
+   },
+   {
+    "title": "Fire protection",
+    "detail": [
+     "Fire protection systems",
+     "Sprinklers",
+     "Pipes and pipe fittings"
+    ]
+   },
+   {
+    "title": "Electrical systems",
+    "detail": [
+     "Light fixtures",
+     "Electrical devices",
+     "Cable trays",
+     "Cables and electrical equipment"
+    ]
+   },
+   {
+    "title": "Families",
+    "detail": [
+     "Introduction to families",
+     "Basic family creation tools",
+     "Creating families",
+     "Duct, pipe and electrical connectors",
+     "Editing existing families"
+    ]
+   },
+   {
+    "title": "Documentation and teamwork",
+    "detail": [
+     "Tags",
+     "Dimensions",
+     "Symbols and text",
+     "Legends",
+     "Schedules",
+     "Worksets and worksharing",
+     "Printing and publishing"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:16.258707+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "6b2d500d-8bcb-4fe2-bb44-0c7a5723e38f",
+  "title": "Revit Structure",
+  "caption": "Model structural frames, foundations and reinforcement in Revit Structure and document them for construction.",
+  "description": "This course covers structural modelling in Revit. You will link the architectural model, set up levels, add columns, foundations, retaining walls, beams, braced frames, trusses and slabs, reinforce with rebar, and then detail, schedule and plot the structure.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "5",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Civil / Architecture",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Setting up",
+    "detail": [
+     "The Revit interface",
+     "Linking the architectural model",
+     "Creating levels"
+    ]
+   },
+   {
+    "title": "Structural elements",
+    "detail": [
+     "Steel columns",
+     "Foundations",
+     "Retaining walls",
+     "Beam systems",
+     "Brace frames",
+     "Trusses"
+    ]
+   },
+   {
+    "title": "Slabs and circulation",
+    "detail": [
+     "Slab floors",
+     "Cantilevered slab edges",
+     "Stairs and ramps"
+    ]
+   },
+   {
+    "title": "Reinforcement and details",
+    "detail": [
+     "Reinforcing with rebar",
+     "Tagging steel framing",
+     "Detailing",
+     "Using AutoCAD geometry"
+    ]
+   },
+   {
+    "title": "Schedules and output",
+    "detail": [
+     "Schedules",
+     "Plotting"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:17.044029+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "1bc74a0a-5d06-416e-949c-0044fd56321c",
+  "title": "Sketch up",
+  "caption": "Build 3D models in SketchUp, from furniture to full house interiors, and present them with scenes and walkthroughs.",
+  "description": "SketchUp is a quick way to model buildings and interiors. The course covers the interface and drawing tools, modelling furniture, tracing a floor plan, building a house interior with moulding, applying materials and photo-matched textures, and presenting the model with annotations, terrain, scenes and walkthroughs.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "6",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Civil / Architecture",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Introduction and interface",
+    "detail": [
+     "Introduction to SketchUp",
+     "Using a 3D mouse",
+     "Save options",
+     "Select tool",
+     "Views toolbar",
+     "Orthographic drawings"
+    ]
+   },
+   {
+    "title": "Modelling furniture",
+    "detail": [
+     "Pencil tool",
+     "Eraser tool",
+     "Groups",
+     "Modelling a table",
+     "Modelling a bookcase"
+    ]
+   },
+   {
+    "title": "Floor plans",
+    "detail": [
+     "Importing a raster image",
+     "Tracing a plan",
+     "Edge styles",
+     "Sloped ceilings"
+    ]
+   },
+   {
+    "title": "House interior",
+    "detail": [
+     "Shell and first floor",
+     "Second floor",
+     "Crown moulding",
+     "Follow Me tool"
+    ]
+   },
+   {
+    "title": "Materials",
+    "detail": [
+     "Native materials",
+     "Textures",
+     "Swatches",
+     "Photo-match"
+    ]
+   },
+   {
+    "title": "Presenting",
+    "detail": [
+     "Annotations",
+     "Dimensions",
+     "Terrain",
+     "Scenes",
+     "Walkthroughs"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:17.808542+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "4bfb4ebe-26b9-4250-b262-ee4df605151d",
+  "title": "STAAD Pro",
+  "caption": "Analyse and design RCC and steel structures in STAAD.Pro to Indian standards, including wind, seismic and moving loads.",
+  "description": "This course covers structural analysis and design in STAAD.Pro. After learning the workspace and how to create geometry, you apply loads and combinations, then design reinforced concrete and steel structures using IS 456 and IS 800, with wind loading to IS 875 and seismic design to IS 1893. It also covers FEM modelling, water tanks, shear walls, moving loads and foundations.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "7",
+  "students": null,
+  "duration": "4",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Civil / Architecture",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Introduction",
+    "detail": [
+     "Overview of structural analysis and design",
+     "Introduction to STAAD.Pro",
+     "Workspace and interface",
+     "Coordinate systems",
+     "Units",
+     "Dimensions",
+     "Labels",
+     "Tools"
+    ]
+   },
+   {
+    "title": "Creating geometry",
+    "detail": [
+     "Geometry creation methods",
+     "Importing from DXF",
+     "Inserting nodes",
+     "Model editing tools",
+     "Section properties",
+     "Structure diagram"
+    ]
+   },
+   {
+    "title": "Loading",
+    "detail": [
+     "Loading basics",
+     "Special loads",
+     "Building loads",
+     "Creating primary loads",
+     "Load combinations",
+     "Analysis and printing"
+    ]
+   },
+   {
+    "title": "Code-based design",
+    "detail": [
+     "RCC design as per IS 456",
+     "Wind load design as per IS 875",
+     "Seismic design and analysis as per IS 1893",
+     "Steel design as per IS 800"
+    ]
+   },
+   {
+    "title": "Special structures",
+    "detail": [
+     "FEM modelling in STAAD.Pro",
+     "Water tank design",
+     "Shear wall design"
+    ]
+   },
+   {
+    "title": "Moving loads",
+    "detail": [
+     "Moving (rolling) loads",
+     "Moving load analysis"
+    ]
+   },
+   {
+    "title": "Foundation design",
+    "detail": [
+     "Isolated footing design",
+     "Combined footing design"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:47:24.804393+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "2e2398c5-fab5-4487-ac59-9881e331c48e",
+  "title": "Tekla Structure",
+  "caption": "Model steel and concrete structures in Tekla Structures and produce drawings, reports and material lists.",
+  "description": "Tekla Structures is a BIM tool for detailed structural models. You will learn to set up the model geometry, model roofs, foundations, beams and columns, add reinforcement and connections, and generate general arrangement drawings, material takeoffs, reports and plots.",
+  "image": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775655808/course-images/trfni9iduvmvpe9aknjd.png",
+  "banner": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775655810/course-images/dqekhx3shjywaiskgtmv.png",
+  "price": "10000",
+  "lessons": "4",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Civil / Architecture",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Introduction and setup",
+    "detail": [
+     "Introduction to Tekla Structures",
+     "Model geometry",
+     "Project information"
+    ]
+   },
+   {
+    "title": "Modelling structures",
+    "detail": [
+     "Roofs",
+     "Foundations",
+     "Beams",
+     "Columns",
+     "Reinforcement",
+     "Connections"
+    ]
+   },
+   {
+    "title": "BIM workflow",
+    "detail": [
+     "Tekla in BIM workflows",
+     "Modelling and drawing"
+    ]
+   },
+   {
+    "title": "Drawings and output",
+    "detail": [
+     "General arrangement drawings",
+     "Drawing properties",
+     "Material takeoff",
+     "Report generation",
+     "Plotting"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:23.929272+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "70264ea9-4d17-47e7-b84c-ed6bacb60c2e",
+  "title": "Tekla Structure Designer",
+  "caption": "Analyse and design concrete and steel buildings in Tekla Structural Designer.",
+  "description": "This course introduces Tekla Structural Designer for analysing and designing buildings. You will set up grids and geometry, define materials, element properties and supports, apply loads, run seismic and dynamic analysis, and design concrete and steel members before preparing reports and drawings.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "5",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Civil / Architecture",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Introduction and interface",
+    "detail": [
+     "Introduction to Tekla Structural Designer",
+     "User interface"
+    ]
+   },
+   {
+    "title": "Model setup",
+    "detail": [
+     "Model geometry",
+     "Grids and modelling",
+     "Material constants",
+     "Element properties",
+     "Support conditions"
+    ]
+   },
+   {
+    "title": "Loading and analysis",
+    "detail": [
+     "Loading",
+     "Seismology",
+     "Seismic analysis",
+     "Dynamic analysis"
+    ]
+   },
+   {
+    "title": "Member design",
+    "detail": [
+     "Reinforcement details",
+     "Columns",
+     "Beams",
+     "Slabs",
+     "Concrete design",
+     "Steel design"
+    ]
+   },
+   {
+    "title": "Output",
+    "detail": [
+     "Reports and drawings"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:18.126484+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "7f9a913d-bc2c-436d-9553-b331729c689f",
+  "title": "V-Ray",
+  "caption": "Light, shade and render realistic scenes with V-Ray.",
+  "description": "V-Ray is a rendering engine used for architectural and product visualisation. This course explains the key concepts behind image quality, lighting tools, global illumination, materials, the physical camera and sun and sky, special effects, and render elements for compositing.",
+  "image": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775582842/course-images/wkrvmlkdshmevlj5asn0.png",
+  "banner": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775582847/course-images/ba3rqftoquctlccajvtu.png",
+  "price": "10000",
+  "lessons": "8",
+  "students": null,
+  "duration": "15",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Civil / Architecture",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Getting ready",
+    "detail": [
+     "Preparing the scene",
+     "Finding the V-Ray tools",
+     "Image-saving options"
+    ]
+   },
+   {
+    "title": "Core rendering concepts",
+    "detail": [
+     "Image sampling",
+     "Subdivisions",
+     "DMC sampler",
+     "Colour mapping"
+    ]
+   },
+   {
+    "title": "Lighting",
+    "detail": [
+     "Introduction to lighting",
+     "Common lighting problems",
+     "Spherical fill light",
+     "Mesh light",
+     "Skylight effect",
+     "Dome light"
+    ]
+   },
+   {
+    "title": "Global illumination",
+    "detail": [
+     "What global illumination is",
+     "Primary and secondary bounces",
+     "Irradiance map",
+     "Light cache",
+     "Brute force GI"
+    ]
+   },
+   {
+    "title": "V-Ray materials",
+    "detail": [
+     "V-Ray-specific materials",
+     "Diffuse colour",
+     "Reflective materials",
+     "Blurry reflections",
+     "Clear and coloured glass",
+     "Translucency"
+    ]
+   },
+   {
+    "title": "The physical workflow",
+    "detail": [
+     "The physical workflow",
+     "V-Ray Sun and Sky",
+     "V-Ray Physical Camera"
+    ]
+   },
+   {
+    "title": "Effects",
+    "detail": [
+     "Depth of field",
+     "Motion blur",
+     "Caustics",
+     "Stereoscopic 3D"
+    ]
+   },
+   {
+    "title": "Render elements",
+    "detail": [
+     "Render element workflow",
+     "Compositing",
+     "Post-lighting"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:15.308571+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "ac73d0cd-6e96-4df4-88b5-59b3ae524281",
+  "title": "Adobe Illustrator",
+  "caption": "Create logos, illustrations and layouts with Adobe Illustrator's drawing, colour, type and effects tools.",
+  "description": "This course covers vector drawing in Adobe Illustrator. You will learn the workspace, selections and guides, colour, gradients and layers, the Pen and Pencil tools, brushes and symbols, type, transparency and masks, effects and the Pathfinder, tracing and Live Paint, and finally how to print and export your work.",
+  "image": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775828677/course-images/czt0hddfg9wdbqcakzsj.png",
+  "banner": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775828683/course-images/pmyuabz7y8jmoo3kw34w.png",
+  "price": "10000",
+  "lessons": "7",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Creative Arts",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Workspace and basics",
+    "detail": [
+     "Introduction, workspace and navigation",
+     "Selections",
+     "Smart guides and rulers"
+    ]
+   },
+   {
+    "title": "Colour, fills and layers",
+    "detail": [
+     "Fills, strokes and colour",
+     "Gradients and gradient mesh",
+     "Layers and grouping"
+    ]
+   },
+   {
+    "title": "Drawing",
+    "detail": [
+     "Draw tools",
+     "The Pen tools and path editing",
+     "The Pencil tools",
+     "Brushes",
+     "Symbol tools"
+    ]
+   },
+   {
+    "title": "Transforming, cutting and type",
+    "detail": [
+     "Transform tools",
+     "Cutting tools",
+     "Charts and graphs",
+     "Working with type"
+    ]
+   },
+   {
+    "title": "Styles and effects",
+    "detail": [
+     "Appearance and styles",
+     "Transparency and masking",
+     "Filters",
+     "Effects",
+     "Blending",
+     "Pathfinder operations"
+    ]
+   },
+   {
+    "title": "Advanced features",
+    "detail": [
+     "Image maps",
+     "Image and Photoshop integration",
+     "Dynamic type treatments",
+     "Auto Trace and Live Trace",
+     "Live Paint"
+    ]
+   },
+   {
+    "title": "Output",
+    "detail": [
+     "Printing and exporting"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:15.946138+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "6cca13cc-880a-48b7-a3f2-b5f97a7a226f",
+  "title": "Adobe Photoshop",
+  "caption": "Edit photos, build composites and design graphics in Photoshop using layers, masks, brushes and shapes.",
+  "description": "Photoshop is a widely used tool for editing photographs and building graphics. This course covers the workspace, layers, selecting and transforming, brushes with masks, fills, shape tools and custom shapes, retouching with the Clone Stamp, and creating collages and editing drawings.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "4",
+  "students": null,
+  "duration": "10",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Creative Arts",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Workspace and files",
+    "detail": [
+     "The Photoshop workspace",
+     "Importing images and files"
+    ]
+   },
+   {
+    "title": "Layers and selections",
+    "detail": [
+     "Working with layers",
+     "Selecting and transforming"
+    ]
+   },
+   {
+    "title": "Painting and retouching",
+    "detail": [
+     "Brushes with masks",
+     "Fill options and the Paint Bucket tool",
+     "Shape tools",
+     "Custom shapes",
+     "Clone Stamp retouching"
+    ]
+   },
+   {
+    "title": "Putting it together",
+    "detail": [
+     "Collaging images into one composition",
+     "Editing drawings"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:22.533539+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "319c2861-07c6-4af2-9095-08c95185854d",
+  "title": "Diploma in Photography",
+  "caption": "A diploma covering camera control, lighting, shooting genres and editing in Lightroom and Photoshop.",
+  "description": "This diploma is for people who love photography and want to build creative and technical skills, whether as a serious hobby or a career. You will learn camera handling and the exposure triangle, composition and lighting, portrait, landscape, fashion and product photography, then edit RAW files in Lightroom and refine images in Photoshop, ending with file management and a portfolio.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "6",
+  "students": null,
+  "duration": "90",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Creative Arts",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Camera fundamentals",
+    "detail": [
+     "Fundamentals of photography",
+     "Camera handling"
+    ]
+   },
+   {
+    "title": "Exposure, composition and light",
+    "detail": [
+     "The exposure triangle: aperture, shutter speed and ISO",
+     "Composition techniques",
+     "Lighting essentials"
+    ]
+   },
+   {
+    "title": "Photography genres",
+    "detail": [
+     "Portrait photography",
+     "Landscape photography",
+     "Fashion photography",
+     "Product photography"
+    ]
+   },
+   {
+    "title": "Shooting practice",
+    "detail": [
+     "Indoor shooting practice",
+     "Outdoor shooting practice"
+    ]
+   },
+   {
+    "title": "Editing",
+    "detail": [
+     "RAW image processing in Adobe Lightroom",
+     "Advanced photo editing in Adobe Photoshop",
+     "Colour correction",
+     "Retouching",
+     "Creative effects"
+    ]
+   },
+   {
+    "title": "Finishing",
+    "detail": [
+     "File management",
+     "Exporting images",
+     "Building a portfolio"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:19.383049+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "79c4bbae-da89-4c60-aa1f-c3654bd7a394",
+  "title": "Graphic Design in CorelDRAW",
+  "caption": "Design logos, layouts and print artwork with CorelDRAW's vector drawing, colour, text and effects tools.",
+  "description": "CorelDRAW is a vector drawing application used for graphic design and print work. In this course you will learn the workspace and page setup, drawing, shaping and arranging objects, working with outlines, fills and layers, special effects and text, symbols, bitmaps and tracing, and finally page layout, printing and exporting.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "5",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Creative Arts",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Getting started",
+    "detail": [
+     "Exploring the CorelDRAW screen",
+     "File management",
+     "Setting up the page",
+     "Viewing modes",
+     "Inserting and deleting pages",
+     "Using multiple workspaces",
+     "Customising toolbars",
+     "Using shortcuts"
+    ]
+   },
+   {
+    "title": "Drawing and editing objects",
+    "detail": [
+     "Drawing and shaping objects",
+     "Selecting and manipulating objects",
+     "Transforming objects",
+     "Arranging objects",
+     "Using layers"
+    ]
+   },
+   {
+    "title": "Colour and outlines",
+    "detail": [
+     "Outlining and filling objects",
+     "Eyedropper and Paint Bucket tools",
+     "Outline tool",
+     "Fill tool"
+    ]
+   },
+   {
+    "title": "Effects, text and graphics",
+    "detail": [
+     "Special effects and text",
+     "Symbols and clipart",
+     "Working with bitmaps",
+     "Tracing in CorelDRAW"
+    ]
+   },
+   {
+    "title": "Layout and output",
+    "detail": [
+     "Page layout",
+     "Printing",
+     "Exporting",
+     "Advanced features"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:21.90127+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "23c45b99-d4b1-4192-8b34-5a9397cbe2e3",
+  "title": "Matrix 3D",
+  "caption": "Design jewellery in MatrixGold, from basic forms and stone settings to engraving, parametric design and presentation.",
+  "description": "Matrix, now called MatrixGold, is a 3D design program built on the Rhino platform for jewellery design and manufacture. This course covers basic and advanced jewellery modelling, setting gemstones and diamonds, detailing and engraving, parametric design, and preparing presentations and portfolios.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "5",
+  "students": null,
+  "duration": "40",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Creative Arts",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Introduction",
+    "detail": [
+     "Introduction to Matrix for jewellery design"
+    ]
+   },
+   {
+    "title": "Core techniques",
+    "detail": [
+     "Basic jewellery design techniques in Matrix"
+    ]
+   },
+   {
+    "title": "Stones and settings",
+    "detail": [
+     "Gemstone and diamond setting"
+    ]
+   },
+   {
+    "title": "Advanced modelling",
+    "detail": [
+     "Advanced jewellery modelling in Matrix",
+     "Custom detailing and engraving",
+     "Parametric jewellery design with MatrixGold"
+    ]
+   },
+   {
+    "title": "Presentation",
+    "detail": [
+     "Creating presentation materials and portfolios"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:18.603438+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "e2140ba0-c781-4cd4-93df-ffa1f9534e71",
+  "title": "Product Design and Animation with Blender",
+  "caption": "Model, texture, animate and render 3D designs and product visuals in Blender.",
+  "description": "Blender is a free 3D creation suite. In this course you will learn the interface and modelling workflow, edit meshes with extrusion, loop cuts and bevels, use modifiers for non-destructive work, apply materials and textures, animate with keyframes, and render a final project. It suits artists and designers who want to create 3D visuals and simple animations.",
+  "image": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1774594375/course-images/dchwkkgexyvma2i7x88b.png",
+  "banner": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1774594383/course-images/iail5gtve2hikydhf9zx.png",
+  "price": "10000",
+  "lessons": "7",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Creative Arts",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Getting started",
+    "detail": [
+     "The Blender interface",
+     "Navigation basics",
+     "Moving, rotating and scaling objects",
+     "Viewport navigation"
+    ]
+   },
+   {
+    "title": "Modelling workflow",
+    "detail": [
+     "Modelling techniques",
+     "Box modelling and edge modelling",
+     "Edit mode and vertex manipulation",
+     "Extrusion, loop cuts and bevelling"
+    ]
+   },
+   {
+    "title": "Practical modelling",
+    "detail": [
+     "Modelling principles",
+     "Creating simple objects",
+     "Hands-on modelling exercises",
+     "Advanced tools: Boolean operations and the knife tool"
+    ]
+   },
+   {
+    "title": "Modifiers",
+    "detail": [
+     "Common modifiers",
+     "Non-destructive modelling with modifiers"
+    ]
+   },
+   {
+    "title": "Materials and texturing",
+    "detail": [
+     "Introduction to materials",
+     "Creating basic materials",
+     "Applying textures"
+    ]
+   },
+   {
+    "title": "Animation",
+    "detail": [
+     "Keyframe animation basics",
+     "Animating object properties",
+     "Hands-on animation exercises"
+    ]
+   },
+   {
+    "title": "Rendering and final project",
+    "detail": [
+     "Rendering basics",
+     "Render settings and output formats",
+     "Final project"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:14.483908+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "83a3e907-cfa5-4008-b9c2-5dbf418b99fa",
+  "title": "Rhinoceros",
+  "caption": "Model curves, surfaces and solids in Rhinoceros for product, jewellery and architectural design.",
+  "description": "Rhinoceros is a 3D modelling program known for its freeform surface tools. This course introduces the interface, then builds from curves to surfaces and solids, covers transforming and organising objects, and finishes with materials, dimensions and exporting your model.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "6",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Creative Arts",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Getting started",
+    "detail": [
+     "The Rhino interface and viewports",
+     "Navigation and display modes",
+     "Units, templates and file settings",
+     "Selection and snapping tools"
+    ]
+   },
+   {
+    "title": "Curves",
+    "detail": [
+     "Lines, polylines and arcs",
+     "Free-form curves and control points",
+     "Editing, trimming and joining curves",
+     "Offsetting, filleting and blending curves"
+    ]
+   },
+   {
+    "title": "Surfaces",
+    "detail": [
+     "Extrude, revolve and sweep",
+     "Loft and network surfaces",
+     "Surface continuity",
+     "Trimming, joining and filleting surfaces"
+    ]
+   },
+   {
+    "title": "Solids",
+    "detail": [
+     "Solid primitives",
+     "Boolean operations",
+     "Editing solids",
+     "Filleting and chamfering"
+    ]
+   },
+   {
+    "title": "Transforming and organising",
+    "detail": [
+     "Move, rotate, scale, mirror and arrays",
+     "Layers and object properties",
+     "Blocks and groups"
+    ]
+   },
+   {
+    "title": "Presentation and output",
+    "detail": [
+     "Materials and rendering basics",
+     "Dimensions and annotations",
+     "Exporting for drawings, rendering and 3D printing"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:21.434852+00:00",
+  "needs_review": true
+ },
+ {
+  "id": "9db356c3-1184-405f-9822-ca77358c8851",
+  "title": "Adobe Photoshop",
+  "caption": "Edit and design images for websites and digital media in Photoshop using layers, masks, brushes and shapes.",
+  "description": "Photoshop is widely used by web developers and designers to prepare images. This course covers the workspace, layers, selecting and transforming, brushes with masks, fills, shape tools and custom shapes, retouching and collaging.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "4",
+  "students": null,
+  "duration": "10",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "CS/IT",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Workspace and files",
+    "detail": [
+     "The Photoshop workspace",
+     "Importing images and files"
+    ]
+   },
+   {
+    "title": "Layers and selections",
+    "detail": [
+     "Working with layers",
+     "Selecting and transforming"
+    ]
+   },
+   {
+    "title": "Painting and retouching",
+    "detail": [
+     "Brushes with masks",
+     "Fill options and the Paint Bucket tool",
+     "Shape tools",
+     "Custom shapes",
+     "Clone Stamp retouching"
+    ]
+   },
+   {
+    "title": "Putting it together",
+    "detail": [
+     "Collaging images into one composition",
+     "Editing drawings"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:18.757847+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "b4f45064-87c4-4933-80bf-ab8bdb1e7422",
+  "title": "Advanced Excel",
+  "caption": "Work faster and analyse data in Excel with formatting, functions, pivot tables, charts and data tools.",
+  "description": "This course takes Excel beyond the basics. You will format and clean data, use functions, build pivot tables and charts, import and transform data with Get & Transform, use data tools such as forecasting and outlines, and prepare workbooks for printing and review.",
+  "image": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775828291/course-images/dd3vtth3ed908mlgby9s.png",
+  "banner": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775828292/course-images/lvtrpajily6xzaye4v6r.png",
+  "price": "10000",
+  "lessons": "7",
+  "students": null,
+  "duration": "15",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "CS/IT",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Formatting and editing",
+    "detail": [
+     "Clipboard, font and alignment",
+     "Numbers and conditional formatting",
+     "Inserting rows and columns",
+     "Deleting, inserting and formatting cells"
+    ]
+   },
+   {
+    "title": "Cleaning and organising data",
+    "detail": [
+     "Fill, clean, sort and filter"
+    ]
+   },
+   {
+    "title": "Functions",
+    "detail": [
+     "Functions in Excel"
+    ]
+   },
+   {
+    "title": "Analysis and charts",
+    "detail": [
+     "Pivot tables and pivot charts",
+     "Illustrations, charts and sparklines",
+     "Filters, links and themes"
+    ]
+   },
+   {
+    "title": "Page setup and views",
+    "detail": [
+     "Scale to fit and page setup",
+     "Sheet options and arranging windows",
+     "Workbook views, show, zoom and arrange"
+    ]
+   },
+   {
+    "title": "Data tools",
+    "detail": [
+     "Get and transform data",
+     "Connections, sort and filter",
+     "Data tools",
+     "Forecast and outline"
+    ]
+   },
+   {
+    "title": "Review",
+    "detail": [
+     "Proofing and insights",
+     "Language, comments and tracked changes"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:16.106476+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "5d9d0467-81ae-4aa7-b7a4-f0f2d49ebdaf",
+  "title": "ASP.NET MVC",
+  "caption": "Build web applications with ASP.NET, from web forms and data access to the MVC pattern and Entity Framework.",
+  "description": "This course covers web development on Microsoft's .NET platform. You will start with ASP.NET fundamentals such as server controls, state, data access with LINQ, AJAX, security and deployment, then move to the MVC pattern with controllers, views, models and Entity Framework, finishing with a project.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "6",
+  "students": null,
+  "duration": "30",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "CS/IT",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Foundations",
+    "detail": [
+     "Introduction to the Microsoft .NET Framework",
+     "Introduction to ASP.NET"
+    ]
+   },
+   {
+    "title": "Building web forms",
+    "detail": [
+     "Web server controls",
+     "Styles, themes and master pages",
+     "Navigating websites",
+     "Managing state in web applications"
+    ]
+   },
+   {
+    "title": "Data and robustness",
+    "detail": [
+     "Working with data",
+     "Manipulating data with LINQ",
+     "Error handling and debugging"
+    ]
+   },
+   {
+    "title": "Richer, safer applications",
+    "detail": [
+     "Rich internet applications with AJAX",
+     "Internationalisation and accessibility",
+     "Securing web applications",
+     "Deploying an ASP.NET application"
+    ]
+   },
+   {
+    "title": "ASP.NET MVC",
+    "detail": [
+     "Introduction to web development with ASP.NET MVC",
+     "Controllers and views",
+     "Models and helper methods",
+     "Entity Framework"
+    ]
+   },
+   {
+    "title": "Project",
+    "detail": [
+     "Project work"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:17.976574+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "c86beb57-36dc-490c-ae50-d06409492743",
+  "title": "Basics of Python Programming",
+  "caption": "Learn Python from first principles: data types, functions, object-oriented code, files, databases and basic networking.",
+  "description": "This course teaches Python programming from the ground up. You will cover syntax, data types, control flow, functions, modules, file handling and object-oriented programming, then exceptions, regular expressions, database access, Tkinter interfaces, threading, CGI and socket programming.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "9",
+  "students": null,
+  "duration": "30",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "CS/IT",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Python fundamentals",
+    "detail": [
+     "Features of Python",
+     "Installing Python",
+     "Identifiers and reserved keywords",
+     "Comments and multiline statements",
+     "Operators"
+    ]
+   },
+   {
+    "title": "Data types",
+    "detail": [
+     "Numbers and strings",
+     "Lists",
+     "Tuples and sets",
+     "Dictionaries",
+     "Data type conversion"
+    ]
+   },
+   {
+    "title": "Flow control",
+    "detail": [
+     "Decision making",
+     "Loops",
+     "Nested loops",
+     "Control statements",
+     "Nested dictionaries"
+    ]
+   },
+   {
+    "title": "Functions and modules",
+    "detail": [
+     "Defining functions",
+     "Calling functions",
+     "Recursive functions",
+     "Functions returning multiple values",
+     "Built-in modules",
+     "Creating modules",
+     "Import statements",
+     "Namespaces and scope",
+     "Date and time modules"
+    ]
+   },
+   {
+    "title": "Files",
+    "detail": [
+     "Reading and writing files",
+     "Opening and closing files",
+     "File methods",
+     "Renaming and deleting files",
+     "Working with directories"
+    ]
+   },
+   {
+    "title": "Object-oriented programming",
+    "detail": [
+     "Classes and objects",
+     "Built-in attributes and methods",
+     "Destructors",
+     "Encapsulation",
+     "Data hiding",
+     "Inheritance",
+     "Polymorphism",
+     "Method overriding"
+    ]
+   },
+   {
+    "title": "Errors and patterns",
+    "detail": [
+     "Built-in exceptions",
+     "Handling exceptions",
+     "Exceptions with arguments",
+     "User-defined exceptions",
+     "Assertions",
+     "The match() and search() functions",
+     "Regular expression patterns",
+     "Special character classes",
+     "Repetition cases"
+    ]
+   },
+   {
+    "title": "Databases and GUIs",
+    "detail": [
+     "Connecting to a database",
+     "Creating tables",
+     "Insert, update, delete and read operations",
+     "Exception handling in database code",
+     "Tkinter widgets",
+     "Layout managers"
+    ]
+   },
+   {
+    "title": "Threads, web and sockets",
+    "detail": [
+     "Threads in Python",
+     "Thread objects",
+     "Lock objects",
+     "Event and timer objects",
+     "CGI programs",
+     "HTTP headers and environment variables",
+     "Forms (GET and POST)",
+     "Cookies",
+     "File uploading",
+     "The socket module",
+     "Socket methods",
+     "Connecting to a server",
+     "Creating a server and a client"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:22.213495+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "64fb4cda-c385-480c-946f-11b73d656fd1",
+  "title": "C Programming",
+  "caption": "Learn C programming, from variables and control flow to functions, pointers, structures and file handling.",
+  "description": "C is a structured language used for system software and embedded programming. This course covers program structure and debugging, data types and operators, control flow, input and output, functions, arrays, strings, pointers and structures, and file operations.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "7",
+  "students": null,
+  "duration": "30",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "CS/IT",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Basics of C",
+    "detail": [
+     "Structure of a C program",
+     "Writing a C program",
+     "Building and executing a program",
+     "Debugging a program"
+    ]
+   },
+   {
+    "title": "Data types and variables",
+    "detail": [
+     "Declaring and initialising variables",
+     "Operators, operands and expressions"
+    ]
+   },
+   {
+    "title": "Control flow",
+    "detail": [
+     "Control-flow statements",
+     "Looping"
+    ]
+   },
+   {
+    "title": "Input and output",
+    "detail": [
+     "Basics of input and output",
+     "Formatted input functions"
+    ]
+   },
+   {
+    "title": "Functions and program structure",
+    "detail": [
+     "Basics of functions",
+     "Scope rules",
+     "Header files",
+     "Static variables",
+     "Passing arguments",
+     "Standard library functions"
+    ]
+   },
+   {
+    "title": "Arrays, pointers and strings",
+    "detail": [
+     "Arrays",
+     "Strings",
+     "Pointers and addresses",
+     "Structures",
+     "Arrays of structures",
+     "Passing structures to functions",
+     "Nesting structures"
+    ]
+   },
+   {
+    "title": "File operations",
+    "detail": [
+     "ASCII and binary files",
+     "The FILE structure",
+     "stdin, stdout and stderr",
+     "Creating and opening files",
+     "Reading and writing text and binary data",
+     "Writing your own file copy function"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:18.438666+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "b37c8202-2ea4-4729-b3c0-5524ee146ac8",
+  "title": "C# Programming",
+  "caption": "Learn C# and the .NET Framework, from object-oriented basics to threading, delegates and reflection.",
+  "description": "This course teaches C# programming on the .NET Framework. You will learn the object-oriented approach, value and reference types, constructors, inheritance and polymorphism, file input and output, exception handling, and advanced topics such as multithreading, delegates, events, attributes and reflection.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "4",
+  "students": null,
+  "duration": "30",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "CS/IT",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Getting started",
+    "detail": [
+     "Introduction to the .NET Framework",
+     "Introduction to the object-oriented approach",
+     "Creating objects",
+     "Operators and programming constructs"
+    ]
+   },
+   {
+    "title": "Object-oriented concepts",
+    "detail": [
+     "Encapsulation and abstraction",
+     "Value types and reference types",
+     "Constructors and destructors",
+     "Polymorphism",
+     "Inheritance"
+    ]
+   },
+   {
+    "title": "Files and errors",
+    "detail": [
+     "File input and output",
+     "Exception handling"
+    ]
+   },
+   {
+    "title": "Advanced features",
+    "detail": [
+     "Multithreaded applications",
+     "Delegates and events",
+     "Attributes and reflection"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:20.962499+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "632b3531-447c-439c-8a06-cd12f0e59ac7",
+  "title": "C++ Programming",
+  "caption": "Learn C++ and object-oriented programming, from classes and constructors to inheritance, overloading and exceptions.",
+  "description": "C++ extends C with object-oriented features. This course covers the structure of a C++ program, data types, classes and objects, operators and expressions, functions, constructors and destructors, inheritance, operator overloading and exception handling.",
+  "image": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775829241/course-images/z7n82sg0o2dl06ayolil.png",
+  "banner": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775829245/course-images/gzesu6bqc0pow1wf9uey.png",
+  "price": "10000",
+  "lessons": "9",
+  "students": null,
+  "duration": "30",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "CS/IT",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Object-oriented thinking",
+    "detail": [
+     "Core ideas of object-oriented programming and why they help",
+     "What C++ is and how a program is laid out",
+     "Writing the source file, compiling and linking"
+    ]
+   },
+   {
+    "title": "Variables and data types",
+    "detail": [
+     "Keywords and identifiers",
+     "Built-in data types and type compatibility",
+     "Declaring variables and initialising them at run time"
+    ]
+   },
+   {
+    "title": "Classes and objects",
+    "detail": [
+     "Declaring a class and defining its member functions",
+     "Inline functions defined outside the class",
+     "Nested calls between member functions",
+     "Private member functions",
+     "Arrays inside a class and arrays of objects",
+     "How memory is allocated for objects",
+     "Static data members"
+    ]
+   },
+   {
+    "title": "Operators and expressions",
+    "detail": [
+     "The C++ operator set",
+     "Scope resolution and member dereferencing operators",
+     "Memory management operators (new and delete)",
+     "Manipulators",
+     "Type casting and implicit conversions",
+     "Kinds of expressions and special assignments",
+     "Operator precedence",
+     "Control structures"
+    ]
+   },
+   {
+    "title": "Functions",
+    "detail": [
+     "Declaring and prototyping functions",
+     "Passing and returning by reference",
+     "Inline functions",
+     "Default arguments",
+     "Recursion",
+     "Function overloading",
+     "Friend functions and virtual functions"
+    ]
+   },
+   {
+    "title": "Constructors and destructors",
+    "detail": [
+     "Constructors and parameterised constructors",
+     "Several constructors in one class",
+     "Default arguments in constructors",
+     "Initialising objects dynamically",
+     "Copy constructors and dynamic constructors",
+     "Destructors"
+    ]
+   },
+   {
+    "title": "Inheritance",
+    "detail": [
+     "Defining derived classes",
+     "Single inheritance and the other inheritance types",
+     "Virtual base classes",
+     "Abstract classes",
+     "Constructors in derived classes",
+     "Classes nested as members"
+    ]
+   },
+   {
+    "title": "Operator overloading",
+    "detail": [
+     "Why and how to overload an operator",
+     "Overloading unary operators",
+     "Overloading binary operators",
+     "Working with strings using operators",
+     "Rules for overloading",
+     "Converting between types"
+    ]
+   },
+   {
+    "title": "Exception handling",
+    "detail": [
+     "Why exceptions are used",
+     "How the exception mechanism works",
+     "Throwing exceptions",
+     "Catching exceptions"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:17.198189+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "956ca2a5-62dd-4cfe-8d7f-9618a0c97465",
+  "title": "Core Java",
+  "caption": "Learn core Java, from syntax and object-oriented programming to threads, file handling, GUIs and JDBC.",
+  "description": "This course teaches core Java programming. You will learn the language fundamentals and object-oriented concepts, then packages, interfaces, exceptions, threads, file handling and strings, applets, networking with sockets, AWT and Swing interfaces, and database access with JDBC, finishing with a project.",
+  "image": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775829832/course-images/wwpv4ok0vjzgheldvskg.png",
+  "banner": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775829835/course-images/ezcnml1n7lznchiom380.png",
+  "price": "10000",
+  "lessons": "9",
+  "students": null,
+  "duration": "30",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "CS/IT",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Introduction to Java",
+    "detail": [
+     "Why Java",
+     "Features of Java",
+     "The JVM",
+     "Java program structure",
+     "Creating a Java application"
+    ]
+   },
+   {
+    "title": "Java fundamentals",
+    "detail": [
+     "Java program flow",
+     "Java bytecode",
+     "Data types and variables",
+     "Naming conventions",
+     "Operators"
+    ]
+   },
+   {
+    "title": "Control structures",
+    "detail": [
+     "Types of control structures",
+     "Decision control (if, if-else, else-if, switch-case)",
+     "Repetition control (do-while, while, for)",
+     "Branching statements (break, continue, return)"
+    ]
+   },
+   {
+    "title": "Object-oriented programming",
+    "detail": [
+     "Classes and objects",
+     "Methods and constructors",
+     "Inheritance",
+     "Method overriding",
+     "Final classes and methods",
+     "Abstract classes and methods"
+    ]
+   },
+   {
+    "title": "Packages, interfaces and exceptions",
+    "detail": [
+     "Predefined (API) packages",
+     "User-defined packages",
+     "Interfaces",
+     "Types of exception handling",
+     "Common exceptions",
+     "Catching and handling exceptions (try, catch, throw)",
+     "Built-in exceptions"
+    ]
+   },
+   {
+    "title": "Threads, files and strings",
+    "detail": [
+     "Overview of multithreading",
+     "The Thread class",
+     "Life cycle of a thread",
+     "The java.io package",
+     "Streams and types of streams",
+     "Character streams",
+     "Use of strings",
+     "String constructors and operations",
+     "String comparison and searching",
+     "Changing the case of characters",
+     "Data conversion with valueOf()"
+    ]
+   },
+   {
+    "title": "Applets and graphics",
+    "detail": [
+     "Types of applets",
+     "Advantages of applets",
+     "Applet programs",
+     "Applet life cycle",
+     "Applet methods",
+     "Graphics coordinate system",
+     "Java colour system",
+     "Drawing and filling"
+    ]
+   },
+   {
+    "title": "Networking and GUIs",
+    "detail": [
+     "Internet addresses",
+     "The InetAddress class",
+     "Sockets in Java",
+     "Port numbers and URLs",
+     "AWT component hierarchy",
+     "Stand-alone AWT applications",
+     "Building graphical user interfaces",
+     "AWT components",
+     "Layout managers",
+     "Creating Swing applets and applications",
+     "Programming using panes"
+    ]
+   },
+   {
+    "title": "Databases and project",
+    "detail": [
+     "Java Database Connectivity (JDBC)",
+     "JDBC architecture",
+     "The JDBC API",
+     "Project work"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:19.863559+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "41263bf6-b270-4fd7-9fbd-e1f2084e7ab8",
+  "title": "Cyber Security",
+  "caption": "Learn how systems are attacked and defended, from networking and malware to ethical hacking, CTF challenges and reporting.",
+  "description": "This course introduces cyber security principles and practice. You will build a virtual lab, learn networking basics, study common attacks and defences, and follow the ethical hacking process from reconnaissance to covering tracks. It ends with two capture-the-flag challenges and writing a vulnerability report. Techniques are taught for defensive and ethical purposes.",
+  "image": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1774593749/course-images/qstlncizmqktuyychydm.png",
+  "banner": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1774593766/course-images/ywmuixmssje1t8wxbwnu.png",
+  "price": "10000",
+  "lessons": "5",
+  "students": null,
+  "duration": "45",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "CS/IT",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Foundations",
+    "detail": [
+     "Introduction to cyber security",
+     "Basics of networking",
+     "Building a virtual lab",
+     "GitHub and Kali Linux"
+    ]
+   },
+   {
+    "title": "Threats and defences",
+    "detail": [
+     "Spoofing attacks",
+     "Anti-virus",
+     "Malware",
+     "Data recovery",
+     "Google Hacking Database (GHDB)",
+     "Basic attacks and security",
+     "IDS, firewalls and honeypots",
+     "Denial of service (DoS)"
+    ]
+   },
+   {
+    "title": "Techniques and tools",
+    "detail": [
+     "Steganography",
+     "Mobile hacking",
+     "Cryptography",
+     "Wireless attacks",
+     "Cyber laws and security"
+    ]
+   },
+   {
+    "title": "The ethical hacking process",
+    "detail": [
+     "Footprinting and reconnaissance",
+     "Scanning",
+     "Gaining access",
+     "Maintaining access",
+     "Clearing tracks"
+    ]
+   },
+   {
+    "title": "Practice and reporting",
+    "detail": [
+     "Two CTF challenges",
+     "Writing reports on security vulnerabilities"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:14.127213+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "0764eed5-4cd9-46ee-9098-ed25051f086f",
+  "title": "Data Science with Python",
+  "caption": "Analyse data with Python using NumPy, SciPy, Pandas and scikit-learn, from exploratory analysis to text processing and big data tools.",
+  "description": "This course introduces data science with Python. You will learn the analytics process and exploratory analysis, set up Python, compute with NumPy and SciPy, manipulate data with Pandas, process text with scikit-learn, collect data with BeautifulSoup, and see how Python connects with Hadoop and Spark.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "4",
+  "students": null,
+  "duration": "45",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "CS/IT",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Data science foundations",
+    "detail": [
+     "Introduction to data science",
+     "Sectors that use data science",
+     "Data analytics overview",
+     "The data analytics process",
+     "Exploratory data analysis (EDA)",
+     "Statistical analysis and business applications",
+     "Statistical and non-statistical analysis"
+    ]
+   },
+   {
+    "title": "Python for data",
+    "detail": [
+     "Python environment setup and essentials",
+     "Data types in Python",
+     "Basic operators and functions"
+    ]
+   },
+   {
+    "title": "Scientific computing",
+    "detail": [
+     "Mathematical computing with NumPy",
+     "NumPy mathematical functions",
+     "Scientific computing with SciPy"
+    ]
+   },
+   {
+    "title": "Data handling and modelling",
+    "detail": [
+     "Data manipulation with Pandas",
+     "Natural language processing with scikit-learn",
+     "Web scraping with BeautifulSoup",
+     "Python integration with Hadoop MapReduce and Spark"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:23.461951+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "ae2e3c58-8cef-4712-b305-8df8002d98e3",
+  "title": "Data Structures & Algorithm",
+  "caption": "Learn the core data structures and algorithms, with complexity analysis and problem-solving practice.",
+  "description": "This course covers the building blocks of efficient programs. You will learn complexity analysis, then arrays and linked lists, stacks and queues, trees, hashing, graphs and sorting, and practise problem-solving strategies on algorithm problems.",
+  "image": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775830096/course-images/bzlasjm0uwao266yxhg1.png",
+  "banner": null,
+  "price": "10000",
+  "lessons": "9",
+  "students": null,
+  "duration": "45",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "CS/IT",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Algorithms and analysis",
+    "detail": [
+     "Introduction to algorithms and algorithm analysis",
+     "Complexity theory basics",
+     "Asymptotic notations (Big O, Big Omega, Big Theta)",
+     "Time and space complexity analysis"
+    ]
+   },
+   {
+    "title": "Arrays and strings",
+    "detail": [
+     "Arrays and their properties",
+     "String manipulation and algorithms",
+     "Dynamic arrays and amortised analysis"
+    ]
+   },
+   {
+    "title": "Linked lists",
+    "detail": [
+     "Singly, doubly and circular linked lists",
+     "Insertion, deletion and searching",
+     "Variations: skip lists and self-adjusting lists"
+    ]
+   },
+   {
+    "title": "Stacks and queues",
+    "detail": [
+     "Stack and queue data structures",
+     "Implementations, operations and applications",
+     "Array-based and linked-list-based implementations"
+    ]
+   },
+   {
+    "title": "Trees",
+    "detail": [
+     "Binary trees and binary search trees",
+     "Balanced trees (AVL and red-black)",
+     "Tree traversals (pre-order, in-order, post-order)",
+     "Heaps and heap sort"
+    ]
+   },
+   {
+    "title": "Hashing",
+    "detail": [
+     "Hashing principles and collision resolution",
+     "Hash table implementation and operations",
+     "Load factor, rehashing and performance analysis"
+    ]
+   },
+   {
+    "title": "Graphs",
+    "detail": [
+     "Graph representation (adjacency matrix and list)",
+     "Traversals (DFS and BFS)",
+     "Shortest paths (Dijkstra and Bellman-Ford)",
+     "Minimum spanning trees (Prim and Kruskal)"
+    ]
+   },
+   {
+    "title": "Sorting",
+    "detail": [
+     "Comparison-based sorts (bubble, insertion, selection)",
+     "Divide and conquer sorts (merge sort, quicksort)",
+     "Radix, counting and bucket sort"
+    ]
+   },
+   {
+    "title": "Problem solving",
+    "detail": [
+     "Problem-solving strategies",
+     "Analysing constraints and designing algorithms",
+     "Practice with algorithmic problems"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:22.851358+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "0caad814-e73d-469c-abac-88026928fea6",
+  "title": "Digital Marketing",
+  "caption": "Plan and run digital campaigns across search, display, email, social and mobile, and measure the results.",
+  "description": "This course covers the main channels of digital marketing: SEO, pay-per-click, display advertising, email, social media and mobile marketing. You will also learn analytics and measurement, and how to plan a strategy with objectives, budgets and KPIs.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "10",
+  "students": null,
+  "duration": "45",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "CS/IT",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Overview",
+    "detail": [
+     "Overview of digital marketing channels"
+    ]
+   },
+   {
+    "title": "Search engine optimisation",
+    "detail": [
+     "How search results are ranked and positioned",
+     "Why search position matters and who is involved",
+     "How search works",
+     "On-page and off-page optimisation",
+     "Customer insights, keyword research and keyword selection",
+     "Content updates, page layout and meta tags",
+     "Site maps and SEO webmaster tools",
+     "Ranking factors",
+     "Inbound links and link building",
+     "Legal rules and guidelines"
+    ]
+   },
+   {
+    "title": "Search engine marketing (PPC)",
+    "detail": [
+     "Strengths of pay-per-click advertising",
+     "Keyword research and tools",
+     "The search campaign process",
+     "Choosing keywords",
+     "Writing ad copy",
+     "Landing pages",
+     "Targeting and scheduling",
+     "Budgets and bidding",
+     "Display networks",
+     "Managing campaigns",
+     "Conversion tracking and metrics such as CPA and CTR",
+     "Analytics",
+     "Legal rules and guidelines"
+    ]
+   },
+   {
+    "title": "Digital display advertising",
+    "detail": [
+     "Benefits and challenges of display advertising",
+     "Business value of display",
+     "Running effective ads",
+     "Ad formats and features",
+     "How often ads are shown",
+     "Planning a campaign and its steps",
+     "Defining the audience, objectives and budget",
+     "Creative formats",
+     "Targeting",
+     "Tracking and optimising the campaign",
+     "Legal rules and guidelines"
+    ]
+   },
+   {
+    "title": "Email marketing",
+    "detail": [
+     "The email campaign process",
+     "Capturing data online and face to face",
+     "Segmentation",
+     "Email design, copy and structure",
+     "User behaviour and characteristics",
+     "Delivery, email systems and filtering",
+     "Scheduling",
+     "Measurement, key terms and metrics",
+     "Split testing",
+     "Legal rules and guidelines"
+    ]
+   },
+   {
+    "title": "Social media marketing: platforms",
+    "detail": [
+     "Setting social media goals and priorities",
+     "Facebook: features, newsfeed, business page and insights",
+     "Twitter (X): features and engagement",
+     "LinkedIn: setup, profile, features and company page",
+     "YouTube: setup, channels and features",
+     "Tumblr",
+     "Blogging"
+    ]
+   },
+   {
+    "title": "Social media marketing: planning and advertising",
+    "detail": [
+     "Implementing a social media plan",
+     "Social listening",
+     "Content planning",
+     "Scheduling tools",
+     "Facebook advertising",
+     "LinkedIn groups and advertising",
+     "Twitter (X) advertising",
+     "Advanced YouTube",
+     "Pinterest advertising",
+     "Instagram and Snapchat",
+     "Analytics for Facebook, LinkedIn, Twitter (X) and YouTube",
+     "Legal rules and guidelines"
+    ]
+   },
+   {
+    "title": "Mobile marketing",
+    "detail": [
+     "Mobile trends and statistics",
+     "Mobile-optimised websites",
+     "Apps compared with mobile sites",
+     "The site development process",
+     "Mobile apps",
+     "Mobile advertising goals and ad formats",
+     "Rich media ad units",
+     "The mobile advertising campaign process",
+     "Proximity marketing and QR codes",
+     "SMS marketing and its campaign process",
+     "Mobile analytics",
+     "Emerging trends",
+     "Legal rules and guidelines"
+    ]
+   },
+   {
+    "title": "Analytics",
+    "detail": [
+     "Cookies",
+     "Account structure, user levels and setup",
+     "Common terms",
+     "Reporting",
+     "Audiences",
+     "Acquisition",
+     "Behaviour",
+     "Conversions",
+     "Attribution",
+     "Customisation",
+     "Setting KPIs",
+     "Legal rules and guidelines"
+    ]
+   },
+   {
+    "title": "Strategy and planning",
+    "detail": [
+     "Planning and situation analysis",
+     "Gathering information",
+     "Defining the audience",
+     "Setting objectives",
+     "Choosing tools",
+     "Building an action plan",
+     "Setting the budget",
+     "KPIs and measurement",
+     "Iteration and enhancement"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:19.70298+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "fb609eaf-b215-4bbe-b22b-52a9dabf7edd",
+  "title": "Machine Learning",
+  "caption": "Learn core machine learning methods, from regression and clustering to neural networks and model selection.",
+  "description": "This course introduces machine learning. After setting up your environment you will study regression, classification, clustering, association rules and reinforcement learning, build neural networks including convolutional networks, reduce dimensions with PCA, LDA and Kernel PCA, and improve results with model selection and boosting.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "6",
+  "students": null,
+  "duration": "45",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "CS/IT",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Getting started",
+    "detail": [
+     "Introduction to machine learning and set-up"
+    ]
+   },
+   {
+    "title": "Supervised learning",
+    "detail": [
+     "Regression",
+     "Classification"
+    ]
+   },
+   {
+    "title": "Unsupervised learning",
+    "detail": [
+     "Clustering",
+     "Association rule learning"
+    ]
+   },
+   {
+    "title": "Reinforcement and deep learning",
+    "detail": [
+     "Reinforcement learning",
+     "Artificial neural networks",
+     "Convolutional neural networks"
+    ]
+   },
+   {
+    "title": "Dimensionality reduction",
+    "detail": [
+     "Dimensionality reduction",
+     "Principal component analysis (PCA)",
+     "Linear discriminant analysis (LDA)",
+     "Kernel PCA"
+    ]
+   },
+   {
+    "title": "Improving models",
+    "detail": [
+     "Model selection and boosting"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:20.183015+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "9ac11dc4-81ae-4d39-9eb2-1f702bc18548",
+  "title": "Microsoft SQL Server",
+  "caption": "Learn to query, build and tune relational databases in Microsoft SQL Server.",
+  "description": "This course teaches working with databases in Microsoft SQL Server. You will learn relational database concepts, write queries with joins and subqueries, create and manage databases and tables, and implement indexes, views, stored procedures, functions, triggers and transactions, finishing with monitoring and performance tuning.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "5",
+  "students": null,
+  "duration": "45",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "CS/IT",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Introduction",
+    "detail": [
+     "Introduction to RDBMS",
+     "Overview of SQL Server"
+    ]
+   },
+   {
+    "title": "Querying",
+    "detail": [
+     "Querying data",
+     "Querying with joins and subqueries"
+    ]
+   },
+   {
+    "title": "Managing data",
+    "detail": [
+     "Managing databases and tables",
+     "Manipulating data in tables"
+    ]
+   },
+   {
+    "title": "Database objects",
+    "detail": [
+     "Indexes, views and full-text search",
+     "Stored procedures and functions",
+     "Triggers and transactions",
+     "Managed code"
+    ]
+   },
+   {
+    "title": "Performance",
+    "detail": [
+     "Monitoring and optimising performance"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:23.156044+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "3199789f-a250-4402-85b4-b390afc91e73",
+  "title": "PHP",
+  "caption": "Build dynamic websites with HTML, CSS, JavaScript, Bootstrap and PHP with MySQL.",
+  "description": "This course takes you from front-end basics to server-side development. You will learn HTML, CSS, JavaScript, jQuery and Bootstrap, then PHP: forms, control flow, functions, strings, arrays, files, sessions and cookies, MySQL database access, authentication and object-oriented programming, finishing with a project.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "10",
+  "students": null,
+  "duration": "30",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "CS/IT",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "HTML",
+    "detail": [
+     "Introduction to HTML",
+     "HTML tags",
+     "Creating forms",
+     "Creating tables",
+     "Building a home page"
+    ]
+   },
+   {
+    "title": "CSS",
+    "detail": [
+     "Introduction to CSS",
+     "Types of CSS",
+     "CSS properties",
+     "Working with templates"
+    ]
+   },
+   {
+    "title": "JavaScript and jQuery",
+    "detail": [
+     "Introduction to JavaScript",
+     "Ways to use JavaScript",
+     "Working with events",
+     "Form validation",
+     "jQuery hide, show and toggle effects",
+     "Fade effects",
+     "Animate",
+     "Slide",
+     "Callbacks",
+     "Stop",
+     "Chaining"
+    ]
+   },
+   {
+    "title": "Bootstrap",
+    "detail": [
+     "Designing web pages with Bootstrap classes"
+    ]
+   },
+   {
+    "title": "PHP basics",
+    "detail": [
+     "Introduction and installation",
+     "PHP syntax",
+     "Variables",
+     "Data types and strings",
+     "Constants and operators"
+    ]
+   },
+   {
+    "title": "Forms and control flow",
+    "detail": [
+     "Handling HTML forms with PHP",
+     "Form validation",
+     "Form handling",
+     "Required fields",
+     "URL and email fields",
+     "A complete form example",
+     "Decisions and conditional constructs (if/else, switch)",
+     "Loops (for, while, do-while)"
+    ]
+   },
+   {
+    "title": "Functions, strings and arrays",
+    "detail": [
+     "Defining functions",
+     "Parameterised functions",
+     "Call by value and call by reference",
+     "Recursive functions",
+     "Creating and accessing strings",
+     "String formatting",
+     "String library functions",
+     "Working with arrays",
+     "Indexed and associative arrays",
+     "Arrays with foreach"
+    ]
+   },
+   {
+    "title": "Files and state",
+    "detail": [
+     "Files and directories",
+     "Copying, renaming and deleting files",
+     "Working with directories",
+     "File upload and download",
+     "Session state",
+     "Cookies",
+     "Query strings"
+    ]
+   },
+   {
+    "title": "Databases and authentication",
+    "detail": [
+     "Introduction to RDBMS",
+     "Connecting to MySQL from PHP",
+     "Basic database operations (DML)",
+     "Joins and subqueries",
+     "Authentication using a class",
+     "Authentication using a file"
+    ]
+   },
+   {
+    "title": "Object-oriented PHP and project",
+    "detail": [
+     "Classes and objects",
+     "Abstraction and encapsulation",
+     "Polymorphism and inheritance",
+     "Project work"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:20.651535+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "bbbd4239-ed27-4691-be10-458bceab152b",
+  "title": "Power BI",
+  "caption": "Turn data from many sources into interactive dashboards with Power BI, Power Query, DAX and visualisations.",
+  "description": "This course teaches business intelligence with Power BI. You will connect and clean data with Power Query and the M language, model relationships, write DAX measures and calculated columns with date, text and logical functions, and design interactive reports using a range of chart types.",
+  "image": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775582998/course-images/xf8ydoi1j05qmamapr9v.png",
+  "banner": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775583005/course-images/ih6susvi1rftuknhqbhl.png",
+  "price": "10000",
+  "lessons": "8",
+  "students": null,
+  "duration": "45",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "CS/IT",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Introduction to business intelligence",
+    "detail": [
+     "Tools and terminology",
+     "Overview of dashboards",
+     "Data visualisation and reporting",
+     "Business intelligence (BI)",
+     "Traditional BI",
+     "Self-service BI",
+     "Power BI Desktop (Power Query, Power Pivot, Power View)",
+     "Power BI Report Server",
+     "Power BI Service",
+     "Power BI Mobile",
+     "Power BI architecture"
+    ]
+   },
+   {
+    "title": "Excel and database basics",
+    "detail": [
+     "Basics of Excel",
+     "Basics of SQL Server",
+     "Combining data from multiple sources"
+    ]
+   },
+   {
+    "title": "Power Query",
+    "detail": [
+     "Data transformation and its benefits",
+     "Overview of Power Query and the Query Editor",
+     "The Query Editor interface",
+     "Ribbon tabs (Home, Transform, Add Column, View)",
+     "The data view and results pane",
+     "The Query Settings pane",
+     "The formula bar",
+     "Data types and changing column types",
+     "Basic filtering",
+     "Pivot and unpivot columns",
+     "Transposing columns",
+     "Using the first row as headers",
+     "Group By"
+    ]
+   },
+   {
+    "title": "M language",
+    "detail": [
+     "IF and ELSE conditions",
+     "Transforming column types",
+     "Removing columns",
+     "Splitting columns",
+     "Replacing values",
+     "Distinct and group-by options",
+     "Sorting with type conversion",
+     "Pivot operations with Table.Pivot()",
+     "List functions",
+     "Parameters in M"
+    ]
+   },
+   {
+    "title": "Data modelling",
+    "detail": [
+     "Introduction to data modelling",
+     "Why relationships are needed",
+     "One-to-one, one-to-many and many-to-many relationships",
+     "Auto-detecting relationships",
+     "Creating and editing relationships",
+     "Making relationships active or inactive"
+    ]
+   },
+   {
+    "title": "DAX",
+    "detail": [
+     "What DAX is",
+     "Calculated columns",
+     "Measures",
+     "DAX table and column name syntax",
+     "Creating calculated columns",
+     "Creating measures",
+     "DAX syntax and operators"
+    ]
+   },
+   {
+    "title": "DAX functions",
+    "detail": [
+     "Date and time functions",
+     "Logical functions",
+     "Math and statistical functions",
+     "Filter functions",
+     "Date functions: YEAR, MONTH, DAY, WEEKDAY, WEEKNUM, FORMAT, DATE, TODAY, NOW, HOUR, MINUTE, SECOND, TIME, DATEDIFF, CALENDAR",
+     "Text functions: LEN, CONCATENATE, LEFT, RIGHT, MID, UPPER, LOWER, TRIM, SUBSTITUTE, BLANK",
+     "Logical functions: IF, TRUE, FALSE, NOT, OR, IN, AND, IFERROR, SWITCH"
+    ]
+   },
+   {
+    "title": "Visualisations",
+    "detail": [
+     "Why visualise data",
+     "Visualisation types",
+     "Bar and column charts",
+     "Stacked bar and stacked column charts",
+     "Scatter charts",
+     "Table visual",
+     "Matrix visual",
+     "Line charts",
+     "Area and stacked area charts",
+     "Line and stacked column chart",
+     "Line and clustered column chart"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:15.790684+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "3f66bf18-ce00-4e1d-a633-dccd2a3a20f0",
+  "title": "Tally ERP",
+  "caption": "Keep business accounts in Tally, from vouchers and inventory to banking, TDS, TCS and GST.",
+  "description": "This course teaches accounting with Tally. You will create companies, ledgers and vouchers, handle purchases, sales and discounts, manage budgets and banking, maintain inventory with godowns, batches and bills of material, secure and back up your data, and work with TDS, TCS and GST.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "6",
+  "students": null,
+  "duration": "30",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "CS/IT",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Accounting basics",
+    "detail": [
+     "Basics of accountancy",
+     "Creating a company",
+     "Ledgers and groups",
+     "Accounting vouchers"
+    ]
+   },
+   {
+    "title": "Purchases and sales",
+    "detail": [
+     "Orders, notes and rejections in and out",
+     "Calculating discounts in three methods",
+     "Additional cost of purchase",
+     "Bill-wise details"
+    ]
+   },
+   {
+    "title": "Accounts management",
+    "detail": [
+     "Reversal journals",
+     "Budgets",
+     "Reorder level (ROL)",
+     "Banking features"
+    ]
+   },
+   {
+    "title": "Inventory",
+    "detail": [
+     "Inventories",
+     "Godowns and batches",
+     "Price lists",
+     "Point of sale (POS)",
+     "Bills of material",
+     "Material in and out vouchers"
+    ]
+   },
+   {
+    "title": "Control and data safety",
+    "detail": [
+     "Security and control",
+     "Splitting a company",
+     "Backup and restore"
+    ]
+   },
+   {
+    "title": "Taxation",
+    "detail": [
+     "TDS and TCS",
+     "GST in Tally"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:18.285088+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "7a0d19c4-fea9-4bd6-a295-e751e3fcc277",
+  "title": "Web Design",
+  "caption": "Design and build responsive websites with HTML, CSS, JavaScript, jQuery and Bootstrap.",
+  "description": "This course covers front-end web design. You will build pages with HTML, style them with CSS, add behaviour with JavaScript and jQuery, and make them responsive with Bootstrap's grid, components and helper classes.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "5",
+  "students": null,
+  "duration": "30",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "CS/IT",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "HTML",
+    "detail": [
+     "Getting started with HTML",
+     "Enhancing web pages",
+     "Tables and frames",
+     "Adding interactivity",
+     "Creating dynamic web pages",
+     "Working with graphics",
+     "Adding visual effects"
+    ]
+   },
+   {
+    "title": "CSS",
+    "detail": [
+     "Types of CSS",
+     "Classes and IDs",
+     "Working with div",
+     "CSS selectors and properties",
+     "Background properties",
+     "Page layouts",
+     "Links and classes",
+     "Navigation bars",
+     "Fonts and text effects"
+    ]
+   },
+   {
+    "title": "JavaScript",
+    "detail": [
+     "Benefits of JavaScript",
+     "Variables, operators and control structures",
+     "JavaScript objects",
+     "Browser objects",
+     "Creating dynamic web pages",
+     "Events and validation"
+    ]
+   },
+   {
+    "title": "jQuery",
+    "detail": [
+     "jQuery effects",
+     "jQuery selectors",
+     "jQuery plugins",
+     "Handling events"
+    ]
+   },
+   {
+    "title": "Bootstrap",
+    "detail": [
+     "Grid system",
+     "Typography",
+     "Code",
+     "Tables, forms and buttons",
+     "Images",
+     "Helper classes",
+     "Responsive utilities"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:21.119303+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "f836577d-69cd-4bb9-bfbd-234cc389f356",
+  "title": "AutoCAD Electrical",
+  "caption": "Draw electrical control schematics, panel layouts and reports in AutoCAD Electrical.",
+  "description": "This course teaches electrical drawing with AutoCAD Electrical. After the drafting basics, you will manage projects, build schematics with wires, terminals, ladders, PLC and connector symbols, lay out control panels, and generate component reports and audits.",
+  "image": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775582417/course-images/e5unj8uhqyy44zooows1.png",
+  "banner": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775582427/course-images/affsryz0tstwsiahmhgu.png",
+  "price": "10000",
+  "lessons": "6",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Electrical",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Introduction",
+    "detail": [
+     "Introduction to AutoCAD Electrical",
+     "The AutoCAD interface"
+    ]
+   },
+   {
+    "title": "Drawing and annotation",
+    "detail": [
+     "Draw tools",
+     "Drafting settings",
+     "Modify tools",
+     "Annotation tools",
+     "Properties panel",
+     "Layer Properties Manager",
+     "Blocks panel"
+    ]
+   },
+   {
+    "title": "Project tab",
+    "detail": [
+     "Project management",
+     "Initialising a project",
+     "Creating a new drawing in a project",
+     "Opening a project file",
+     "Project properties and settings"
+    ]
+   },
+   {
+    "title": "Schematic tab",
+    "detail": [
+     "Inserting wires and wire numbers",
+     "Terminals and components",
+     "Inserting and creating symbols",
+     "Ladders and components",
+     "The Circuit Clipboard",
+     "Circuit Builder",
+     "Inserting jumpers",
+     "Inserting PLCs",
+     "Inserting connectors"
+    ]
+   },
+   {
+    "title": "Panel tab",
+    "detail": [
+     "Introduction to panel layout",
+     "Inserting terminals",
+     "Icon menu for the panel",
+     "Wire annotations",
+     "Panel assembly",
+     "Table generators"
+    ]
+   },
+   {
+    "title": "Reports tab",
+    "detail": [
+     "Introduction to reports",
+     "Component report",
+     "Missing catalog report",
+     "Electrical audit",
+     "Drawing audit",
+     "Modifying tables",
+     "Printing and previews"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:14.655051+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "9955406f-0e91-48a6-b35c-09db951dda92",
+  "title": "CATIA Electrical",
+  "caption": "Define electrical components, route wires and flatten harnesses in CATIA, then produce manufacturing drawings.",
+  "description": "CATIA Electrical covers electrical design inside the CATIA environment. You will review sketching, part design and assembly, then define electrical components, route wires, flatten harnesses for manufacture, create 2D manufacturing drawings and look at reverse engineering.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "4",
+  "students": null,
+  "duration": "45",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Electrical",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Introduction",
+    "detail": [
+     "Introduction to CATIA electrical design"
+    ]
+   },
+   {
+    "title": "Foundations",
+    "detail": [
+     "Sketcher workbench",
+     "Part Design",
+     "Assembly"
+    ]
+   },
+   {
+    "title": "Electrical design",
+    "detail": [
+     "Defining electrical components",
+     "Electrical wire routing",
+     "Electrical harness flattening"
+    ]
+   },
+   {
+    "title": "Drawings and reverse engineering",
+    "detail": [
+     "Drafting 2D manufacturing drawings",
+     "Reverse engineering"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:23.31023+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "a088a96a-1e3b-4ea5-9a77-fac91dc5574b",
+  "title": "EPLAN Electric",
+  "caption": "Plan, document and manage electrical projects in EPLAN Electric P8 to IEC standards.",
+  "description": "EPLAN Electric P8 is used to design and document electrical systems. This course covers creating projects and pages, drawing schematics with cross-references and parts, using macros, searching and replacing identifiers, accessing master data, generating reports and exporting or printing the finished project, with designs following IEC 81346 and IEC 61355.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "4",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Electrical",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Introduction",
+    "detail": [
+     "Introduction to EPLAN",
+     "Electrical system design",
+     "Starting EPLAN",
+     "Designing to IEC 81346 and IEC 61355"
+    ]
+   },
+   {
+    "title": "Projects and pages",
+    "detail": [
+     "Creating a project",
+     "Opening and editing pages",
+     "Project management"
+    ]
+   },
+   {
+    "title": "Schematics",
+    "detail": [
+     "Creating a schematic",
+     "Cross-references",
+     "Selecting parts and creating external parts",
+     "The macro concept",
+     "Finding and replacing identifiers"
+    ]
+   },
+   {
+    "title": "Data and output",
+    "detail": [
+     "Generating reports",
+     "Accessing master data",
+     "Exporting and importing",
+     "Printing the project"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:15.61956+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "2d59fec6-837f-4721-864b-230c3c8c981a",
+  "title": "ETAP",
+  "caption": "Model power systems in ETAP and run load flow, short circuit, protection and arc flash studies.",
+  "description": "ETAP is used to simulate and study electrical power systems. This course starts with power system fundamentals and a single line diagram, then covers load flow, cable and transformer sizing, generator load sharing, short circuit analysis, protection coordination, arc flash, motor starting and harmonic analysis.",
+  "image": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775828921/course-images/uefihvzoqfwap3ud6xuj.png",
+  "banner": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775828926/course-images/jrpbtoxdtcyoayxezdex.png",
+  "price": "10000",
+  "lessons": "5",
+  "students": null,
+  "duration": "20",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Electrical",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Foundations",
+    "detail": [
+     "Fundamentals of power system analysis",
+     "Designing and simulating an electrical power system",
+     "Creating a new project",
+     "ETAP overview and toolbars"
+    ]
+   },
+   {
+    "title": "Modelling",
+    "detail": [
+     "Creating a single line diagram"
+    ]
+   },
+   {
+    "title": "Sizing and load studies",
+    "detail": [
+     "Load flow analysis",
+     "Cable sizing analysis",
+     "Transformer MVA sizing",
+     "Generator load sharing",
+     "Transformer X/R ratio calculation"
+    ]
+   },
+   {
+    "title": "Fault and protection studies",
+    "detail": [
+     "Short circuit analysis",
+     "Protection coordination",
+     "Arc flash analysis"
+    ]
+   },
+   {
+    "title": "Motor and harmonic studies",
+    "detail": [
+     "Motor starting analysis",
+     "Harmonic analysis"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:16.889213+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "3b1926f9-3476-4202-9139-3356aa0c7d31",
+  "title": "PLC",
+  "caption": "Learn PLC hardware and ladder programming, from basic instructions to timers, counters and SCADA communication.",
+  "description": "This course introduces industrial automation and programmable logic controllers. You will learn PLC architecture and wiring, write ladder programs using contacts, coils, timers, counters, comparison, maths and advanced instructions, and connect a PLC to SCADA software. Hands-on exercises use real-time applications.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "5",
+  "students": null,
+  "duration": "20",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Electrical",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Industrial automation",
+    "detail": [
+     "Introduction to industrial automation",
+     "Applications of industrial automation",
+     "History of industrial automation"
+    ]
+   },
+   {
+    "title": "PLC fundamentals",
+    "detail": [
+     "Introduction to the programmable logic controller (PLC)",
+     "PLC block diagram",
+     "PLC hardware and architecture",
+     "Wiring field devices to a PLC",
+     "PLC addressing",
+     "Advantages of PLCs",
+     "The NO/NC concept"
+    ]
+   },
+   {
+    "title": "Programming basics",
+    "detail": [
+     "Introduction to PLC programming languages",
+     "Downloading a PLC program",
+     "Uploading a PLC program",
+     "Sequential input and output instructions (NO, NC, coil, latch, unlatch, OSR)",
+     "Ladder programming with logic gates and interlocking"
+    ]
+   },
+   {
+    "title": "Instructions",
+    "detail": [
+     "Timers",
+     "Counters",
+     "Compare and move",
+     "Mathematical instructions",
+     "Logical instructions",
+     "Jump, subroutine and MCR",
+     "FIFO and LIFO",
+     "Advanced instructions",
+     "Scaling"
+    ]
+   },
+   {
+    "title": "Integration and practice",
+    "detail": [
+     "Communication with SCADA software",
+     "Hands-on work on real-time applications"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:20.497573+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "34edcee5-e2b2-466d-a63d-81c313f6e602",
+  "title": "Revit MEP",
+  "caption": "Model ductwork, piping, plumbing, fire protection and electrical systems in Revit MEP.",
+  "description": "Revit MEP is used to design and coordinate building services. This course covers BIM basics, HVAC, piping, plumbing and fire protection, and in particular electrical systems: light fixtures, devices, cable trays, cables and equipment. It also covers families, annotations, schedules and collaboration.",
+  "image": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775582186/course-images/tmoqfwtupde7l7aocliv.png",
+  "banner": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775582204/course-images/fisu4hrzamzwkuo2nz5f.png",
+  "price": "10000",
+  "lessons": "7",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Electrical",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "BIM and Revit MEP basics",
+    "detail": [
+     "Introduction to BIM",
+     "Revit MEP fundamentals",
+     "Viewing the model"
+    ]
+   },
+   {
+    "title": "HVAC",
+    "detail": [
+     "Creating an HVAC system",
+     "Mechanical equipment and air terminals",
+     "Creating and modifying ductwork",
+     "Ducts and duct fittings",
+     "Duct accessories",
+     "Overview of energy analysis"
+    ]
+   },
+   {
+    "title": "Piping and plumbing",
+    "detail": [
+     "Hydraulic piping",
+     "Pipes and pipe fittings",
+     "Pipe accessories",
+     "Plumbing systems",
+     "Plumbing pipes and fittings",
+     "Sloping drainage pipes"
+    ]
+   },
+   {
+    "title": "Fire protection",
+    "detail": [
+     "Fire protection systems",
+     "Sprinklers",
+     "Pipes and pipe fittings"
+    ]
+   },
+   {
+    "title": "Electrical systems",
+    "detail": [
+     "Light fixtures",
+     "Electrical devices",
+     "Cable trays",
+     "Cables and electrical equipment"
+    ]
+   },
+   {
+    "title": "Families",
+    "detail": [
+     "Introduction to families",
+     "Basic family creation tools",
+     "Creating families",
+     "Duct, pipe and electrical connectors",
+     "Editing existing families"
+    ]
+   },
+   {
+    "title": "Documentation and teamwork",
+    "detail": [
+     "Tags",
+     "Dimensions",
+     "Symbols and text",
+     "Legends",
+     "Schedules",
+     "Worksets and worksharing",
+     "Printing and publishing"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:14.993792+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "27e370bc-3f3f-4fa5-be67-af765d2cbcf5",
+  "title": "ANSYS WB",
+  "caption": "Set up and run finite element analyses in ANSYS Workbench, from geometry and meshing to structural and thermal studies.",
+  "description": "This course introduces finite element analysis and the ANSYS Workbench environment. You will prepare geometry, assign materials, build a mesh with contacts and joints, and run structural, modal, thermal, buckling and dynamic studies before reviewing the results and producing a report. It is suitable for beginners in simulation.",
+  "image": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775829416/course-images/gf1q941p5gniqzvmagbr.png",
+  "banner": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775829421/course-images/xc4sjoow5rl8e8agibvb.png",
+  "price": "10000",
+  "lessons": "7",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Mechanical",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Introduction",
+    "detail": [
+     "Introduction to ANSYS Workbench",
+     "Introduction to FEA",
+     "The Workbench interface",
+     "General procedure for an FEA study"
+    ]
+   },
+   {
+    "title": "Types of analysis",
+    "detail": [
+     "1D analysis",
+     "2D analysis",
+     "3D analysis"
+    ]
+   },
+   {
+    "title": "Engineering data",
+    "detail": [
+     "Adding materials from the current library",
+     "Defining a new material"
+    ]
+   },
+   {
+    "title": "DesignModeler",
+    "detail": [
+     "Creating and importing a model",
+     "Symmetry tool",
+     "Boolean operations",
+     "Creating line bodies and surface bodies"
+    ]
+   },
+   {
+    "title": "Meshing and connections",
+    "detail": [
+     "Mesh generation",
+     "Global mesh settings",
+     "Local mesh settings",
+     "Defining manual contacts",
+     "Defining joints and joint loads"
+    ]
+   },
+   {
+    "title": "Analysis systems",
+    "detail": [
+     "Static structural analysis",
+     "Modal analysis",
+     "Thermal analysis",
+     "Thermal-structural coupling",
+     "Buckling analysis",
+     "Parametric study",
+     "Explicit dynamics",
+     "Rigid dynamics"
+    ]
+   },
+   {
+    "title": "Post-processing",
+    "detail": [
+     "Viewing the results",
+     "Generating reports"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:21.589277+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "196d9da8-05eb-438e-b8e5-acd4218c596a",
+  "title": "ArtCAM",
+  "caption": "Design vectors, bitmaps and 3D reliefs in ArtCAM and generate toolpaths for engraving and carving machines.",
+  "description": "ArtCAM is used to design artistic and relief work and prepare it for CNC machining. This course covers vector drawing and editing, layers, bitmaps, 3D relief modelling, and both 2D and 3D toolpaths such as profiling, V-bit carving, engraving, relief machining and Z-level roughing. It suits wood, signage and craft production.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "12",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Mechanical",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "ArtCAM fundamentals",
+    "detail": [
+     "Introduction to ArtCAM",
+     "Starting ArtCAM",
+     "Opening an existing ArtCAM file",
+     "Understanding the interface",
+     "ArtCAM terminology",
+     "Customising the interface",
+     "Using workspaces",
+     "Resetting the workspace"
+    ]
+   },
+   {
+    "title": "Getting started with models",
+    "detail": [
+     "Creating a new model",
+     "The ArtCAM workflow",
+     "Mouse controls",
+     "Zoom commands in 2D and 3D",
+     "How zooming works",
+     "Viewing tools",
+     "Save, Save As and Auto-Recover",
+     "Closing and exiting"
+    ]
+   },
+   {
+    "title": "Creating vectors",
+    "detail": [
+     "What vectors are",
+     "Free-form shapes",
+     "Rectangles",
+     "Circles",
+     "Ellipses",
+     "Polygons",
+     "Stars",
+     "Arcs",
+     "Text shapes in depth"
+    ]
+   },
+   {
+    "title": "Basic drawing operations",
+    "detail": [
+     "Creating, editing and deleting 2D views",
+     "Setting and displaying coordinate values",
+     "Grid",
+     "Ruler",
+     "Guidelines",
+     "Undo and redo",
+     "Object snaps",
+     "Working with snaps",
+     "Other basic operation tools"
+    ]
+   },
+   {
+    "title": "Editing and manipulating vectors",
+    "detail": [
+     "Trim tool and techniques",
+     "Offset tool",
+     "Transform tool",
+     "Advanced copy, rotate and move",
+     "Node editing",
+     "Editing vector spans",
+     "Mirroring objects",
+     "Boolean operations",
+     "Joining vectors and vector nodes",
+     "Closing and aligning vector nodes",
+     "Rectangular and polar arrays",
+     "Copying objects along a path",
+     "Aligning vectors",
+     "Creating and editing vector fillets"
+    ]
+   },
+   {
+    "title": "Working with layers",
+    "detail": [
+     "Understanding and creating vector layers",
+     "Assigning layers to existing objects",
+     "Moving, deleting, duplicating, renaming and merging layers",
+     "Layer visibility, locking and snapping",
+     "Exporting and importing layers and objects",
+     "Selecting vectors and the colour-coding of vectors"
+    ]
+   },
+   {
+    "title": "Advanced vector tools",
+    "detail": [
+     "Importing vectors",
+     "Cleaning up vector intersections",
+     "Cleaning up nodes and converting vectors to splines",
+     "Converting splines to fitted arcs",
+     "Selection techniques",
+     "Grouping",
+     "Creating vectors from intersecting boundaries",
+     "Separating vectors with a specific boundary",
+     "Converting vectors into regular shapes",
+     "Nesting vectors"
+    ]
+   },
+   {
+    "title": "Working with bitmaps",
+    "detail": [
+     "Understanding bitmaps",
+     "Importing images and key terms",
+     "Primary and secondary colours",
+     "Reducing the number of colours in artwork",
+     "Creating vectors from a bitmap",
+     "Creating bitmap layers",
+     "Importing and exporting bitmap artwork",
+     "Duplicating, deleting and renaming bitmap layers",
+     "Viewing and clearing a bitmap layer"
+    ]
+   },
+   {
+    "title": "3D relief modelling",
+    "detail": [
+     "Creating and selecting relief layers and layer groups",
+     "Importing and exporting relief layers",
+     "Moving, deleting, duplicating and renaming relief layers",
+     "Merging relief layers and controlling their visibility",
+     "The Shape Editor tool",
+     "Basic shapes from closed vectors",
+     "Constant-height lettering",
+     "Male (concave) and female (convex) domes",
+     "Weave reliefs",
+     "Angled planes on a relief layer",
+     "Extruded shapes",
+     "Spun shapes",
+     "Turned shapes",
+     "Pasting a relief along a curve"
+    ]
+   },
+   {
+    "title": "Machining basics",
+    "detail": [
+     "2D machining and 2D toolpath tools",
+     "3D machining and 3D toolpath tools"
+    ]
+   },
+   {
+    "title": "2D machining operations",
+    "detail": [
+     "Material setup",
+     "Deleting material",
+     "Profile toolpath",
+     "Fluting toolpath",
+     "2D area-clearance toolpath",
+     "V-bit carving toolpath",
+     "Bevel-carving toolpath",
+     "Smart engraving toolpath",
+     "Drill-holes toolpath",
+     "Inlay wizard",
+     "Raised-round toolpath",
+     "Texture toolpath",
+     "Drill-bank toolpath",
+     "2D machining wizard",
+     "Grid-creator toolpath"
+    ]
+   },
+   {
+    "title": "3D machining operations",
+    "detail": [
+     "3D toolpath tools",
+     "Machine-relief toolpath",
+     "Feature-machining toolpath",
+     "Z-level roughing toolpath",
+     "Laser-machining toolpath",
+     "3D cut-out toolpath"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:20.337607+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "cde8567d-ec7f-4b2f-8dfd-a89ca4c77a01",
+  "title": "AutoCAD for Mechanical",
+  "caption": "Produce accurate mechanical drawings in AutoCAD, from technical-drawing basics to isometric views and 3D solids.",
+  "description": "This course is for mechanical students and technicians who need to draw to engineering standards. It starts with technical drawing fundamentals and projection, then covers drawing, dimensioning and annotation tools, layers and blocks, layouts and printing, isometric and orthographic views, and an introduction to 3D solid modelling and rendering.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "5",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Mechanical",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Introduction",
+    "detail": [
+     "Course plan and orientation",
+     "Introduction to AutoCAD",
+     "Fundamentals of technical drawing",
+     "Theory of projection",
+     "The AutoCAD interface"
+    ]
+   },
+   {
+    "title": "Drawing and annotation",
+    "detail": [
+     "Drawing tools",
+     "Drafting settings",
+     "Modify tools",
+     "Dimensions",
+     "Text",
+     "Multileaders",
+     "Tables",
+     "Annotation style managers"
+    ]
+   },
+   {
+    "title": "Productivity tools",
+    "detail": [
+     "Layer Properties Manager",
+     "Working with layers",
+     "Isolating and unisolating layers",
+     "DesignCenter and tool palettes",
+     "Creating and editing blocks",
+     "Adding and editing block attributes",
+     "Managing attributes"
+    ]
+   },
+   {
+    "title": "Advanced tools",
+    "detail": [
+     "Layouts, page setup and printing",
+     "Creating templates",
+     "Linking and data extraction",
+     "Hatch and gradients",
+     "Parametric drawings",
+     "Isometric drawings",
+     "Orthographic views from projection",
+     "Importing and exporting"
+    ]
+   },
+   {
+    "title": "3D modelling",
+    "detail": [
+     "Switching workspaces",
+     "Solid creation tools",
+     "Solid editing tools",
+     "Applying materials",
+     "Lights and scene settings",
+     "Rendering",
+     "Motion path animation"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:22.061036+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "da3325b8-6f1a-4cac-94c6-2b9c9b2258ef",
+  "title": "Autodesk Inventor",
+  "caption": "Design parts, assemblies, sheet metal and drawings in Autodesk Inventor using parametric 3D modelling.",
+  "description": "This course covers mechanical design in Inventor from sketch to documentation. You will build parametric parts, work with surfaces and sheet metal, assemble components with constraints and joints, and produce drawings with views, parts lists and balloons.",
+  "image": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1774711280/course-images/ryuyjhmc8dpac7sjwr9j.png",
+  "banner": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1774711284/course-images/y2gbon1dyknfrkqy0zsh.png",
+  "price": "10000",
+  "lessons": "7",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Mechanical",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Introduction",
+    "detail": [
+     "Introduction to product design",
+     "CAD, CAM and CAE overview",
+     "The Inventor interface",
+     "Designing parametric parts"
+    ]
+   },
+   {
+    "title": "Sketching",
+    "detail": [
+     "Creating 2D sketches",
+     "Constraining sketches",
+     "Adding dimensions to sketches"
+    ]
+   },
+   {
+    "title": "Part design",
+    "detail": [
+     "Creating and editing sketch-based features",
+     "Work features",
+     "Chamfers and fillets",
+     "Holes and threads",
+     "Patterning and mirroring features",
+     "Thin-walled parts"
+    ]
+   },
+   {
+    "title": "Drawings",
+    "detail": [
+     "Drawing environment and views",
+     "Preparing the drawing sheet",
+     "Title blocks and borders",
+     "Base and projected views",
+     "Section views",
+     "Detail views",
+     "Managing views",
+     "Bill of materials",
+     "Parts lists",
+     "Balloons"
+    ]
+   },
+   {
+    "title": "Surface design",
+    "detail": [
+     "Introduction to surfacing",
+     "Creating surface bodies",
+     "Editing surface bodies",
+     "Importing surfaces",
+     "Repairing imported surfaces"
+    ]
+   },
+   {
+    "title": "Assembly",
+    "detail": [
+     "Introduction to assembly",
+     "Assembly approaches",
+     "Constraints",
+     "Joints",
+     "Frame Generator"
+    ]
+   },
+   {
+    "title": "Sheet metal",
+    "detail": [
+     "Sheet metal concepts",
+     "Sheet metal terminology",
+     "Sheet metal rules",
+     "Creating sheet metal features"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:15.157066+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "c3d627d2-7731-424c-896d-85a74d392e18",
+  "title": "CATIA",
+  "caption": "Design parts, surfaces, sheet metal and assemblies in CATIA V5 and document them with drawings.",
+  "description": "CATIA V5 is used for mechanical, automotive and aerospace design. In this course you will learn sketching, part design, wireframe and surface modelling, sheet metal design, assemblies with constraints and interference checks, and drawings with annotations, GD&T symbols, balloons and a bill of material.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "7",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Mechanical",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Introduction",
+    "detail": [
+     "Introduction to product design and CAD/CAM/CAE",
+     "Parametric and non-parametric modelling",
+     "Introduction to CATIA V5",
+     "The CATIA V5 interface"
+    ]
+   },
+   {
+    "title": "Sketcher workbench",
+    "detail": [
+     "Profile toolbar",
+     "Sketch tools",
+     "Operations",
+     "Constraints"
+    ]
+   },
+   {
+    "title": "Part Design workbench",
+    "detail": [
+     "Sketch-based features",
+     "Dress-up features",
+     "Reference elements",
+     "Transformation features",
+     "Boolean operations",
+     "Material and rendering"
+    ]
+   },
+   {
+    "title": "Wireframe and surface design",
+    "detail": [
+     "Creating wireframe geometry",
+     "Extruded surfaces",
+     "Revolved surfaces",
+     "Spherical surfaces",
+     "Offset surfaces",
+     "Swept surfaces",
+     "Fill surfaces",
+     "Loft surfaces",
+     "Blend surfaces",
+     "Splitting surfaces",
+     "Trimming surfaces",
+     "Joining surfaces"
+    ]
+   },
+   {
+    "title": "Sheet metal design",
+    "detail": [
+     "Setting sheet metal parameters",
+     "Sheet metal walls",
+     "Flanges",
+     "Hems",
+     "Bends",
+     "Conical bends",
+     "Bend from flat",
+     "Rolled walls",
+     "Hopper walls",
+     "Folding and unfolding parts",
+     "Flat patterns",
+     "Stamping"
+    ]
+   },
+   {
+    "title": "Assembly",
+    "detail": [
+     "Introduction to assembly",
+     "Assembly design approaches",
+     "Inserting components into a product",
+     "Applying constraints",
+     "Interference detection",
+     "Sectioning an assembly",
+     "Exploding an assembly"
+    ]
+   },
+   {
+    "title": "Drawings",
+    "detail": [
+     "Sheet preparation",
+     "Generating drawing views",
+     "Exploded views",
+     "Editing and modifying views",
+     "Changing view scale",
+     "Inserting sheets",
+     "Adding annotations",
+     "Adding GD&T symbols",
+     "Editing annotations",
+     "Generating balloons",
+     "Bill of material",
+     "Exporting to PDF"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:20.015867+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "354dc7a6-3cfd-4cf8-b00d-5799f209a86c",
+  "title": "CNC Programming",
+  "caption": "Write CNC part programs for lathe and milling operations and prove them on a simulator.",
+  "description": "This course teaches the basics of CNC programming with a machine simulator. You will learn G-codes and M-codes, workpiece and tool offset settings, and part programming for turning and milling, then import and export programs, record simulations and measure the finished workpiece.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "4",
+  "students": null,
+  "duration": "15",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Mechanical",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Introduction",
+    "detail": [
+     "Introduction to CAM technology",
+     "Fundamentals of CNC programming",
+     "The CNC simulator interface"
+    ]
+   },
+   {
+    "title": "CNC lathe",
+    "detail": [
+     "Introduction to the CNC lathe",
+     "Part program terminology",
+     "G-codes and M-codes",
+     "Workpiece settings",
+     "Tool post and tool management",
+     "Tool offset settings",
+     "Part programming techniques",
+     "Programs for common lathe operations"
+    ]
+   },
+   {
+    "title": "CNC milling",
+    "detail": [
+     "Introduction to CNC milling",
+     "Part program terminology",
+     "G-codes and M-codes",
+     "Workpiece settings",
+     "Tool post and tool management",
+     "Tool offset settings",
+     "Programs for milling operations"
+    ]
+   },
+   {
+    "title": "Output and measurement",
+    "detail": [
+     "Importing and exporting NC programs",
+     "Recording operation videos",
+     "Saving images",
+     "Measuring the workpiece"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:19.073303+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "9f724f86-a55c-4787-82f0-e99b43297d5f",
+  "title": "Creo",
+  "caption": "Model parts, surfaces, sheet metal and assemblies in Creo Parametric and prepare detailed drawings.",
+  "description": "Creo Parametric is a 3D CAD tool for product design. This course takes you through sketching, solid and surface part modelling, sheet metal design, assembly with constraints and connections, and finally drawings with projection and section views, annotations and a bill of materials.",
+  "image": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1774716402/course-images/tkrakmd5tw7xvijok4ly.png",
+  "banner": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1774716405/course-images/qbpy0kcmynzqymjklcb3.png",
+  "price": "10000",
+  "lessons": "7",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Mechanical",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Introduction",
+    "detail": [
+     "Course plan and orientation",
+     "CAD, CAM and CAE overview",
+     "Introduction to Creo Parametric",
+     "Setting the working directory",
+     "The Creo interface and view toolbar"
+    ]
+   },
+   {
+    "title": "Sketcher",
+    "detail": [
+     "Sketch and construction geometry",
+     "Editing tools",
+     "Dimensions and constraints",
+     "Inspect tools"
+    ]
+   },
+   {
+    "title": "Part modelling",
+    "detail": [
+     "Solid features",
+     "Cut features",
+     "Tweak features",
+     "Rib features",
+     "Engineering features",
+     "Datum planes",
+     "Patterns"
+    ]
+   },
+   {
+    "title": "Surface modelling",
+    "detail": [
+     "Shape feature tools",
+     "Blend and tangent tools",
+     "Creating and editing tools",
+     "Developing a freeform surface model"
+    ]
+   },
+   {
+    "title": "Sheet metal",
+    "detail": [
+     "Introduction to sheet metal",
+     "Primary wall features",
+     "Secondary wall features",
+     "Modifying sheet metal models",
+     "Sheet metal bends",
+     "Die and punch forms"
+    ]
+   },
+   {
+    "title": "Assembly",
+    "detail": [
+     "Introduction to assembly",
+     "Assembly approaches",
+     "Constraint assembly",
+     "Connection assembly",
+     "Exploding components",
+     "Replacing and repeating components"
+    ]
+   },
+   {
+    "title": "Drawings",
+    "detail": [
+     "Introduction to drawings",
+     "Creating a new drawing",
+     "Projection views",
+     "Sectional views",
+     "Notes and annotations",
+     "Bill of materials",
+     "Exporting to PDF"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:14.832404+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "290e733c-eeb4-4b87-a5e8-fd10bec513d8",
+  "title": "Fusion 360",
+  "caption": "Design, render, animate and document products in Fusion 360, from sketches to free-form shapes and assemblies.",
+  "description": "Fusion 360 brings sketching, solid and surface modelling, sculpting, assemblies, rendering, animation and drawings into one program. This course covers each workspace in turn, so you can take a product from first sketch to a documented, presentation-ready design.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "8",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Mechanical",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Introduction",
+    "detail": [
+     "Introduction to product design and CAD/CAM/CAE",
+     "Parametric and non-parametric modelling",
+     "Introduction to Fusion 360",
+     "The Fusion 360 interface"
+    ]
+   },
+   {
+    "title": "Sketching",
+    "detail": [
+     "Sketch entities",
+     "Sketch modifying tools",
+     "Parametric sketching",
+     "Geometric relations",
+     "Dimensional constraints"
+    ]
+   },
+   {
+    "title": "Solid modelling",
+    "detail": [
+     "Solid creation tools",
+     "Solid modifying tools",
+     "Construct tools",
+     "Insert tab",
+     "Selection tab",
+     "Sheet metal design",
+     "Surface modelling"
+    ]
+   },
+   {
+    "title": "Sculpt workspace",
+    "detail": [
+     "Creating free-form shapes",
+     "T-spline box, cylinder, sphere and more",
+     "Face, extrude, revolve, sweep and loft",
+     "Editing forms",
+     "Inserting edges and points, and subdividing",
+     "Merging edges, bridging, filling holes, erasing and filling",
+     "Welding vertices and unwelding edges",
+     "Crease and uncrease",
+     "Bevel and slide edges",
+     "Thicken",
+     "Appearance and physical material",
+     "Symmetry tools",
+     "Utility tools"
+    ]
+   },
+   {
+    "title": "Assembly",
+    "detail": [
+     "Introduction to assembly",
+     "Assembly design approaches",
+     "Creating a new component",
+     "As-built joints",
+     "Joints",
+     "Motion links"
+    ]
+   },
+   {
+    "title": "Rendering",
+    "detail": [
+     "Render set-up",
+     "Editing the environment",
+     "Render settings",
+     "Canvas render",
+     "Render tool"
+    ]
+   },
+   {
+    "title": "Animation",
+    "detail": [
+     "Storyboard",
+     "Animation timeline",
+     "Manual and automatic explode",
+     "Transformations",
+     "Recording views",
+     "Publishing"
+    ]
+   },
+   {
+    "title": "Drawings",
+    "detail": [
+     "Generating drawing views",
+     "Editing drawing views",
+     "Inserting sheets",
+     "Adding annotations",
+     "Adding balloons",
+     "Bill of material",
+     "Exporting to PDF"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:22.698085+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "95ee313c-4ca8-4e04-8d65-f8045d4ca779",
+  "title": "GD&T",
+  "caption": "Read and apply geometric dimensioning and tolerancing, from fits and limits to datums, position and run-out controls.",
+  "description": "GD&T is the symbol language used on engineering drawings to control how much a feature may vary in size, shape, orientation and position. This course explains tolerance basics, the GD&T rules and symbols, form, orientation, profile and position controls, datums and modifiers, and run-out, so you can read and write drawings with confidence.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "6",
+  "students": null,
+  "duration": "15",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Mechanical",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Introduction",
+    "detail": [
+     "Understanding GD&T drawings",
+     "Dimension terminology",
+     "Fits and limits",
+     "International tolerance (IT) grades",
+     "Surface finish symbols",
+     "Introduction to GD&T",
+     "GD&T compared with traditional dimensioning",
+     "Benefits of GD&T",
+     "Reading a feature control frame",
+     "GD&T symbols",
+     "Dimensional tolerances"
+    ]
+   },
+   {
+    "title": "Rules, symbols and form tolerances",
+    "detail": [
+     "The 14 GD&T symbols",
+     "Flatness, straightness, cylindricity and circularity",
+     "MMC, LMC and RFS conditions",
+     "Form tolerances"
+    ]
+   },
+   {
+    "title": "Datums, modifiers and virtual condition",
+    "detail": [
+     "What datums are and how to apply them to parts",
+     "Datum reference features",
+     "Datum feature modifiers",
+     "Virtual condition"
+    ]
+   },
+   {
+    "title": "Orientation and profile tolerances",
+    "detail": [
+     "Profile of a surface and profile of a line",
+     "Perpendicularity, parallelism and angularity"
+    ]
+   },
+   {
+    "title": "Position tolerance",
+    "detail": [
+     "Location",
+     "Concentricity",
+     "Coaxiality",
+     "Symmetry"
+    ]
+   },
+   {
+    "title": "Run-out",
+    "detail": [
+     "Circular run-out",
+     "Total run-out"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:21.745385+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "0417bca0-2ebc-42dc-80bd-7f31ce7b79d2",
+  "title": "NX CAD",
+  "caption": "Design parts and assemblies in Siemens NX with sketching, surfacing, drafting and analysis.",
+  "description": "This course covers 3D design in Siemens NX. You will learn the interface and sketch tools, modify and measure geometry, build surface models, assemble parts, dimension and annotate, create drawings, and analyse products and assemblies.",
+  "image": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775828533/course-images/c2blblqfnmqw7hdwfymy.png",
+  "banner": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1775828536/course-images/jeejhb0d81hk7srfkh04.png",
+  "price": "10000",
+  "lessons": "4",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Mechanical",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Interface and sketching",
+    "detail": [
+     "Understanding the user interface",
+     "Sketch creation tools",
+     "Modifying tools"
+    ]
+   },
+   {
+    "title": "Modelling and measurement",
+    "detail": [
+     "Measuring objects",
+     "Surface modelling"
+    ]
+   },
+   {
+    "title": "Assemblies",
+    "detail": [
+     "Building an assembly",
+     "Inserting parts into an assembly",
+     "Analysing products and assemblies"
+    ]
+   },
+   {
+    "title": "Drawings",
+    "detail": [
+     "Dimensioning and annotations",
+     "Drafting and drawings"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:16.414093+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "75896da9-1d91-4ac3-9c7b-ed8f15c4be59",
+  "title": "NX CAM",
+  "caption": "Generate machining programs in Siemens NX for milling, turning, boring and drilling.",
+  "description": "This course introduces computer-aided manufacturing in Siemens NX. You will learn about milling machines, cutters and cutter materials, then create multi-axis milling, turning, boring and drilling operations, including mixed drilling and turning.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "3",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Mechanical",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Milling",
+    "detail": [
+     "Milling machines",
+     "Milling cutters and cutter materials",
+     "Multi-axis milling operations",
+     "Multi-blade axis operations"
+    ]
+   },
+   {
+    "title": "Turning",
+    "detail": [
+     "Turning operations",
+     "Milling on turning machines",
+     "Mixed drilling and turning operations"
+    ]
+   },
+   {
+    "title": "Drilling and boring",
+    "detail": [
+     "Boring operations",
+     "Drilling operations",
+     "Drilling machines"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:19.229619+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "1659142b-886d-4684-ac8d-4b6afa5cd0fc",
+  "title": "Primavera",
+  "caption": "Plan, schedule and monitor projects in Primavera P6, from enterprise structure to resource levelling and reports.",
+  "description": "Primavera P6 is a project planning tool used for projects of all sizes. You will learn to set up the enterprise project structure, create projects, activities and relationships, build a work breakdown structure, assign resources and costs, set a baseline, update progress and produce reports.",
+  "image": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1774593492/course-images/o8t5gc6o8vksoultlnsr.png",
+  "banner": "https://res.cloudinary.com/dhz2ymfi0/image/upload/v1774593505/course-images/tvwwhgyy40dtmjuff5sn.png",
+  "price": "10000",
+  "lessons": "9",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Mechanical",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Introduction and setup",
+    "detail": [
+     "Introduction to Primavera and project management",
+     "User interface",
+     "Currencies"
+    ]
+   },
+   {
+    "title": "Enterprise structure",
+    "detail": [
+     "EPS setup",
+     "Sub-EPS levels and user preferences",
+     "Calendars",
+     "OBS"
+    ]
+   },
+   {
+    "title": "Creating a project",
+    "detail": [
+     "Creating a new project",
+     "Project titles and details",
+     "Activities, start and finish dates and durations",
+     "Predecessors, successors and dependencies",
+     "Task relationships",
+     "Activity scheduling"
+    ]
+   },
+   {
+    "title": "Work breakdown and activities",
+    "detail": [
+     "Defining a work breakdown structure",
+     "WBS hierarchy",
+     "Adding activities",
+     "Activity types",
+     "Assigning calendars",
+     "Gantt chart",
+     "Activity codes"
+    ]
+   },
+   {
+    "title": "Relationships",
+    "detail": [
+     "Creating relationships",
+     "Relationship types",
+     "Network logic diagram"
+    ]
+   },
+   {
+    "title": "Resources and cost",
+    "detail": [
+     "Assigning resources",
+     "Adjusting budgeted units and time",
+     "Budgeted cost",
+     "Expenses",
+     "Resource sheet"
+    ]
+   },
+   {
+    "title": "Analysing resources",
+    "detail": [
+     "Resource usage spreadsheet",
+     "Cost accounts",
+     "Activity and resource usage spreadsheet",
+     "Activity and resource-based curves"
+    ]
+   },
+   {
+    "title": "Baseline and execution",
+    "detail": [
+     "Creating a baseline plan",
+     "Assigning a baseline",
+     "Baseline bars on the Gantt chart",
+     "Methods for updating the schedule",
+     "Monitoring progress",
+     "Updating the project"
+    ]
+   },
+   {
+    "title": "Resource levelling and reports",
+    "detail": [
+     "Resource codes",
+     "Resource assignments window",
+     "Manual resource allocation",
+     "Levelling resources",
+     "Schedule reports",
+     "Report Wizard",
+     "Printing",
+     "Importing and exporting",
+     "Project codes",
+     "Project notes",
+     "Activity usage profile"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:13.945511+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "4bf579e6-ef2a-4934-a786-3e4deb413b82",
+  "title": "Product Design and Animation with Blender",
+  "caption": "Model, texture, animate and render product designs in Blender.",
+  "description": "Blender is a free 3D creation suite. In this course you will learn the interface and modelling workflow, edit meshes with extrusion, loop cuts and bevels, use modifiers for non-destructive work, apply materials and textures, animate with keyframes, and render a final project. It suits product and mechanical design students who want to visualise and present their designs.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "7",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Mechanical",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Getting started",
+    "detail": [
+     "The Blender interface",
+     "Navigation basics",
+     "Moving, rotating and scaling objects",
+     "Viewport navigation"
+    ]
+   },
+   {
+    "title": "Modelling workflow",
+    "detail": [
+     "Modelling techniques",
+     "Box modelling and edge modelling",
+     "Edit mode and vertex manipulation",
+     "Extrusion, loop cuts and bevelling"
+    ]
+   },
+   {
+    "title": "Practical modelling",
+    "detail": [
+     "Modelling principles",
+     "Creating simple objects",
+     "Hands-on modelling exercises",
+     "Advanced tools: Boolean operations and the knife tool"
+    ]
+   },
+   {
+    "title": "Modifiers",
+    "detail": [
+     "Common modifiers",
+     "Non-destructive modelling with modifiers"
+    ]
+   },
+   {
+    "title": "Materials and texturing",
+    "detail": [
+     "Introduction to materials",
+     "Creating basic materials",
+     "Applying textures"
+    ]
+   },
+   {
+    "title": "Animation",
+    "detail": [
+     "Keyframe animation basics",
+     "Animating object properties",
+     "Hands-on animation exercises"
+    ]
+   },
+   {
+    "title": "Rendering and final project",
+    "detail": [
+     "Rendering basics",
+     "Render settings and output formats",
+     "Final project"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:20.810593+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "ab04d620-a6b2-441d-8a60-1dd47e471dc8",
+  "title": "Revit MEP",
+  "caption": "Model ductwork, piping, plumbing, fire protection and electrical systems in Revit MEP.",
+  "description": "Revit MEP is used to design and coordinate the mechanical, electrical and plumbing services of a building. This course covers HVAC and ductwork, piping and plumbing with sloped drainage, fire protection and sprinklers, and electrical fixtures, devices and cable trays, followed by families, annotations, schedules and team collaboration.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "7",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Mechanical",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "BIM and Revit MEP basics",
+    "detail": [
+     "Introduction to BIM",
+     "Revit MEP fundamentals",
+     "Viewing the model"
+    ]
+   },
+   {
+    "title": "HVAC",
+    "detail": [
+     "Creating an HVAC system",
+     "Mechanical equipment and air terminals",
+     "Creating and modifying ductwork",
+     "Ducts and duct fittings",
+     "Duct accessories",
+     "Overview of energy analysis"
+    ]
+   },
+   {
+    "title": "Piping and plumbing",
+    "detail": [
+     "Hydraulic piping",
+     "Pipes and pipe fittings",
+     "Pipe accessories",
+     "Plumbing systems",
+     "Plumbing pipes and fittings",
+     "Sloping drainage pipes"
+    ]
+   },
+   {
+    "title": "Fire protection",
+    "detail": [
+     "Fire protection systems",
+     "Sprinklers",
+     "Pipes and pipe fittings"
+    ]
+   },
+   {
+    "title": "Electrical systems",
+    "detail": [
+     "Light fixtures",
+     "Electrical devices",
+     "Cable trays",
+     "Cables and electrical equipment"
+    ]
+   },
+   {
+    "title": "Families",
+    "detail": [
+     "Introduction to families",
+     "Basic family creation tools",
+     "Creating families",
+     "Duct, pipe and electrical connectors",
+     "Editing existing families"
+    ]
+   },
+   {
+    "title": "Documentation and teamwork",
+    "detail": [
+     "Tags",
+     "Dimensions",
+     "Symbols and text",
+     "Legends",
+     "Schedules",
+     "Worksets and worksharing",
+     "Printing and publishing"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:23.776104+00:00",
+  "needs_review": false
+ },
+ {
+  "id": "d15091f4-045f-4868-996d-74ddf51c7222",
+  "title": "Solidworks",
+  "caption": "Design parts, sheet metal, surfaces, weldments and assemblies in SolidWorks and turn them into engineering drawings.",
+  "description": "SolidWorks is widely used for product and machine design. This course covers sketching and part design, sheet metal, surfacing, weldments, assemblies with mates and motion studies, and engineering drawings with views, annotations and bills of materials.",
+  "image": null,
+  "banner": null,
+  "price": "10000",
+  "lessons": "8",
+  "students": null,
+  "duration": "28",
+  "certification": true,
+  "difficulty": [
+   {
+    "label": "Beginner",
+    "value": "Beginner"
+   },
+   {
+    "label": "Intermediate",
+    "value": "Intermediate"
+   },
+   {
+    "label": "Advanced",
+    "value": "Advanced"
+   }
+  ],
+  "languages": [
+   "English",
+   "Hindi"
+  ],
+  "category": "Mechanical",
+  "prerequisites": "",
+  "assignment": "",
+  "table_of_contents": [
+   {
+    "title": "Introduction",
+    "detail": [
+     "Introduction to product design and CAD/CAM/CAE",
+     "Parametric and non-parametric modelling",
+     "Introduction to SolidWorks",
+     "The SolidWorks interface"
+    ]
+   },
+   {
+    "title": "Sketching",
+    "detail": [
+     "Sketch entities",
+     "Sketch modifying tools",
+     "Parametric modelling",
+     "Geometric relations",
+     "Fully defined sketches",
+     "Over-defined sketches",
+     "Under-defined sketches"
+    ]
+   },
+   {
+    "title": "Part design",
+    "detail": [
+     "Base features",
+     "Reference planes",
+     "Reference axes",
+     "Reference points",
+     "Reference coordinate systems",
+     "Cut features",
+     "Standard holes with the Hole Wizard",
+     "External cosmetic threads",
+     "Selection methods",
+     "Changing the sketch plane",
+     "Editing with Instant3D",
+     "Deleting features",
+     "Deleting bodies",
+     "Suppressing features",
+     "Unsuppressing features",
+     "Creating different types of curves"
+    ]
+   },
+   {
+    "title": "Sheet metal design",
+    "detail": [
+     "Base flange",
+     "Edge flange",
+     "Sketched bend",
+     "Miter flange",
+     "Closed corners",
+     "Hems",
+     "Jog bend",
+     "Breaking corners",
+     "Lofted bends",
+     "Converting a solid body to sheet metal",
+     "Ripping edges",
+     "Forming tool design"
+    ]
+   },
+   {
+    "title": "Surface design",
+    "detail": [
+     "Extruded surface",
+     "Revolved surface",
+     "Swept surface",
+     "Lofted surface",
+     "Boundary surface",
+     "Planar surface",
+     "Fill surface",
+     "Radiated surface",
+     "Offsetting surfaces",
+     "Trimming surfaces",
+     "Untrimming surfaces",
+     "Extending surfaces",
+     "Knitting surfaces",
+     "Filleting surfaces",
+     "Replacing faces",
+     "Deleting faces",
+     "Mirroring surface bodies",
+     "Adding thickness to surface bodies",
+     "Thicken surface cut",
+     "Surface cut"
+    ]
+   },
+   {
+    "title": "Weldment design",
+    "detail": [
+     "3D sketching",
+     "Assigning structural members",
+     "End operations",
+     "End caps and gussets"
+    ]
+   },
+   {
+    "title": "Assembly",
+    "detail": [
+     "Introduction to assembly",
+     "Assembly approaches",
+     "Standard mates",
+     "Advanced mates",
+     "Mechanical mates",
+     "Patterns of components",
+     "Copying and mirroring components",
+     "Smart fasteners",
+     "Hiding components",
+     "Exploded state",
+     "Explode and assembly videos",
+     "Design Library and Toolbox",
+     "Motion study"
+    ]
+   },
+   {
+    "title": "Drawings",
+    "detail": [
+     "Adding sheets and drawing views",
+     "Editing the sheet format",
+     "User-defined sheet formats",
+     "View Layout tab",
+     "Views from the 3D model",
+     "Exploded views of assemblies",
+     "Editing and modifying views",
+     "Balloons",
+     "Annotations",
+     "Bill of materials",
+     "Exporting to PDF"
+    ]
+   }
+  ],
+  "additional_resources": [],
+  "materials": [],
+  "created_at": "2026-03-09T11:30:19.545834+00:00",
+  "needs_review": false
+ }
+]

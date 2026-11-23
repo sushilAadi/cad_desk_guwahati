@@ -151,7 +151,7 @@
   --color-paper-raised: #f4f4f5;
   --color-ink: #171717;
   --color-ink-2: #525252;
-  --color-ink-3: #737373;
+  --color-ink-3: #666666;
   --color-line: rgba(23, 23, 23, 0.1);
   --color-brand: #d92d20;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -161,12 +161,25 @@
   --shadow-book-border: var(--ds-shadow-book-border);
 }
 
+/* height of the pinned top bar + header, for anything that sticks or scrolls under it */
+:root { --site-header: 6.8rem; }
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
+  }
+  /* Body and small text use Matangi (from the uraniam_fitness project). Headings keep Geist, and anything
+     with its own font class (the Anton display face, font-sans) still wins over both rules. */
+  body {
+    font-family: var(--font-matangi), var(--font-plex-sans), system-ui, sans-serif;
+    /* Matangi is light at small sizes; its weight axis is variable, so nudge the base up for easier reading. */
+    font-weight: 450;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-plex-sans), system-ui, sans-serif;
   }
 }
 
@@ -211,4 +224,16 @@ button:not(:disabled), [role="button"]:not([aria-disabled="true"]), summary, [ro
 ::view-transition-new(site-header) { animation: none; }
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}
+
+/* Universities strip: slow endless scroll, paused on hover, still for reduced-motion users */
+@keyframes uni-scroll {
+  to { transform: translateX(-50%); }
+}
+.uni-track { animation: uni-scroll 50s linear infinite; }
+.uni-marquee:hover .uni-track { animation-play-state: paused; }
+.uni-marquee { mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+@media (prefers-reduced-motion: reduce) {
+  .uni-track { animation: none; }
+  .uni-marquee { overflow-x: auto; }
 }

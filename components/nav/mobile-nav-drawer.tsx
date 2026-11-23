@@ -9,14 +9,12 @@ import {
   ChevronDown,
   GraduationCap,
   UserCheck,
-  HelpCircle,
   Building2,
   MessageCircle,
 } from "lucide-react"
 import type { PublicCourse } from "@/lib/public-courses"
 import { getCategoryDisplay } from "./category-config"
-import { RegistrationMenuContent } from "./registration-menu-content"
-import { EnquiryMenuContent } from "./enquiry-menu-content"
+import { RegistrationEnquiryMenuContent } from "./registration-enquiry-menu-content"
 import { ContactMenuContent } from "./contact-menu-content"
 import { webp } from "@/lib/webp"
 
@@ -43,7 +41,7 @@ function whatsappLinkFor(courseTitle: string) {
 export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [openCategory, setOpenCategory] = useState<string | null>(null)
-  const [openSection, setOpenSection] = useState<"registration" | "enquiry" | "contact" | null>(null)
+  const [openSection, setOpenSection] = useState<"register" | "contact" | null>(null)
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : ""
@@ -116,7 +114,7 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
                 {/* Courses accordion */}
                 <div className="border-b border-zinc-200 px-4 py-3">
                   <div className="flex items-center justify-between py-1">
-                    <span className="text-[11px] font-mono font-bold text-zinc-500">
+                    <span className="text-xs font-bold text-zinc-500">
                       COURSES ({totalCount})
                     </span>
                   </div>
@@ -145,7 +143,7 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
                             </div>
                             <div className="flex items-center gap-1.5 shrink-0">
                               <span
-                                className={`font-mono text-[10px] font-bold px-1.5 py-0.5 border ${
+                                className={`text-xs font-bold px-1.5 py-0.5 border ${
                                   isOpenCat
                                     ? "bg-amber-400 text-zinc-950 border-amber-300"
                                     : "bg-zinc-200 text-zinc-800 border-zinc-300"
@@ -179,11 +177,11 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
                                       className="flex items-center justify-between gap-2 p-2.5 text-xs hover:bg-amber-50"
                                     >
                                       <span className="font-bold text-zinc-800 truncate">{course.title}</span>
-                                      <span className="shrink-0 font-mono text-[10px] text-amber-700">Enquire →</span>
+                                      <span className="shrink-0 text-xs text-amber-700">Enquire →</span>
                                     </a>
                                   ))}
                                   {g.courses.length === 0 && (
-                                    <p className="p-2.5 text-[11px] text-zinc-500">
+                                    <p className="p-2.5 text-xs text-zinc-500">
                                       Message us on WhatsApp for this category.
                                     </p>
                                   )}
@@ -197,26 +195,26 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
                   </div>
                 </div>
 
-                {/* Registration — same content as desktop */}
+                {/* Registration / Enquiry — same content as desktop */}
                 <div className="border-b border-zinc-200">
                   <button
                     type="button"
-                    onClick={() => setOpenSection(openSection === "registration" ? null : "registration")}
+                    onClick={() => setOpenSection(openSection === "register" ? null : "register")}
                     className="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-zinc-50"
                   >
                     <UserCheck className="h-4 w-4 text-amber-600 shrink-0" />
                     <div className="min-w-0 flex-1 text-left">
-                      <span className="block text-xs font-extrabold text-zinc-900">Registration</span>
-                      <span className="block text-[11px] text-zinc-500">Enroll into a course</span>
+                      <span className="block text-xs font-extrabold text-zinc-900">Registration / Enquiry</span>
+                      <span className="block text-xs text-zinc-500">One form to register or ask a question</span>
                     </div>
                     <ChevronDown
                       className={`h-3.5 w-3.5 text-zinc-400 shrink-0 transition-transform ${
-                        openSection === "registration" ? "rotate-180" : ""
+                        openSection === "register" ? "rotate-180" : ""
                       }`}
                     />
                   </button>
                   <AnimatePresence initial={false}>
-                    {openSection === "registration" && (
+                    {openSection === "register" && (
                       <motion.div
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
@@ -225,42 +223,7 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
                         className="overflow-hidden"
                       >
                         <div className="p-3">
-                          <RegistrationMenuContent />
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-                {/* Enquiry — same content as desktop */}
-                <div className="border-b border-zinc-200">
-                  <button
-                    type="button"
-                    onClick={() => setOpenSection(openSection === "enquiry" ? null : "enquiry")}
-                    className="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-zinc-50"
-                  >
-                    <HelpCircle className="h-4 w-4 text-blue-600 shrink-0" />
-                    <div className="min-w-0 flex-1 text-left">
-                      <span className="block text-xs font-extrabold text-zinc-900">Enquiry Desk</span>
-                      <span className="block text-[11px] text-zinc-500">Ask about syllabus, batches, fees</span>
-                    </div>
-                    <ChevronDown
-                      className={`h-3.5 w-3.5 text-zinc-400 shrink-0 transition-transform ${
-                        openSection === "enquiry" ? "rotate-180" : ""
-                      }`}
-                    />
-                  </button>
-                  <AnimatePresence initial={false}>
-                    {openSection === "enquiry" && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ type: "spring", stiffness: 380, damping: 34 }}
-                        className="overflow-hidden"
-                      >
-                        <div className="p-3">
-                          <EnquiryMenuContent />
+                          <RegistrationEnquiryMenuContent />
                         </div>
                       </motion.div>
                     )}
@@ -277,7 +240,7 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
                     <Building2 className="h-4 w-4 text-emerald-600 shrink-0" />
                     <div className="min-w-0 flex-1 text-left">
                       <span className="block text-xs font-extrabold text-zinc-900">Contact Us</span>
-                      <span className="block text-[11px] text-zinc-500">Noonmati, Guwahati</span>
+                      <span className="block text-xs text-zinc-500">Noonmati, Guwahati</span>
                     </div>
                     <ChevronDown
                       className={`h-3.5 w-3.5 text-zinc-400 shrink-0 transition-transform ${

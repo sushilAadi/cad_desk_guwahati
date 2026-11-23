@@ -1,6 +1,6 @@
 "use client"
 
-import { ViewTransition, useEffect, useRef, useState } from "react"
+import { ViewTransition, useEffect, useMemo, useRef, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { FrameLines, FrameStrips } from "@/components/home/frame-lines"
@@ -9,6 +9,9 @@ import { Book } from "@/components/ui/book"
 import { RibbonTwist } from "@/components/home/ribbon-twist"
 import { useResponsive } from "@/components/ui/use-responsive"
 import { AnimatePresence, motion } from "motion/react"
+import { UNIVERSITIES, type University } from "@/lib/universities"
+import { ScrollRevealText } from "@/components/ui/scroll-reveal-text"
+import { CAD_DESK_NETWORK } from "@/lib/site"
 import { ArrowRight, Check, ChevronDown, MessageCircle, Plus, Search, X } from "lucide-react"
 import { COVER_COLORS, CoverBook, sharedImages } from "@/components/home/course-cover"
 import type { PublicCourse } from "@/lib/public-courses"
@@ -81,7 +84,7 @@ function BookCard({ course, img, w, added, href, onToggle }: { course: PublicCou
           <ViewTransition name={`course-title-${course.id}`} share="morph">
             <p className="truncate text-sm font-medium text-ink">{course.title}</p>
           </ViewTransition>
-          <p className="mt-1 truncate font-mono text-xs text-ink-3">{code(course.category)} · {days(course)}</p>
+          <p className="mt-1 truncate text-xs text-ink-3">{code(course.category)} · {days(course)}</p>
         </div>
         <button
           onClick={onToggle}
@@ -96,9 +99,25 @@ function BookCard({ course, img, w, added, href, onToggle }: { course: PublicCou
   )
 }
 
+/** A university tile. Hovering any tile reports it so a popover can show; with a letter it is also a link to the full letter. */
+function UniTile({ u, className, children, onPeek }: { u: University; className: string; children: React.ReactNode; onPeek: (p: { id: string; x: number; y: number } | null) => void }) {
+  const show = (e: React.SyntheticEvent<HTMLElement>) => {
+    const r = e.currentTarget.getBoundingClientRect()
+    onPeek({ id: u.id, x: r.left + r.width / 2, y: r.bottom })
+  }
+  const hide = () => onPeek(null)
+  if (!u.letter)
+    return <div tabIndex={0} aria-label={u.name} className={`group ${className}`} onMouseEnter={show} onFocus={show} onMouseLeave={hide} onBlur={hide}>{children}</div>
+  return (
+    <Link href={`/appreciation/${u.id}`} aria-label={`Read the appreciation letter from ${u.name}`} className={`group cursor-pointer ${className}`} onMouseEnter={show} onFocus={show} onMouseLeave={hide} onBlur={hide}>
+      {children}
+    </Link>
+  )
+}
+
 /** Small monospace caption above a block, like the class-name notes on tailwindcss.com. */
 function Note({ children, dark = false }: { children: React.ReactNode; dark?: boolean }) {
-  return <p data-rule className={`mb-4 font-mono text-[11px] tracking-wide ${dark ? "text-white/40" : "text-ink-3/70"}`}>{children}</p>
+  return <p data-rule className={`mb-4 text-xs tracking-wide ${dark ? "text-white/65" : "text-ink-3"}`}>{children}</p>
 }
 
 /** Vertical label sitting in the hatched strip to the left of the column (large screens only). */
@@ -106,7 +125,7 @@ function SideLabel({ children }: { children: React.ReactNode }) {
   return (
     <span
       aria-hidden
-      className="pointer-events-none absolute bottom-12 left-[calc(50%-min(720px,50vw-100px)-23px)] z-20 hidden rotate-180 font-mono text-[10px] uppercase tracking-[0.22em] text-brand [writing-mode:vertical-rl] lg:block"
+      className="pointer-events-none absolute bottom-12 left-[calc(50%-min(720px,50vw-100px)-23px)] z-20 hidden rotate-180 text-xs uppercase tracking-[0.22em] text-brand [writing-mode:vertical-rl] lg:block"
     >
       {children}
     </span>
@@ -115,17 +134,17 @@ function SideLabel({ children }: { children: React.ReactNode }) {
 
 /** Colour of each "what you get" row when it is open, and how its text and button read on that colour. */
 const WHY_STYLE = [
-  { bg: "#ff8a35", fg: "text-white", btn: "bg-white text-ink" },
+  { bg: "#ff8a35", fg: "text-ink", btn: "bg-ink text-white" },
   { bg: "#e6fa55", fg: "text-ink", btn: "bg-ink text-white" },
-  { bg: "#ff4a3f", fg: "text-white", btn: "bg-white text-ink" },
+  { bg: "#ff4a3f", fg: "text-ink", btn: "bg-ink text-white" },
 ]
 
 const PILL: Record<string, string> = {
   lime: "bg-[#e6fa55] text-ink",
-  orange: "bg-[#ff8a35] text-white",
-  red: "bg-[#ff4a3f] text-white",
-  violet: "bg-[#9b7bf7] text-white",
-  green: "bg-[#06b57b] text-white",
+  orange: "bg-[#ff8a35] text-ink",
+  red: "bg-[#ff4a3f] text-ink",
+  violet: "bg-[#9b7bf7] text-ink",
+  green: "bg-[#06b57b] text-ink",
   ink: "bg-ink text-white",
   sky: "bg-[#bcd8f2] text-ink",
 }
@@ -171,7 +190,7 @@ function MiniCards({ i }: { i: number }) {
       <>
         <MiniCard title="Every course" sub="Ends with one">
           <span className={`${DISPLAY} block w-full text-4xl leading-none`}>Certificate</span>
-          <span className="mt-2 grid h-14 w-14 place-items-center rounded-full bg-brand font-mono text-[9px] text-white">CAD DESK</span>
+          <span className="mt-2 grid h-14 w-14 place-items-center rounded-full bg-brand text-xs text-white">CAD DESK</span>
         </MiniCard>
         <MiniCard title="From CAD Desk" sub="Issued by the institute" className="mt-10">
           <Pill c="lime">CAD Desk</Pill>
@@ -202,52 +221,72 @@ function MiniCards({ i }: { i: number }) {
 }
 
 const HERO_IMAGE = "/images/hero/institute.webp" // drop a wide photo of the institute here
+// the hero pours between these like ink (see ink-flow-carousel); a single image is shown as before
+const HERO_IMAGES = [HERO_IMAGE, "/images/hero/institute-1.webp", "/images/hero/institute-2.webp", "/images/hero/institute-3.webp", "/images/hero/institute-4.webp"]
 const HERO_FALLBACK = "/images/hero/categories-collage.png"
 
 // 8 x 3 grid, 24 boxes numbered across (1 to 24). The first and last columns are half width and the top and
 // bottom rows are half height, so the four corners are quarter size and the middle boxes are square.
 // Boxes 11, 15 and 21 carry text; every other box is a slice of the one big image.
-const HERO_TEXT: Record<number, { cls: string; node: React.ReactNode }> = {
+// What the "Hands-on training" box says for each hero picture (same order as HERO_IMAGES).
+const HERO_COPY = [
+  { title: "Hands-on training", text: "Real projects as you learn, with internships encouraged." },
+  { title: "Mechanical design", text: "3D models and drawings, taught step by step." },
+  { title: "Civil and architecture", text: "Floor plans and building models, from drawing to 3D." },
+  { title: "Learn by making", text: "Work with real models as you learn." },
+  { title: "Learn together", text: "Guided practice in a working CAD lab, with an instructor on the floor." },
+]
+// The other two boxes keep their words and change colour with each picture. Full class names so Tailwind sees them.
+const HERO_COLORS = [
+  { a: "bg-ink text-white", b: "bg-[#2f3bff] text-white", badge: "bg-white text-[#2f3bff]" },
+  { a: "bg-[#ff4a3f] text-ink", b: "bg-[#e6fa55] text-ink", badge: "bg-ink text-white" },
+  { a: "bg-[#06b57b] text-ink", b: "bg-[#9b7bf7] text-ink", badge: "bg-ink text-white" },
+  { a: "bg-[#ff8a35] text-ink", b: "bg-ink text-white", badge: "bg-white text-ink" },
+  { a: "bg-[#2f3bff] text-white", b: "bg-[#bcd8f2] text-ink", badge: "bg-ink text-white" },
+]
+const heroText = (i: number): Record<number, { cls: string; node: React.ReactNode }> => ({
   11: {
     cls: "bg-paper-raised",
     node: (
       <Link href="/courses" className="group flex h-full flex-col justify-between p-3 sm:p-4">
         <span>
-          <span className="block text-[clamp(13px,1.3vw,19px)] font-medium leading-tight text-ink">Hands-on training</span>
-          <span className="mt-1 block text-[clamp(10px,0.85vw,13px)] leading-snug text-ink-2">Real projects as you learn, with internships encouraged.</span>
+          <span key={i} className="rise block">
+            <span className="block text-[clamp(13px,1.3vw,19px)] font-medium leading-tight text-ink">{HERO_COPY[i].title}</span>
+            <span className="mt-1 block text-[clamp(12px,0.9vw,14px)] leading-snug text-ink-2">{HERO_COPY[i].text}</span>
+          </span>
         </span>
-        <span className="flex items-center gap-1 text-[11px] font-medium text-ink">
+        <span className="flex items-center gap-1 text-xs font-medium text-ink">
           Browse courses <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.75} />
         </span>
       </Link>
     ),
   },
   15: {
-    cls: "bg-ink text-white",
+    cls: HERO_COLORS[i].a,
     node: (
       <div className="flex h-full flex-col justify-between p-3 sm:p-4">
         <span className={`${DISPLAY} text-[clamp(16px,1.7vw,26px)] leading-[1.02]`}>Classroom<br />or live online</span>
-        <span className="font-mono text-[10px] text-white/60">Noonmati, Guwahati</span>
+        <span className="text-xs opacity-80">Noonmati, Guwahati</span>
       </div>
     ),
   },
   21: {
-    cls: "bg-[#2f3bff] text-white",
+    cls: HERO_COLORS[i].b,
     node: (
       <div className="flex h-full flex-col justify-between p-3 sm:p-4">
         <span className={`${DISPLAY} text-[clamp(16px,1.7vw,26px)] leading-[1.02]`}>Certificate with<br />every course</span>
-        <span className="grid h-7 w-7 place-items-center rounded-full bg-white text-[#2f3bff]">
+        <span className={`grid h-7 w-7 place-items-center rounded-full ${HERO_COLORS[i].badge}`}>
           <Check className="h-3.5 w-3.5" strokeWidth={2.25} />
         </span>
       </div>
     ),
   },
-}
-const HERO_FULL: MosaicTile[] = Array.from({ length: 24 }, (_, k): MosaicTile => {
+})
+const heroFull = (i: number): MosaicTile[] => Array.from({ length: 24 }, (_, k): MosaicTile => {
   const n = k + 1
   const col = String((k % 8) + 1)
   const row = String(Math.floor(k / 8) + 1)
-  const t = HERO_TEXT[n]
+  const t = heroText(i)[n]
   // Rounded everywhere except the outer edge: the top row's top corners and the bottom row's bottom corners
   // are square, apart from the four corners of the whole mosaic, which keep their outer corner rounded.
   // The two top corner boxes are also square on their inner bottom corner (box 1 bottom-left, box 8 bottom-right),
@@ -293,7 +332,8 @@ function StickyBar({ target, title, index, total, dark = false, size = "clamp(26
       cancelAnimationFrame(raf)
       raf = requestAnimationFrame(() => {
         // 0 while the heading is still on screen, 1 once it has fully passed under the navbar
-        const p = Math.min(Math.max((100 - el.getBoundingClientRect().bottom) / 90, 0), 1)
+        const hdr = document.querySelector("[data-site-header]")?.getBoundingClientRect().height ?? 64
+        const p = Math.min(Math.max((hdr + 36 - el.getBoundingClientRect().bottom) / 90, 0), 1)
         b.style.opacity = String(p)
         b.style.transform = `translateY(${(1 - p) * 28}px) scale(${0.94 + 0.06 * p})`
         b.style.pointerEvents = p > 0.6 ? "auto" : "none"
@@ -314,7 +354,7 @@ function StickyBar({ target, title, index, total, dark = false, size = "clamp(26
       ref={bar}
       aria-hidden
       style={{ ["--bh" as string]: `calc(${size} + 22px)`, opacity: 0, transformOrigin: "left center" }}
-      className={`sticky top-16 z-30 -mb-[var(--bh)] flex h-[var(--bh)] items-center justify-between gap-4 border-b will-change-transform ${
+      className={`sticky top-[var(--site-header)] z-30 -mb-[var(--bh)] flex h-[var(--bh)] items-center justify-between gap-4 border-b will-change-transform ${
         dark ? "border-white/15 bg-ink text-white" : "border-line bg-white text-ink"
       }`}
     >
@@ -322,7 +362,7 @@ function StickyBar({ target, title, index, total, dark = false, size = "clamp(26
         {title}
         <span className="text-brand">.</span>
       </span>
-      <span className={`font-mono text-[11px] ${dark ? "text-white/50" : "text-ink-3"}`}>
+      <span className={`text-xs ${dark ? "text-white/70" : "text-ink-3"}`}>
         {String(index).padStart(2, "0")} / {String(total).padStart(2, "0")}
       </span>
     </div>
@@ -374,6 +414,8 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
     }
   }, [])
   const bw = useResponsive({ sm: 120, lg: 96, xl: 128, "2xl": 175 }) // each book + its count must fit its own column
+  const [peek, setPeek] = useState<{ id: string; x: number; y: number } | null>(null) // letter preview under the hovered university
+  const peekUni = peek ? UNIVERSITIES.find((u) => u.id === peek.id) : undefined
   const [seed, setSeed] = useState(1) // bumps on every tab change so the books reveal in a new random order
   const [why, setWhy] = useState(0)
   const [dot, setDot] = useState<{ c: PublicCourse; i: number; x: number; y: number; b: number; w: number } | null>(null)
@@ -386,6 +428,15 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
       ? all
       : (groups.find((g) => g.category === active)?.courses ?? [])
   const heroMode = useResponsive<string>({ sm: "compact", lg: "full" })
+  // The boxes follow the picture: switch just as the new one finishes pouring in, not when the pour starts.
+  const [heroIdx, setHeroIdx] = useState(0)
+  const heroTimer = useRef<ReturnType<typeof setTimeout>>(undefined)
+  useEffect(() => () => clearTimeout(heroTimer.current), [])
+  const onHeroSlide = (i: number) => {
+    clearTimeout(heroTimer.current)
+    heroTimer.current = setTimeout(() => setHeroIdx(i), 1100)
+  }
+  const heroTiles = useMemo(() => heroFull(heroIdx), [heroIdx])
   const listed = all.filter((c) => list.includes(c.id))
   const tabs = groups.map((g) => ({ category: g.category, label: g.category, count: g.courses.length }))
 
@@ -402,8 +453,12 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
           <MaskedMosaic
             src={HERO_IMAGE}
             fallback={HERO_FALLBACK}
-            tiles={heroMode === "compact" ? HERO_COMPACT : HERO_FULL}
+            tiles={heroMode === "compact" ? HERO_COMPACT : heroTiles}
             objectPosition="center 40%"
+            images={HERO_IMAGES}
+            focusY={0.4}
+            autoplay={6000}
+            onSlide={onHeroSlide}
             className={`grid gap-2 ${
               heroMode === "compact"
                 ? "h-[clamp(240px,60vw,340px)] grid-cols-4 grid-rows-2"
@@ -438,6 +493,39 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
         </h1>
       </section>
 
+      {/* Universities strip: bold title, then logo + name pairs drifting past on the white sheet; the full grid is further down */}
+      <section id="universities" aria-label="Universities we have trained students at" className={`${GUTTER} scroll-mt-[var(--site-header)] pb-10 pt-12 lg:pb-14 lg:pt-16`}>
+        <Note>/ 02 · trust · who we have taught</Note>
+        <div data-rule className="flex flex-wrap items-end justify-between gap-x-10 gap-y-4">
+          <h2 className={`${DISPLAY} text-[clamp(36px,5vw,72px)] leading-[0.95] text-ink`}>
+            Trusted by <span className="text-brand">Assam&apos;s</span> universities<span className="text-brand">.</span>
+          </h2>
+          <ScrollRevealText end={0.5} text="We have trained students at these universities and received letters of appreciation." className="max-w-[38ch] text-base leading-7 text-ink-2" />
+        </div>
+        <div data-rule className="uni-marquee mt-8 overflow-hidden border-y border-line py-6 lg:mt-10">
+          <ul className="uni-track flex w-max items-center">
+            {[...UNIVERSITIES, ...UNIVERSITIES].map((u, i) => (
+              <li key={`${u.id}-${i}`} aria-hidden={i >= UNIVERSITIES.length || undefined} className="shrink-0">
+                <UniTile u={u} onPeek={setPeek} className="flex items-center gap-4 pr-12 outline-none md:pr-16">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`/images/universities/${u.id}.png`}
+                    alt={i < UNIVERSITIES.length ? `${u.short} logo` : ""}
+                    draggable={false}
+                    className={`block h-16 w-16 shrink-0 object-contain md:h-20 md:w-20 ${u.dark ? "rounded-full bg-[#1a2a4a] p-1.5" : "bg-white"}`}
+                  />
+                  <span className="block">
+                    <span className={`${DISPLAY} block whitespace-nowrap text-xl leading-none text-ink transition-colors group-hover:text-brand group-focus-visible:text-brand md:text-2xl`}>{u.short}</span>
+                    <span className="mt-1.5 block text-xs text-ink-3">{u.place}</span>
+                  </span>
+                  <span aria-hidden className="ml-12 h-10 w-px bg-line md:ml-16" />
+                </UniTile>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
       {/* 02 Ribbon: two satin ribbons that wave and twist, weaving over and under each other */}
       <div className="relative -mb-2 overflow-hidden">
         <RibbonTwist text={BAND_A.join("   ✦   ")} className="h-[190px] sm:h-[230px]" />
@@ -446,15 +534,13 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
       {/* 03 Train your way: tracks */}
       <section className={`${GUTTER} pb-16 pt-6 lg:pb-24 lg:pt-8`}>
         <SideLabel>Tracks</SideLabel>
-        <StickyBar target="h-tracks" title="Train your way" index={1} total={5} />
-        <Note>/ tracks · pick one</Note>
+        <StickyBar target="h-tracks" title="Train your way" index={3} total={7} />
+        <Note>/ 03 · choose · pick a track</Note>
         <div data-rule className="flex flex-wrap items-end justify-between gap-6">
           <h2 id="h-tracks" className={`${DISPLAY} text-[clamp(44px,6vw,88px)] leading-[0.95] text-ink`}>
             Train your way<span className="text-brand">.</span>
           </h2>
-          <p className="max-w-[40ch] text-base leading-7 text-ink-2">
-            Different goals, one institute. Pick a track and see every course in it.
-          </p>
+          <ScrollRevealText end={0.5} text="Different goals, one institute. Pick a track and see every course in it." className="max-w-[40ch] text-base leading-7 text-ink-2" />
         </div>
         <ul data-rule className="mt-12 grid grid-cols-2 gap-x-5 gap-y-12 sm:grid-cols-3 lg:grid-cols-5">
           {groups.map((g, i) => (
@@ -492,7 +578,7 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
                       {g.courses.length}
                     </span>
                     <span
-                      className="mt-2 block font-medium text-ink/40 transition-colors duration-300 group-hover:text-ink group-focus-visible:text-ink"
+                      className="mt-2 block font-medium text-ink/70 transition-colors duration-300 group-hover:text-ink group-focus-visible:text-ink"
                       style={{ fontSize: Math.max(10, bw * 0.085) }}
                    >
                       Courses
@@ -501,7 +587,7 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
                 </div>
                 <span className="mt-5 flex items-baseline justify-between gap-3">
                   <span className={`${DISPLAY} text-xl leading-none text-ink`}>{g.category}</span>
-                  <span className="font-mono text-xs text-ink-3">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="text-xs text-ink-3">{String(i + 1).padStart(2, "0")}</span>
                 </span>
               </a>
             </motion.li>
@@ -513,10 +599,10 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
 
       {/* Sheet 03: every course, under tabs (own page: /courses) */}
       {page && (
-      <section id="courses" className={`${GUTTER} scroll-mt-16 pb-32 pt-12 lg:pt-16`}>
+      <section id="courses" className={`${GUTTER} scroll-mt-[var(--site-header)] pb-32 pt-12 lg:pt-16`}>
         <SideLabel>Catalogue</SideLabel>
-        <StickyBar target="h-courses" title="Find your course" index={2} total={5} />
-        <Note>/ catalogue · five tracks</Note>
+        <StickyBar target="h-courses" title="Find your course" index={3} total={7} />
+        <Note>/ 03 · choose · five tracks</Note>
         <div data-rule className="flex flex-wrap items-start justify-between gap-x-10 gap-y-6">
           <h2 id="h-courses" className={`${DISPLAY} text-[clamp(44px,6vw,88px)] leading-[0.95] text-ink`}>Find your course<span className="text-brand">.</span></h2>
           <div className="w-full sm:w-[360px] lg:pt-4">
@@ -528,10 +614,10 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="SEARCH COURSES"
                 aria-label="Search courses"
-                className="min-w-0 flex-1 bg-transparent font-mono text-sm uppercase tracking-[0.12em] outline-none placeholder:text-ink-3/70"
+                className="min-w-0 flex-1 bg-transparent text-sm uppercase tracking-[0.12em] outline-none placeholder:text-ink-3"
               />
               {query && (
-                <button type="button" onClick={() => setQuery("")} className="font-mono text-xs uppercase tracking-[0.12em] text-ink-3 transition-colors hover:text-ink">
+                <button type="button" onClick={() => setQuery("")} className="text-xs uppercase tracking-[0.12em] text-ink-3 transition-colors hover:text-ink">
                   Clear
                 </button>
               )}
@@ -555,11 +641,11 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
                       setSeed((n) => n + 1)
                     }}
                     className={`inline cursor-pointer whitespace-nowrap text-left uppercase outline-none transition-colors duration-300 focus-visible:underline focus-visible:decoration-4 ${
-                      on ? "text-ink" : "text-[#d4d4d4] hover:text-ink/60"
+                      on ? "text-ink" : "text-ink-3 hover:text-ink"
                     }`}
                   >
                     {t.label}
-                    <sup className="ml-[0.12em] align-super font-mono text-[0.24em] tracking-normal text-ink-3">{t.count}</sup>
+                    <sup className="ml-[0.12em] align-super text-[max(12px,0.24em)] tracking-normal text-ink-3">{t.count}</sup>
                   </button>
                 </span>
               )
@@ -567,7 +653,7 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
           </div>
 
         <div ref={gridRef} className="mt-8">
-          <p className="font-mono text-xs text-ink-3">
+          <p className="text-xs text-ink-3">
               {filtered.length} {filtered.length === 1 ? "course" : "courses"}
               {q ? ` for "${query.trim()}"` : active === "all" ? "" : ` in ${active}`}
             </p>
@@ -615,12 +701,12 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
       {/* 04 More than a classroom: numbered rows, the open one fills with its own colour */}
       <section className={`${GUTTER} border-t border-line py-16 lg:py-24`}>
         <SideLabel>Why CAD Desk</SideLabel>
-        <StickyBar target="h-why" title="More than a classroom" index={3} total={5} />
-        <Note>/ why · what you get</Note>
+        <StickyBar target="h-why" title="More than a classroom" index={4} total={7} />
+        <Note>/ 04 · difference · what you get</Note>
         <h2 id="h-why" data-rule className={`${DISPLAY} max-w-[16ch] text-[clamp(44px,6vw,88px)] leading-[0.95] text-ink`}>
           More than a classroom<span className="text-brand">.</span> A stronger career<span className="text-brand">.</span>
         </h2>
-        <ol data-rule className="mt-12 border-t border-ink lg:mt-16">
+        <ol data-rule className="mt-12 border-t border-line lg:mt-16">
           {WHY.map((w, i) => {
             const open = why === i
             const st = WHY_STYLE[i % WHY_STYLE.length]
@@ -677,18 +763,73 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
         </ol>
       </section>
 
+      {/* Proof, in Guwahati's own numbers: years here, universities taught at, what we teach */}
+      <section className={`${GUTTER} border-t border-line py-16 lg:py-24`}>
+        <SideLabel>Guwahati</SideLabel>
+        <StickyBar target="h-network" title="Eight years in Guwahati" index={5} total={7} />
+        <Note>/ 05 · proof · in Guwahati</Note>
+        <div data-rule className="flex flex-wrap items-end justify-between gap-6">
+          <h2 id="h-network" className={`${DISPLAY} max-w-[16ch] text-[clamp(44px,6vw,88px)] leading-[0.95] text-ink`}>
+            Eight years in <span className="text-brand">Guwahati</span>.
+          </h2>
+          <ScrollRevealText
+            end={0.5}
+            text="CAD Desk Guwahati, a CAD Desk franchise centre in Noonmati, has trained students for over 8 years, including at more than 10 private and government universities."
+            className="max-w-[44ch] text-base leading-7 text-ink-2"
+          />
+        </div>
+        <dl data-rule className="mt-12 grid grid-cols-2 border-t border-line lg:mt-16 lg:grid-cols-4">
+          {[
+            { n: "8+", label: "Years teaching in Guwahati" },
+            { n: "10+", label: "Universities, private and government" },
+            { n: String(all.length), label: "Courses to choose from" },
+            { n: String(groups.length), label: "Tracks, from Civil to Creative Arts" },
+          ].map((x, i) => (
+            <div key={x.label} className={`flex min-w-0 flex-col border-b border-line py-8 pr-4 ${i % 2 ? "pl-4 lg:pl-8" : ""} ${i > 0 ? "lg:border-l lg:pl-8" : ""}`}>
+              <dt className="order-2 mt-3 text-base text-ink-2">{x.label}</dt>
+              <dd className={`${DISPLAY} order-1 whitespace-nowrap text-[clamp(34px,4.4vw,72px)] leading-none text-ink`}>{x.n}</dd>
+            </div>
+          ))}
+        </dl>
+
+        {/* The parent brand, kept visibly separate: national figures, labelled as the network's and not Guwahati's */}
+        <div data-rule className="mt-10 rounded-xl border border-line bg-paper-raised p-6 md:p-8 lg:mt-14 lg:flex lg:items-center lg:justify-between lg:gap-12">
+          <div className="max-w-[46ch]">
+            <h3 className={`${DISPLAY} text-[clamp(26px,2.6vw,40px)] leading-none text-ink`}>
+              Part of <span className="text-brand">CAD Desk</span> India
+            </h3>
+            <p className="mt-3 text-base leading-7 text-ink-2">
+              CAD Desk Guwahati is a franchise centre of CAD Desk India, a national CAD and IT training network. These figures are for the whole network, not for Guwahati alone.
+            </p>
+          </div>
+          <dl className="mt-6 grid grid-cols-3 gap-6 lg:mt-0 lg:min-w-[420px]">
+            {CAD_DESK_NETWORK.stats.map((x) => (
+              <div key={x.label} className="flex min-w-0 flex-col">
+                <dt className="order-2 mt-2 text-sm text-ink-2">{x.label}</dt>
+                <dd className={`${DISPLAY} order-1 whitespace-nowrap text-[clamp(28px,3vw,44px)] leading-none text-ink`}>{x.n}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+        <p data-rule className="mt-4 text-xs text-ink-3">
+          Network figures as published by CAD Desk India at{" "}
+          <a href={`https://${CAD_DESK_NETWORK.source}`} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-ink">{CAD_DESK_NETWORK.source}</a>
+          , checked {CAD_DESK_NETWORK.checked}.
+        </p>
+      </section>
+
       {/* 05 Dark: the numbers and how to enrol */}
       <section data-band className={`${GUTTER} py-16 text-white lg:py-24`}>
         <SideLabel>Numbers</SideLabel>
-        <StickyBar target="h-numbers" title="Real courses" index={4} total={5} dark />
-        <Note dark>/ numbers · how to enrol</Note>
+        <StickyBar target="h-numbers" title="Real courses" index={6} total={7} dark />
+        <Note dark>/ 06 · start · pick a course and enrol</Note>
         <div data-rule className="grid gap-12 lg:grid-cols-[minmax(0,6fr)_minmax(0,6fr)] lg:items-center lg:gap-20">
           <div>
             <h2 id="h-numbers" className={`${DISPLAY} text-[clamp(44px,6vw,88px)] leading-[0.95]`}>
               Real courses<span className="text-brand">.</span> Real projects<span className="text-brand">.</span>
             </h2>
             <p className={`${DISPLAY} mt-8 text-[clamp(80px,12vw,180px)] leading-none`}>{all.length}</p>
-            <p className="mt-2 max-w-[34ch] text-base leading-7 text-white/60">courses, each one ending in a CAD Desk certificate.</p>
+            <p className="mt-2 max-w-[34ch] text-base leading-7 text-white/75">courses, each one ending in a CAD Desk certificate.</p>
           </div>
           <div className="relative" onMouseLeave={() => setDot(null)}>
             <div className="grid grid-cols-11 gap-2 sm:gap-3">
@@ -720,7 +861,7 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
                         background: img ? undefined : (COVER_COLORS[c.category] ?? "#171717"),
                       }}
                     >
-                      {!img && <span className={`${DISPLAY} text-[10px] leading-none text-white/90`}>{c.title.replace(/[^A-Za-z0-9 ]/g, "").split(" ").slice(0, 2).map((w) => w[0]).join("")}</span>}
+                      {!img && <span className={`${DISPLAY} text-xs leading-none text-white/90`}>{c.title.replace(/[^A-Za-z0-9 ]/g, "").split(" ").slice(0, 2).map((w) => w[0]).join("")}</span>}
                     </span>
                   </button>
                 )
@@ -754,9 +895,9 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
                         <CoverBook course={dot.c} img={posterOf(dot.c) ?? null} width={92} />
                       </div>
                       <div className="min-w-0 self-center">
-                        <p className="font-mono text-[10px] text-ink-3">{code(dot.c.category)} · {days(dot.c)}</p>
+                        <p className="text-xs text-ink-3">{code(dot.c.category)} · {days(dot.c)}</p>
                         <p className="mt-1.5 text-base font-medium leading-snug">{dot.c.title}</p>
-                        {dot.c.certification && <p className="mt-1 text-[11px] text-brand">Certificate</p>}
+                        {dot.c.certification && <p className="mt-1 text-xs text-brand">Certificate</p>}
                       </div>
                     </motion.div>
                   </AnimatePresence>
@@ -768,9 +909,9 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
         <ol data-rule className="mt-16 grid gap-px overflow-hidden rounded-xl border border-white/15 bg-white/15 sm:grid-cols-3 lg:mt-24">
           {STEPS.map((st, i) => (
             <li key={st.title} className="bg-ink p-7">
-              <span className="font-mono text-xs text-white/50">Step {i + 1}</span>
+              <span className="text-xs text-white/70">Step {i + 1}</span>
               <p className={`${DISPLAY} mt-8 text-3xl leading-none`}>{st.title}</p>
-              <p className="mt-3 text-base leading-7 text-white/60">{st.text}</p>
+              <p className="mt-3 text-base leading-7 text-white/75">{st.text}</p>
             </li>
           ))}
         </ol>
@@ -781,8 +922,8 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
       {/* 07 Call to action + centre + footer wordmark */}
       <section className={`${GUTTER} border-t border-line pt-16 lg:pt-24`}>
         <SideLabel>Contact</SideLabel>
-        <StickyBar target="h-contact" title="Ready to build your career" index={5} total={5} size="clamp(31px, 4.8vw, 72px)" />
-        <Note>/ contact · say hello</Note>
+        <StickyBar target="h-contact" title="Ready to build your career" index={7} total={7} size="clamp(31px, 4.8vw, 72px)" />
+        <Note>/ 07 · begin · say hello</Note>
         <div data-rule className="flex flex-wrap items-end justify-between gap-8">
           <h2 id="h-contact" className={`${DISPLAY} text-[clamp(52px,8vw,120px)] leading-[0.92] text-ink`}>
             Ready to build<br />your career<span className="text-brand">?</span>
@@ -796,18 +937,58 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
             </a>
           </div>
         </div>
-        <div data-rule className="mt-16 grid gap-6 border-t border-ink pt-8 sm:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:mt-24">
+        <div data-rule className="mt-16 grid gap-6 border-t border-line pt-8 sm:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:mt-24">
           <p className={`${DISPLAY} text-4xl leading-none text-ink`}>Our centre<br />in Guwahati</p>
           <div>
             <p className="text-xl font-medium text-ink">Noonmati</p>
             <p className="mt-1 text-base text-ink-2">CAD Desk Guwahati, Noonmati, Guwahati, Assam</p>
-            <a href="tel:+919127281610" className="mt-4 inline-block font-mono text-sm text-ink underline underline-offset-4">+91 91272 81610</a>
+            <a href="tel:+919127281610" className="mt-4 inline-block text-sm text-ink underline underline-offset-4">+91 91272 81610</a>
           </div>
         </div>
         <p data-rule aria-hidden className={`${DISPLAY} mt-16 select-none overflow-hidden whitespace-nowrap text-center text-[min(21.5vw,340px)] leading-[0.8] text-brand lg:mt-24`}>
           CAD DESK
         </p>
       </section>
+
+      {/* University popover: name plus the appreciation letter (or the logo until a letter is added). Fixed so the scrolling strip's clipping can't hide it.
+          It fades and rises in, glides from tile to tile, and fades the content when the university changes. */}
+      <AnimatePresence>
+        {peek && peekUni && (
+          <motion.div
+            key="uni-pop"
+            aria-hidden
+            initial={{ opacity: 0, y: 10, scale: 0.96, left: Math.min(Math.max(peek.x - 140, 8), window.innerWidth - 288), top: Math.min(peek.y + 12, window.innerHeight - 400) }}
+            animate={{ opacity: 1, y: 0, scale: 1, left: Math.min(Math.max(peek.x - 140, 8), window.innerWidth - 288), top: Math.min(peek.y + 12, window.innerHeight - 400) }}
+            exit={{ opacity: 0, y: 6, scale: 0.97, transition: { duration: 0.18, ease: "easeIn" } }}
+            transition={{ type: "spring", stiffness: 240, damping: 28, mass: 0.8, opacity: { duration: 0.25 } }}
+            style={{ transformOrigin: "top center" }}
+            className="pointer-events-none fixed z-50 w-[280px] rounded-xl border border-line bg-white p-3 shadow-[0_16px_40px_rgba(0,0,0,.25)]"
+          >
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={peekUni.id}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.15 }}
+              >
+                <div className="flex h-[240px] items-center justify-center overflow-hidden rounded-lg border border-line bg-paper-raised p-3">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={peekUni.letter ?? `/images/universities/${peekUni.id}.png`}
+                    alt=""
+                    className={peekUni.letter ? "h-full w-full object-cover object-top" : `max-h-full max-w-full object-contain ${peekUni.dark ? "h-40 w-40 rounded-full bg-[#1a2a4a] p-3" : ""}`}
+                  />
+                </div>
+                <p className={`${DISPLAY} mt-3 text-xl leading-tight text-ink`}>{peekUni.name}</p>
+                <p className="mt-1 text-xs text-ink-3">
+                  {peekUni.place} · {peekUni.letter ? "letter of appreciation, click to read" : "letter of appreciation coming soon"}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Your list: appears once something is added */}
       <AnimatePresence>
@@ -834,9 +1015,9 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
             )}
             <div className="flex items-center gap-2">
               <button onClick={() => setListOpen((o) => !o)} aria-expanded={listOpen} className="flex h-10 flex-1 items-center gap-3 px-2 text-left text-sm">
-                <span className="font-mono text-xs text-white/60">{String(listed.length).padStart(2, "0")}</span>
+                <span className="text-xs text-white/75">{String(listed.length).padStart(2, "0")}</span>
                 {listed.length === 1 ? "course" : "courses"} in your list
-                <span className="text-white/60 underline underline-offset-4">{listOpen ? "Hide" : "View"}</span>
+                <span className="text-white/75 underline underline-offset-4">{listOpen ? "Hide" : "View"}</span>
               </button>
               <a
                 href={waLink(listed.map((c) => c.title))}

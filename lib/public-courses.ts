@@ -22,22 +22,31 @@ const FALLBACK_CATEGORIES = [
   "Creative Arts",
 ]
 
+// Images that still point at caddeskindia.com are not ours to show, so they are dropped and the course falls back
+// to the generated cover.
+const ownImage = (u: string | null | undefined) => (u && !/caddeskindia\.com/i.test(u) ? u : null)
+
+// The site reads courses_v2 (the rewritten text) and falls back to the original `courses` table if it is missing,
+// empty or fails. Set COURSES_SOURCE=legacy to force the original table.
+const COURSE_TABLES = process.env.COURSES_SOURCE === "legacy" ? ["courses"] : ["courses_v2", "courses"]
+
 export async function getPublicCourses(): Promise<PublicCourse[]> {
   const supabase = getSupabaseAdmin()
   if (!supabase) return []
 
-  const { data, error } = await supabase
-    .from("courses")
-    .select("id, title, caption, category, duration, certification, image, lessons")
-    .order("category", { ascending: true })
-    .order("title", { ascending: true })
+  for (const table of COURSE_TABLES) {
+    const { data, error } = await supabase
+      .from(table)
+      .select("id, title, caption, category, duration, certification, image, lessons")
+      .order("category", { ascending: true })
+      .order("title", { ascending: true })
 
-  if (error || !data) {
-    console.error("[public-courses] fetch failed:", error)
-    return []
+    if (!error && data && data.length > 0) {
+      return (data as PublicCourse[]).map((c) => ({ ...c, image: ownImage(c.image) }))
+    }
+    if (error && table === COURSE_TABLES[COURSE_TABLES.length - 1]) console.error("[public-courses] fetch failed:", error)
   }
-
-  return data as PublicCourse[]
+  return []
 }
 
 export function groupByCategory(
@@ -84,17 +93,24 @@ const names = (v: unknown) =>
 export async function getCourseDetail(id: string): Promise<CourseDetail | null> {
   const supabase = getSupabaseAdmin()
   if (!supabase) return null
-  const { data, error } = await supabase
-    .from("courses")
-    .select("description, banner, students, difficulty, languages, prerequisites, assignment, table_of_contents, materials, additional_resources")
-    .eq("id", id)
-    .maybeSingle()
-  if (error || !data) return null
+  let data: unknown = null
+  for (const table of COURSE_TABLES) {
+    const res = await supabase
+      .from(table)
+      .select("description, banner, students, difficulty, languages, prerequisites, assignment, table_of_contents, materials, additional_resources")
+      .eq("id", id)
+      .maybeSingle()
+    if (!res.error && res.data) {
+      data = res.data
+      break
+    }
+  }
+  if (!data) return null
   const d = data as Record<string, unknown>
   const s = (v: unknown) => (typeof v === "string" && v.trim() ? v.trim() : null)
   return {
     description: s(d.description),
-    banner: s(d.banner),
+    banner: ownImage(s(d.banner)),
     students: s(d.students),
     difficulty: names(d.difficulty),
     languages: names(d.languages),

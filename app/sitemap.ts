@@ -7,7 +7,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const courses = await getPublicCourses()
   const slugs = courseSlugs(courses)
   return [
-    ...["", "/courses", "/privacy", "/terms", "/data-deletion"],
+    ...["", "/courses", "/enquiry", "/privacy", "/terms", "/data-deletion"],
     ...courses.map((c) => `/courses/${slugs.get(c.id)}`),
   ].map((p) => ({ url: `${SITE_URL}${p}` }))
 }

@@ -20,7 +20,7 @@ function GeneratedBanner({ course }: { course: PublicCourse }) {
         style={{ backgroundImage: "repeating-linear-gradient(135deg, #fff 0 1px, transparent 1px 14px)" }}
       />
       <div className="relative flex h-full flex-col justify-between p-6 pl-[170px] text-white sm:p-8 sm:pl-[190px]">
-        <span className="font-mono text-xs uppercase tracking-[0.14em] text-white/60">{course.category}</span>
+        <span className="text-xs uppercase tracking-[0.14em] text-white/75">{course.category}</span>
         <span className="font-[family-name:var(--font-display)] text-[clamp(28px,4vw,56px)] uppercase leading-[0.95] tracking-[-0.01em]">
           {course.title}
           <span className="text-brand">.</span>

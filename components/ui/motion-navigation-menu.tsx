@@ -234,7 +234,7 @@ export function NavigationMenuItem({
         )}
         <span>{title}</span>
         {badge && (
-          <span className="ml-1 font-mono text-xs text-ink-3">
+          <span className="ml-1 text-xs text-ink-3">
             {badge}
           </span>
         )}

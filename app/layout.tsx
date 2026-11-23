@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Anton, Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
+import { Agentation } from "agentation";
 import { SITE_URL } from "@/lib/site";
 
 const plexSans = Geist({
@@ -19,6 +21,15 @@ const display = Anton({
 const plexMono = Geist_Mono({
   variable: "--font-plex-mono",
   subsets: ["latin"],
+  display: "swap",
+});
+
+// Paragraph font, taken from the uraniam_fitness project. Used for <p> text only (see globals.css); headings keep Anton.
+const matangi = localFont({
+  src: "./fonts/matangi-latin.woff2",
+  variable: "--font-matangi",
+  weight: "300 900",
+  style: "normal",
   display: "swap",
 });
 
@@ -67,9 +78,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${plexSans.variable} ${plexMono.variable} ${display.variable} h-full antialiased`}
+      className={`${plexSans.variable} ${plexMono.variable} ${display.variable} ${matangi.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">{children}
+        {process.env.NODE_ENV === "development" && <Agentation />}
+      </body>
     </html>
   );
 }
