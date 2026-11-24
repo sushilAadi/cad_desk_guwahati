@@ -12,11 +12,6 @@ const MAX = 10
 const BATCHES = ["Morning", "Afternoon", "Evening", "Weekend", "Flexible"]
 const MODES = ["Classroom", "Online", "Either"]
 const HEARD = ["News Paper", "TV/Banners", "Presentations", "Social media", "Friend or relative", "Google search", "Other"]
-const FILLED_BY = [
-  { v: "student", short: "Student" },
-  { v: "parent", short: "Parent" },
-  { v: "other", short: "Other" },
-]
 
 const INPUT =
   "mt-1.5 block w-full rounded-lg border border-line bg-paper-card px-3.5 py-3 text-base text-ink outline-none transition-colors placeholder:text-ink-3 focus:border-ink aria-[invalid=true]:border-brand"
@@ -89,7 +84,6 @@ function EnquiryFormInner({
   const [picked, setPicked] = useState<string[]>(initialCourses)
   const [query, setQuery] = useState("")
   const [tab, setTab] = useState(() => groups.find((g) => g.courses.some((c) => initialCourses.includes(c.id)))?.category ?? groups[0]?.category ?? "")
-  const [filledBy, setFilledBy] = useState(v?.filledBy ?? "student")
   // set once, when the form first shows; the server rejects a form "filled" in under a few seconds
   const [openedAt] = useState(() => Date.now())
 
@@ -172,31 +166,13 @@ function EnquiryFormInner({
         </div>
       </Section>
 
-      <Section n={2} title="Your details" sub="If the student is under 18, a parent or guardian should fill this in.">
-        <fieldset>
-          <legend className={LABEL}>Who is filling this in?</legend>
-          <div className="mt-1.5 grid grid-cols-3 rounded-lg border border-line bg-paper-raised p-1">
-            {FILLED_BY.map((o) => (
-              <label key={o.v} className="cursor-pointer rounded-md px-2 py-2 text-center text-sm text-ink-2 transition-colors has-[:checked]:bg-paper-card has-[:checked]:font-medium has-[:checked]:text-ink has-[:checked]:shadow-sm has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ink">
-                <input type="radio" name="filledBy" value={o.v} checked={filledBy === o.v} onChange={() => setFilledBy(o.v)} className="sr-only" />
-                {o.short}
-              </label>
-            ))}
-          </div>
-        </fieldset>
-
-        <div className="mt-6 grid gap-5 sm:grid-cols-2">
+      <Section n={2} title="Your details">
+        <div className="grid gap-5 sm:grid-cols-2">
           <div>
             <label htmlFor="name" className={LABEL}>Student&apos;s name <span className="text-brand">*</span></label>
             <input id="name" name="name" type="text" autoComplete="name" defaultValue={v?.name} aria-invalid={!!err.name} aria-describedby={err.name ? "name-err" : undefined} className={INPUT} />
             <Err id="name-err">{err.name}</Err>
           </div>
-          {filledBy !== "student" && (
-            <div>
-              <label htmlFor="contactName" className={LABEL}>Your name <span className="font-normal text-ink-3">(optional)</span></label>
-              <input id="contactName" name="contactName" type="text" defaultValue={v?.contactName} className={INPUT} />
-            </div>
-          )}
           <div>
             <label htmlFor="phone" className={LABEL}>Mobile number <span className="text-brand">*</span></label>
             <div className="relative">

@@ -7,9 +7,7 @@ import { SITE_CONTACT_PHONE_DISPLAY } from "@/lib/site"
 
 export type EnquiryValues = {
   type: string
-  filledBy: string
   name: string
-  contactName: string
   phone: string
   email: string
   qualification: string
@@ -25,7 +23,6 @@ export type EnquiryState =
   | { ok: false; errors: Record<string, string>; values: EnquiryValues; message?: string }
   | null
 
-const FILLED_BY = ["student", "parent", "other"] as const
 const BATCHES = ["Morning", "Afternoon", "Evening", "Weekend", "Flexible"]
 const MODES = ["Classroom", "Online", "Either"]
 // matches the values already used in enquiries.sources, plus a few more
@@ -62,9 +59,7 @@ export async function submitEnquiry(_prev: EnquiryState, formData: FormData): Pr
   const text = (k: string, max = 200) => String(formData.get(k) ?? "").trim().slice(0, max)
   const values: EnquiryValues = {
     type: text("type", 20) === "register" ? "register" : "enquiry",
-    filledBy: (FILLED_BY as readonly string[]).includes(text("filledBy", 10)) ? text("filledBy", 10) : "student",
     name: text("name", 80),
-    contactName: text("contactName", 80),
     phone: text("phone", 30),
     email: text("email", 120),
     qualification: text("qualification", 120),
@@ -119,7 +114,6 @@ export async function submitEnquiry(_prev: EnquiryState, formData: FormData): Pr
   // enquiries has no columns for these, so they go in one readable note line for the counsellor.
   const note = [
     `Request: ${values.type === "register" ? "Registration" : "Enquiry"}`,
-    `Filled by: ${values.filledBy === "parent" ? "Parent/guardian" : values.filledBy === "other" ? "Someone else" : "Student"}${values.contactName ? ` (${values.contactName})` : ""}`,
     values.mode && `Mode: ${values.mode}`,
     values.message && `Message: ${values.message}`,
   ]
