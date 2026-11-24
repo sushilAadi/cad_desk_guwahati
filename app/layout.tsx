@@ -1,3 +1,4 @@
+import { InlineScript } from "@/components/inline-script";
 import type { Metadata } from "next";
 import { Anton, Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
@@ -84,11 +85,7 @@ export default function RootLayout({
     >
       <head>
         {/* Set the saved theme before first paint so dark mode doesn't flash. Admin stays light. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `try{if(localStorage.getItem("theme")==="dark"&&!location.pathname.startsWith("/admin"))document.documentElement.classList.add("dark")}catch(e){}`,
-          }}
-        />
+        <InlineScript html={`try{if(localStorage.getItem("theme")==="dark"&&!location.pathname.startsWith("/admin"))document.documentElement.classList.add("dark")}catch(e){}`} />
       </head>
       <body className="min-h-full flex flex-col">{children}
         <CrosshairSections />
