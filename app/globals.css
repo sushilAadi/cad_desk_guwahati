@@ -146,14 +146,17 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-paper: #ffffff;
-  --color-paper-card: #ffffff;
-  --color-paper-raised: #f4f4f5;
-  --color-ink: #171717;
-  --color-ink-2: #525252;
-  --color-ink-3: #666666;
-  --color-line: rgba(23, 23, 23, 0.1);
+  --color-paper: var(--paper);
+  --color-paper-card: var(--paper-card);
+  --color-paper-raised: var(--paper-raised);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
   --color-brand: #d92d20;
+  --color-night: var(--night);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-deep: var(--brand-deep);
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --color-gray-alpha-400: var(--ds-gray-alpha-400);
   --color-background-200: var(--ds-background-200);
@@ -163,6 +166,28 @@
 
 /* height of the pinned top bar + header, for anything that sticks or scrolls under it */
 :root { --site-header: 6.8rem; }
+
+/* Site palette. Light is the default; a pre-paint script in app/layout.tsx adds .dark from localStorage. */
+:root {
+  --paper: #ffffff; --paper-card: #ffffff; --paper-raised: #f4f4f5;
+  --ink: #171717; --ink-2: #525252; --ink-3: #666666;
+  --line: rgba(23, 23, 23, 0.1);
+  --brand-soft: #fdecea; --brand-deep: #b42318;
+  --night: #171717; /* surfaces that stay dark in both themes, with white text */
+  --skel-a: #ececec; --skel-b: #f7f7f7;
+  color-scheme: light;
+}
+.dark {
+  --paper: #111112; --paper-card: #1a1a1c; --paper-raised: #232326;
+  --ink: #f2f2f2; --ink-2: #b8b8bc; --ink-3: #9a9aa0;
+  --line: rgba(255, 255, 255, 0.12);
+  --brand-soft: rgba(217, 45, 32, 0.16); --brand-deep: #ff8a80;
+  --night: #1f1f22;
+  --ds-background-200: #1c1c1f;
+  --skel-a: #222225; --skel-b: #2c2c30;
+  --background: #111112; --foreground: #f2f2f2;
+  color-scheme: dark;
+}
 
 @layer base {
   * {
@@ -202,7 +227,7 @@ html { scroll-behavior: smooth; }
 /* Skeleton shimmer for books that are about to appear */
 @keyframes shimmer { to { background-position: -200% 0; } }
 .skeleton {
-  background: linear-gradient(100deg, #ececec 30%, #f7f7f7 50%, #ececec 70%);
+  background: linear-gradient(100deg, var(--skel-a) 30%, var(--skel-b) 50%, var(--skel-a) 70%);
   background-size: 200% 100%;
   animation: shimmer 1.2s linear infinite;
 }

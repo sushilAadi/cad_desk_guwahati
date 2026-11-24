@@ -107,7 +107,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
   return (
     <div className="min-h-screen bg-paper text-ink">
       <SiteHeader groups={groups} totalCount={courses.length} />
-      <div className="relative bg-white">
+      <div className="relative bg-paper-card">
       <FrameLines />
       <FrameStrips />
       <main className="relative px-5 pb-24 pt-6 md:px-[60px] lg:px-[100px] [&>*]:mx-auto [&>*]:max-w-[1440px]">
@@ -160,7 +160,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
                     Levels:
                     <span className="mt-1.5 flex flex-wrap gap-1.5">
                       {detail.difficulty.map((l) => (
-                        <span key={l} className="rounded-full border border-brand/30 bg-[#fdecea] px-3 py-1 text-xs font-medium text-[#b42318]">{l}</span>
+                        <span key={l} className="rounded-full border border-brand/30 bg-brand-soft px-3 py-1 text-xs font-medium text-brand-deep">{l}</span>
                       ))}
                     </span>
                   </span>
@@ -174,7 +174,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
             </ul>
 
             <div className="mt-6 grid grid-cols-2 gap-3">
-              <Link href={`/enquiry?type=register&course=${slug}`} className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-ink px-4 text-sm font-medium text-white transition-colors hover:bg-ink-2">
+              <Link href={`/enquiry?type=register&course=${slug}`} className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-ink px-4 text-sm font-medium text-paper transition-colors hover:bg-ink-2">
                 <ArrowRight className="h-4 w-4" strokeWidth={1.75} /> Enrol now
               </Link>
               <Link href={`/courses?track=${encodeURIComponent(course.category)}`} transitionTypes={["nav-back"]} className="inline-flex h-12 items-center justify-center rounded-xl border border-line px-4 text-sm font-medium transition-colors hover:bg-paper-raised">
@@ -215,7 +215,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
             <ol className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {detail.toc.map((m, i) => {
                 return (
-                  <li key={i} className="flex flex-col rounded-2xl bg-white p-5">
+                  <li key={i} className="flex flex-col rounded-2xl bg-paper-card p-5">
                     <div className="flex items-start justify-between gap-3">
                       <div>
                         <h3 className="text-base font-medium leading-snug">{m.title}</h3>

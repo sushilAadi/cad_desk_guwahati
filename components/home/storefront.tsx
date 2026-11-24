@@ -90,7 +90,7 @@ function BookCard({ course, img, w, added, href, onToggle }: { course: PublicCou
           onClick={onToggle}
           aria-pressed={added}
           aria-label={added ? `Remove ${course.title} from your list` : `Add ${course.title} to your list`}
-          className={`grid h-8 w-8 shrink-0 place-items-center rounded-lg border transition-colors ${added ? "border-ink bg-ink text-white" : "border-line text-ink hover:bg-paper-raised"}`}
+          className={`grid h-8 w-8 shrink-0 place-items-center rounded-lg border transition-colors ${added ? "border-ink bg-ink text-paper" : "border-line text-ink hover:bg-paper-raised"}`}
        >
           {added ? <Check className="h-4 w-4" strokeWidth={1.5} /> : <Plus className="h-4 w-4" strokeWidth={1.5} />}
         </button>
@@ -134,9 +134,9 @@ function SideLabel({ children }: { children: React.ReactNode }) {
 
 /** Colour of each "what you get" row when it is open, and how its text and button read on that colour. */
 const WHY_STYLE = [
-  { bg: "#ff8a35", fg: "text-ink", btn: "bg-ink text-white" },
-  { bg: "#e6fa55", fg: "text-ink", btn: "bg-ink text-white" },
-  { bg: "#ff4a3f", fg: "text-ink", btn: "bg-ink text-white" },
+  { bg: "#ff8a35", fg: "text-ink", btn: "bg-ink text-paper" },
+  { bg: "#e6fa55", fg: "text-ink", btn: "bg-ink text-paper" },
+  { bg: "#ff4a3f", fg: "text-ink", btn: "bg-ink text-paper" },
 ]
 
 const PILL: Record<string, string> = {
@@ -145,7 +145,7 @@ const PILL: Record<string, string> = {
   red: "bg-[#ff4a3f] text-ink",
   violet: "bg-[#9b7bf7] text-ink",
   green: "bg-[#06b57b] text-ink",
-  ink: "bg-ink text-white",
+  ink: "bg-ink text-paper",
   sky: "bg-[#bcd8f2] text-ink",
 }
 
@@ -155,7 +155,7 @@ function Pill({ c, children }: { c: keyof typeof PILL; children: React.ReactNode
 
 function MiniCard({ title, sub, className = "", children }: { title: string; sub: string; className?: string; children: React.ReactNode }) {
   return (
-    <div className={`min-h-[330px] w-[230px] shrink-0 md:w-[min(300px,30%)] rounded-t-[28px] bg-white p-6 text-center text-ink ${className}`}>
+    <div className={`min-h-[330px] w-[230px] shrink-0 md:w-[min(300px,30%)] rounded-t-[28px] bg-paper-card p-6 text-center text-ink ${className}`}>
       <p className="text-lg font-medium leading-tight">{title}</p>
       <p className="mt-1 text-xs text-ink-3">{sub}</p>
       <div className="mt-6 flex flex-wrap justify-center gap-2">{children}</div>
@@ -240,11 +240,11 @@ const HERO_COPY = [
 ]
 // The other two boxes keep their words and change colour with each picture. Full class names so Tailwind sees them.
 const HERO_COLORS = [
-  { a: "bg-ink text-white", b: "bg-[#2f3bff] text-white", badge: "bg-white text-[#2f3bff]" },
-  { a: "bg-[#ff4a3f] text-ink", b: "bg-[#e6fa55] text-ink", badge: "bg-ink text-white" },
-  { a: "bg-[#06b57b] text-ink", b: "bg-[#9b7bf7] text-ink", badge: "bg-ink text-white" },
-  { a: "bg-[#ff8a35] text-ink", b: "bg-ink text-white", badge: "bg-white text-ink" },
-  { a: "bg-[#2f3bff] text-white", b: "bg-[#bcd8f2] text-ink", badge: "bg-ink text-white" },
+  { a: "bg-ink text-paper", b: "bg-[#2f3bff] text-white", badge: "bg-white text-[#2f3bff]" },
+  { a: "bg-[#ff4a3f] text-ink", b: "bg-[#e6fa55] text-ink", badge: "bg-ink text-paper" },
+  { a: "bg-[#06b57b] text-ink", b: "bg-[#9b7bf7] text-ink", badge: "bg-ink text-paper" },
+  { a: "bg-[#ff8a35] text-ink", b: "bg-ink text-paper", badge: "bg-paper text-ink" },
+  { a: "bg-[#2f3bff] text-white", b: "bg-[#bcd8f2] text-ink", badge: "bg-ink text-paper" },
 ]
 const heroText = (i: number): Record<number, { cls: string; node: React.ReactNode }> => ({
   11: {
@@ -357,7 +357,7 @@ function StickyBar({ target, title, index, total, dark = false, size = "clamp(26
       aria-hidden
       style={{ ["--bh" as string]: `calc(${size} + 22px)`, opacity: 0, transformOrigin: "left center" }}
       className={`sticky top-[var(--site-header)] z-30 -mb-[var(--bh)] flex h-[var(--bh)] items-center justify-between gap-4 border-b will-change-transform ${
-        dark ? "border-white/15 bg-ink text-white" : "border-line bg-white text-ink"
+        dark ? "border-white/15 bg-night text-white" : "border-line bg-paper text-ink"
       }`}
     >
       <span className={`${DISPLAY} leading-none`} style={{ fontSize: size }}>
@@ -453,7 +453,7 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
   const tabs = groups.map((g) => ({ category: g.category, label: g.category, count: g.courses.length }))
 
   return (
-    <div className="relative bg-white">
+    <div className="relative bg-paper">
       <FrameLines />
 
       <FrameStrips />
@@ -490,7 +490,7 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
         </div>
 
         <div data-rule className="mt-5 flex flex-wrap gap-3">
-          <Link href="/courses" className="inline-flex h-11 items-center rounded-full bg-ink px-6 text-sm font-medium text-white transition-colors hover:bg-ink-2">
+          <Link href="/courses" className="inline-flex h-11 items-center rounded-full bg-ink px-6 text-sm font-medium text-paper transition-colors hover:bg-ink-2">
             Browse courses
           </Link>
           <a href={waLink([])} target="_blank" rel="noopener noreferrer" className="inline-flex h-11 items-center rounded-full border border-ink/25 px-6 text-sm font-medium text-ink transition-colors hover:border-ink">
@@ -728,9 +728,9 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
                   {open && (
                     <>
                       {/* ticket notches: a folded corner at the top right and a cut in each side */}
-                      <span aria-hidden className="absolute right-[6%] top-0 h-11 w-11 bg-white [clip-path:polygon(0_0,100%_0,100%_100%)]" />
-                      <span aria-hidden className="absolute left-0 top-[66%] h-12 w-7 bg-white [clip-path:polygon(0_0,100%_50%,0_100%)]" />
-                      <span aria-hidden className="absolute right-0 top-[66%] h-12 w-7 bg-white [clip-path:polygon(100%_0,0_50%,100%_100%)]" />
+                      <span aria-hidden className="absolute right-[6%] top-0 h-11 w-11 bg-paper [clip-path:polygon(0_0,100%_0,100%_100%)]" />
+                      <span aria-hidden className="absolute left-0 top-[66%] h-12 w-7 bg-paper [clip-path:polygon(0_0,100%_50%,0_100%)]" />
+                      <span aria-hidden className="absolute right-0 top-[66%] h-12 w-7 bg-paper [clip-path:polygon(100%_0,0_50%,100%_100%)]" />
                     </>
                   )}
                   <button
@@ -748,7 +748,7 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
                     <span className={`text-base leading-7 transition-colors duration-500 ${open ? "" : "text-ink-2"}`}>{w.text}</span>
                     <span
                       aria-hidden
-                      className={`grid h-14 w-14 place-items-center rounded-full transition-all duration-500 group-hover:scale-105 ${open ? st.btn : "bg-ink text-white"}`}
+                      className={`grid h-14 w-14 place-items-center rounded-full transition-all duration-500 group-hover:scale-105 ${open ? st.btn : "bg-ink text-paper"}`}
                     >
                       <ChevronDown className={`h-6 w-6 transition-transform duration-500 ${open ? "rotate-180" : ""}`} strokeWidth={2} />
                     </span>
@@ -892,7 +892,7 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
                   }}
                   exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.15 } }}
                   transition={{ type: "spring", stiffness: 260, damping: 28, mass: 0.7, opacity: { duration: 0.2 }, scale: { duration: 0.25 } }}
-                  className="pointer-events-none absolute left-0 top-0 z-20 h-[170px] w-[250px] rounded-xl bg-white p-4 text-ink shadow-[0_16px_40px_rgba(0,0,0,.45)]"
+                  className="pointer-events-none absolute left-0 top-0 z-20 h-[170px] w-[250px] rounded-xl bg-paper-card p-4 text-ink shadow-[0_16px_40px_rgba(0,0,0,.45)]"
                 >
                   <AnimatePresence mode="wait" initial={false}>
                     <motion.div
@@ -920,7 +920,7 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
         </div>
         <ol data-rule className="mt-16 grid gap-px overflow-hidden rounded-xl border border-white/15 bg-white/15 sm:grid-cols-3 lg:mt-24">
           {STEPS.map((st, i) => (
-            <li key={st.title} className="bg-ink p-7">
+            <li key={st.title} className="bg-night p-7">
               <span className="text-xs text-white/70">Step {i + 1}</span>
               <p className={`${DISPLAY} mt-8 text-3xl leading-none`}>{st.title}</p>
               <p className="mt-3 text-base leading-7 text-white/75">{st.text}</p>
@@ -993,7 +993,7 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
             exit={{ opacity: 0, y: 6, scale: 0.97, transition: { duration: 0.18, ease: "easeIn" } }}
             transition={{ type: "spring", stiffness: 240, damping: 28, mass: 0.8, opacity: { duration: 0.25 } }}
             style={{ transformOrigin: "top center" }}
-            className="pointer-events-none fixed z-50 w-[280px] rounded-xl border border-line bg-white p-3 shadow-[0_16px_40px_rgba(0,0,0,.25)]"
+            className="pointer-events-none fixed z-50 w-[280px] rounded-xl border border-line bg-paper-card p-3 shadow-[0_16px_40px_rgba(0,0,0,.25)]"
           >
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
@@ -1030,7 +1030,7 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
             animate={{ y: 0 }}
             exit={{ y: 88 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-x-3 bottom-3 z-40 mx-auto max-w-xl rounded-xl bg-ink p-2 text-white shadow-[0_12px_32px_rgba(23,23,23,.25)]"
+            className="fixed inset-x-3 bottom-3 z-40 mx-auto max-w-xl rounded-xl bg-night p-2 text-white shadow-[0_12px_32px_rgba(23,23,23,.25)]"
          >
             {listOpen && (
               <ul className="mb-2 max-h-[40vh] overflow-y-auto border-b border-white/15 pb-2">

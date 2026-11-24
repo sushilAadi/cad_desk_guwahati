@@ -14,6 +14,7 @@ import { RegistrationEnquiryMenuContent } from "@/components/nav/registration-en
 import { ContactMenuContent } from "@/components/nav/contact-menu-content"
 import { TopBar } from "@/components/nav/top-bar"
 import { FrameToggle } from "@/components/nav/frame-toggle"
+import { ThemeToggle } from "@/components/nav/theme-toggle"
 import { MobileNavDrawer } from "@/components/nav/mobile-nav-drawer"
 import type { PublicCourse } from "@/lib/public-courses"
 
@@ -73,6 +74,7 @@ export function SiteHeader({ groups, totalCount }: SiteHeaderProps) {
 
           {/* Action Button (desktop) + Hamburger (mobile) */}
           <div className="flex items-center gap-2">
+            <ThemeToggle />
             <FrameToggle />
             <Link
               href="/enquiry"

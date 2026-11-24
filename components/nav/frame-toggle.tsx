@@ -29,7 +29,7 @@ export function FrameToggle() {
       aria-pressed={on}
       aria-label={on ? "Hide page borders and strips" : "Show page borders and strips"}
       title={on ? "Hide borders" : "Show borders"}
-      className={`hidden h-9 w-9 items-center justify-center rounded-lg border transition-colors md:inline-flex ${on ? "border-ink bg-ink text-white" : "border-line text-ink-2 hover:bg-paper-raised"}`}
+      className={`hidden h-9 w-9 items-center justify-center rounded-lg border transition-colors md:inline-flex ${on ? "border-ink bg-ink text-paper" : "border-line text-ink-2 hover:bg-paper-raised"}`}
     >
       <SquareDashed className="h-4 w-4" strokeWidth={1.5} />
     </button>

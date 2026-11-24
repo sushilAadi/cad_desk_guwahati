@@ -79,8 +79,17 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${plexSans.variable} ${plexMono.variable} ${display.variable} ${matangi.variable} h-full antialiased`}
     >
+      <head>
+        {/* Set the saved theme before first paint so dark mode doesn't flash. Admin stays light. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(localStorage.getItem("theme")==="dark"&&!location.pathname.startsWith("/admin"))document.documentElement.classList.add("dark")}catch(e){}`,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col">{children}
         <CrosshairSections />
         {process.env.NODE_ENV === "development" && <Agentation />}

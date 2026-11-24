@@ -35,7 +35,7 @@ export default async function EnquiryPage({ searchParams }: { searchParams: Prom
   return (
     <div className="min-h-screen bg-paper text-ink">
       <SiteHeader groups={groups} totalCount={courses.length} />
-      <div className="relative bg-white">
+      <div className="relative bg-paper-card">
         <FrameLines />
         <FrameStrips />
         <section className="relative px-5 pb-24 pt-10 md:px-[60px] lg:px-[100px] [&>*]:mx-auto [&>*]:max-w-[1440px]">
@@ -46,7 +46,7 @@ export default async function EnquiryPage({ searchParams }: { searchParams: Prom
             For students and parents. Tell us which course you are interested in and we will get back to you with batch timings, fees and seats.
           </p>
 
-          <div className="mt-12 grid gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)] lg:gap-20">
+          <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)] lg:gap-12">
             <EnquiryForm
               groups={groups.map((g) => ({ category: g.category, courses: g.courses.map((c) => ({ id: c.id, title: c.title })) }))}
               initialType={initialType}
@@ -57,16 +57,16 @@ export default async function EnquiryPage({ searchParams }: { searchParams: Prom
 
             <aside className="lg:sticky lg:top-[calc(var(--site-header)+1rem)] lg:self-start">
               <div className="rounded-2xl border border-line bg-paper-raised p-6 lg:p-8">
-                <h2 className={`${DISPLAY} text-3xl leading-none text-ink`}>What happens next</h2>
-                <ol className="mt-6 space-y-5">
+                <h2 className="text-lg font-semibold text-ink">What happens next</h2>
+                <ol className="mt-5 space-y-4">
                   {STEPS.map((s, i) => (
-                    <li key={s} className="flex gap-4 text-base leading-7 text-ink-2">
-                      <span aria-hidden className="grid h-9 w-9 shrink-0 place-items-center rounded-full border-2 border-brand text-sm text-ink">{i + 1}</span>
+                    <li key={s} className="flex gap-3 text-sm leading-6 text-ink-2">
+                      <span aria-hidden className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-soft text-sm font-medium text-brand-deep">{i + 1}</span>
                       {s}
                     </li>
                   ))}
                 </ol>
-                <div className="mt-8 border-t border-line pt-6 text-base leading-7 text-ink-2">
+                <div className="mt-6 border-t border-line pt-5 text-sm leading-6 text-ink-2">
                   <p>Prefer to talk? Call <a href={`tel:${SITE_CONTACT_PHONE}`} className="font-medium text-ink underline underline-offset-2">{SITE_CONTACT_PHONE_DISPLAY}</a>, or <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="font-medium text-ink underline underline-offset-2">message us on WhatsApp</a>.</p>
                 </div>
               </div>

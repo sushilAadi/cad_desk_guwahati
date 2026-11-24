@@ -36,7 +36,7 @@ export default async function AppreciationPage({ params }: { params: Promise<{ i
   return (
     <div className="min-h-screen bg-paper text-ink">
       <SiteHeader groups={groups} totalCount={courses.length} />
-      <div className="relative bg-white">
+      <div className="relative bg-paper-card">
         <FrameLines />
         <FrameStrips />
         <section className="relative px-5 pb-24 pt-10 md:px-[60px] lg:px-[100px] [&>*]:mx-auto [&>*]:max-w-[1440px]">
@@ -53,7 +53,7 @@ export default async function AppreciationPage({ params }: { params: Promise<{ i
           </div>
           <div className="mt-10 flex justify-center rounded-xl border border-line bg-paper-raised p-4 md:p-10">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={u.letter} alt={`Letter of appreciation from ${u.name}`} className="h-auto w-full max-w-[900px] bg-white shadow-[0_12px_40px_rgba(0,0,0,.12)]" />
+            <img src={u.letter} alt={`Letter of appreciation from ${u.name}`} className="h-auto w-full max-w-[900px] bg-paper-card shadow-[0_12px_40px_rgba(0,0,0,.12)]" />
           </div>
         </section>
       </div>

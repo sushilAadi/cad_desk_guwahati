@@ -9,14 +9,14 @@ const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponen
 
 export function ContactMenuContent() {
   return (
-    <div className="w-full p-6 text-zinc-900 bg-white rounded-lg border border-zinc-200 shadow-xl space-y-4">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b-2 border-zinc-200 pb-4">
+    <div className="w-full p-6 text-ink bg-paper-card rounded-lg border border-line shadow-xl space-y-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b-2 border-line pb-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <Building2 className="h-5 w-5 text-emerald-600" />
-            <h3 className="font-semibold text-base tracking-wide text-zinc-900">Contact & Centre</h3>
+            <h3 className="font-semibold text-base tracking-wide text-ink">Contact & Centre</h3>
           </div>
-          <p className="text-xs text-zinc-600">
+          <p className="text-xs text-ink-2">
             Visit our Noonmati centre in Guwahati, or reach us directly on WhatsApp.
           </p>
         </div>
@@ -32,28 +32,28 @@ export function ContactMenuContent() {
         </a>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-zinc-800">
-        <div className="p-3 bg-zinc-50 border border-zinc-200 rounded-lg space-y-1">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-ink">
+        <div className="p-3 bg-paper-raised border border-line rounded-lg space-y-1">
           <span className="text-emerald-700 font-bold flex items-center gap-1">
             <MapPin className="h-3.5 w-3.5" /> Noonmati Centre
           </span>
-          <p className="text-xs text-zinc-600">
+          <p className="text-xs text-ink-2">
             Near Axom Jatiya Vidyalaya, Noonmati, Kamrup Metro, Guwahati, Assam 781020
           </p>
         </div>
 
-        <div className="p-3 bg-zinc-50 border border-zinc-200 rounded-lg space-y-1">
+        <div className="p-3 bg-paper-raised border border-line rounded-lg space-y-1">
           <span className="text-blue-700 font-bold flex items-center gap-1">
             <Phone className="h-3.5 w-3.5" /> Phone
           </span>
-          <p className="text-xs text-zinc-600">+91 91272 81610</p>
+          <p className="text-xs text-ink-2">+91 91272 81610</p>
         </div>
 
-        <div className="p-3 bg-zinc-50 border border-zinc-200 rounded-lg space-y-1">
+        <div className="p-3 bg-paper-raised border border-line rounded-lg space-y-1">
           <span className="text-amber-700 font-bold flex items-center gap-1">
             <MessageCircle className="h-3.5 w-3.5" /> WhatsApp
           </span>
-          <p className="text-xs text-zinc-600">Message us anytime — usually replies within minutes.</p>
+          <p className="text-xs text-ink-2">Message us anytime — usually replies within minutes.</p>
         </div>
       </div>
     </div>

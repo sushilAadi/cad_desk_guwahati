@@ -70,7 +70,7 @@ export function FrameLines() {
     <div ref={ref} aria-hidden className="pointer-events-none absolute inset-0 z-0 hidden md:block">
       {/* dark bands are painted here so the lines can sit on top of them yet still behind the content */}
       {bands.map((b) => (
-        <span key={b.top} className="absolute inset-x-0 bg-ink" style={{ top: b.top, height: b.height }} />
+        <span key={b.top} className="absolute inset-x-0 bg-night" style={{ top: b.top, height: b.height }} />
       ))}
       {ys.map((y) => (
         <span key={y} className="frame-deco absolute inset-x-0 h-px bg-[rgba(115,115,115,0.3)]" style={{ top: y }} />

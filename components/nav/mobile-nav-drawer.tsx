@@ -63,7 +63,7 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
         type="button"
         onClick={() => setIsOpen(true)}
         aria-label="Open menu"
-        className="md:hidden flex h-9 w-9 items-center justify-center border border-zinc-200 bg-white text-zinc-900 hover:bg-zinc-50"
+        className="md:hidden flex h-9 w-9 items-center justify-center border border-line bg-paper-card text-ink hover:bg-paper-raised"
       >
         <Menu className="h-5 w-5" />
       </button>
@@ -89,12 +89,12 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 320, damping: 32 }}
-              className="fixed inset-y-0 right-0 z-[70] flex h-full w-[85vw] max-w-sm flex-col bg-white text-zinc-900 border-l border-zinc-200 shadow-2xl md:hidden"
+              className="fixed inset-y-0 right-0 z-[70] flex h-full w-[85vw] max-w-sm flex-col bg-paper-card text-ink border-l border-line shadow-2xl md:hidden"
             >
               {/* Header */}
-              <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3.5">
+              <div className="flex items-center justify-between border-b border-line px-4 py-3.5">
                 <div className="flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-tr from-amber-500 via-amber-600 to-amber-400 text-zinc-950">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-tr from-amber-500 via-amber-600 to-amber-400 text-ink">
                     <GraduationCap className="h-4 w-4" />
                   </div>
                   <span className="text-sm font-semibold">CAD DESK</span>
@@ -103,7 +103,7 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
                   type="button"
                   onClick={close}
                   aria-label="Close menu"
-                  className="flex h-8 w-8 items-center justify-center border border-zinc-300 text-zinc-600 hover:bg-zinc-100"
+                  className="flex h-8 w-8 items-center justify-center border border-line text-ink-2 hover:bg-paper-raised"
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -112,9 +112,9 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
               {/* Scrollable content */}
               <div className="flex-1 overflow-y-auto">
                 {/* Courses accordion */}
-                <div className="border-b border-zinc-200 px-4 py-3">
+                <div className="border-b border-line px-4 py-3">
                   <div className="flex items-center justify-between py-1">
-                    <span className="text-xs font-bold text-zinc-500">
+                    <span className="text-xs font-bold text-ink-3">
                       COURSES ({totalCount})
                     </span>
                   </div>
@@ -123,16 +123,16 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
                       const isOpenCat = openCategory === g.category
                       const display = getCategoryDisplay(g.category)
                       return (
-                        <div key={g.category} className="border border-zinc-200">
+                        <div key={g.category} className="border border-line">
                           <button
                             type="button"
                             onClick={() => setOpenCategory(isOpenCat ? null : g.category)}
                             className={`w-full flex items-center justify-between gap-2 p-2.5 text-left transition-colors ${
-                              isOpenCat ? "bg-zinc-900 text-white" : "bg-zinc-50 text-zinc-900"
+                              isOpenCat ? "bg-ink text-paper" : "bg-paper-raised text-ink"
                             }`}
                           >
                             <div className="flex items-center gap-2 min-w-0">
-                              <div className="h-8 w-8 shrink-0 overflow-hidden border border-zinc-300">
+                              <div className="h-8 w-8 shrink-0 overflow-hidden border border-line">
                                 <img
                                   src={webp(display.image)}
                                   alt={g.category}
@@ -145,8 +145,8 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
                               <span
                                 className={`text-xs font-bold px-1.5 py-0.5 border ${
                                   isOpenCat
-                                    ? "bg-amber-400 text-zinc-950 border-amber-300"
-                                    : "bg-zinc-200 text-zinc-800 border-zinc-300"
+                                    ? "bg-amber-400 text-ink border-amber-300"
+                                    : "bg-paper-raised text-ink border-line"
                                 }`}
                               >
                                 {g.courses.length}
@@ -164,9 +164,9 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
                                 animate={{ height: "auto", opacity: 1 }}
                                 exit={{ height: 0, opacity: 0 }}
                                 transition={{ type: "spring", stiffness: 380, damping: 34 }}
-                                className="overflow-hidden bg-white"
+                                className="overflow-hidden bg-paper-card"
                               >
-                                <div className="max-h-64 overflow-y-auto divide-y divide-zinc-100">
+                                <div className="max-h-64 overflow-y-auto divide-y divide-line">
                                   {g.courses.map((course) => (
                                     <a
                                       key={course.id}
@@ -176,12 +176,12 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
                                       onClick={close}
                                       className="flex items-center justify-between gap-2 p-2.5 text-xs hover:bg-amber-50"
                                     >
-                                      <span className="font-bold text-zinc-800 truncate">{course.title}</span>
+                                      <span className="font-bold text-ink truncate">{course.title}</span>
                                       <span className="shrink-0 text-xs text-amber-700">Enquire →</span>
                                     </a>
                                   ))}
                                   {g.courses.length === 0 && (
-                                    <p className="p-2.5 text-xs text-zinc-500">
+                                    <p className="p-2.5 text-xs text-ink-3">
                                       Message us on WhatsApp for this category.
                                     </p>
                                   )}
@@ -196,19 +196,19 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
                 </div>
 
                 {/* Registration / Enquiry — same content as desktop */}
-                <div className="border-b border-zinc-200">
+                <div className="border-b border-line">
                   <button
                     type="button"
                     onClick={() => setOpenSection(openSection === "register" ? null : "register")}
-                    className="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-zinc-50"
+                    className="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-paper-raised"
                   >
                     <UserCheck className="h-4 w-4 text-amber-600 shrink-0" />
                     <div className="min-w-0 flex-1 text-left">
-                      <span className="block text-xs font-extrabold text-zinc-900">Registration / Enquiry</span>
-                      <span className="block text-xs text-zinc-500">One form to register or ask a question</span>
+                      <span className="block text-xs font-extrabold text-ink">Registration / Enquiry</span>
+                      <span className="block text-xs text-ink-3">One form to register or ask a question</span>
                     </div>
                     <ChevronDown
-                      className={`h-3.5 w-3.5 text-zinc-400 shrink-0 transition-transform ${
+                      className={`h-3.5 w-3.5 text-ink-3 shrink-0 transition-transform ${
                         openSection === "register" ? "rotate-180" : ""
                       }`}
                     />
@@ -231,19 +231,19 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
                 </div>
 
                 {/* Contact — same content as desktop */}
-                <div className="border-b border-zinc-200">
+                <div className="border-b border-line">
                   <button
                     type="button"
                     onClick={() => setOpenSection(openSection === "contact" ? null : "contact")}
-                    className="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-zinc-50"
+                    className="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-paper-raised"
                   >
                     <Building2 className="h-4 w-4 text-emerald-600 shrink-0" />
                     <div className="min-w-0 flex-1 text-left">
-                      <span className="block text-xs font-extrabold text-zinc-900">Contact Us</span>
-                      <span className="block text-xs text-zinc-500">Noonmati, Guwahati</span>
+                      <span className="block text-xs font-extrabold text-ink">Contact Us</span>
+                      <span className="block text-xs text-ink-3">Noonmati, Guwahati</span>
                     </div>
                     <ChevronDown
-                      className={`h-3.5 w-3.5 text-zinc-400 shrink-0 transition-transform ${
+                      className={`h-3.5 w-3.5 text-ink-3 shrink-0 transition-transform ${
                         openSection === "contact" ? "rotate-180" : ""
                       }`}
                     />
@@ -267,7 +267,7 @@ export function MobileNavDrawer({ groups, totalCount }: MobileNavDrawerProps) {
               </div>
 
               {/* Sticky bottom CTA */}
-              <div className="border-t border-zinc-200 p-4">
+              <div className="border-t border-line p-4">
                 <a
                   href={WHATSAPP_LINK}
                   target="_blank"
