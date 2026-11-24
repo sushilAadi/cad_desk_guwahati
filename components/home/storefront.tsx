@@ -56,11 +56,11 @@ const waLink = (titles: string[]) =>
 const days = (c: PublicCourse) => (c.duration ? `${c.duration} days` : "Flexible")
 
 const TRACK_IMG: Record<string, string> = {
-  "Civil / Architecture": "/images/categories/civil.jpg",
-  "CS/IT": "/images/categories/cs-it.jpg",
-  Mechanical: "/images/categories/mechanical.jpg",
-  "Creative Arts": "/images/categories/creative-arts.jpg",
-  Electrical: "/images/categories/electrical.jpg",
+  "Civil / Architecture": "/images/categories/civil.webp",
+  "CS/IT": "/images/categories/cs-it.webp",
+  Mechanical: "/images/categories/mechanical.webp",
+  "Creative Arts": "/images/categories/creative-arts.webp",
+  Electrical: "/images/categories/electrical.webp",
 }
 const DISPLAY = "font-[family-name:var(--font-display)] uppercase tracking-[-0.01em]"
 const BAND_A = ["Civil / Architecture", "Mechanical", "Electrical", "CS/IT", "Creative Arts"]
@@ -223,7 +223,9 @@ function MiniCards({ i }: { i: number }) {
 const HERO_IMAGE = "/images/hero/institute.webp" // drop a wide photo of the institute here
 // the hero pours between these like ink (see ink-flow-carousel); a single image is shown as before
 const HERO_IMAGES = [HERO_IMAGE, "/images/hero/institute-1.webp", "/images/hero/institute-2.webp", "/images/hero/institute-3.webp", "/images/hero/institute-4.webp"]
-const HERO_FALLBACK = "/images/hero/categories-collage.png"
+const MAX_LIST = 20
+const MAX_PER_TRACK = 10
+const HERO_FALLBACK = "/images/hero/categories-collage.webp"
 
 // 8 x 3 grid, 24 boxes numbered across (1 to 24). The first and last columns are half width and the top and
 // bottom rows are half height, so the four corners are quarter size and the middle boxes are square.
@@ -420,7 +422,17 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
   const [why, setWhy] = useState(0)
   const [dot, setDot] = useState<{ c: PublicCourse; i: number; x: number; y: number; b: number; w: number } | null>(null)
 
-  const toggle = (id: string) => setList((l) => (l.includes(id) ? l.filter((x) => x !== id) : [...l, id]))
+  // Limits: 20 courses in the list, at most 10 from any one track. A blocked add shows a note in the list bar.
+  const [limitNote, setLimitNote] = useState("")
+  const toggle = (id: string) => {
+    if (list.includes(id)) return setList(list.filter((x) => x !== id)), setLimitNote("")
+    const cat = all.find((c) => c.id === id)?.category
+    const sameTrack = list.filter((x) => all.find((c) => c.id === x)?.category === cat).length
+    if (list.length >= MAX_LIST) return setLimitNote(`Your list is full (${MAX_LIST} courses). Remove one to add another.`)
+    if (sameTrack >= MAX_PER_TRACK) return setLimitNote(`Up to ${MAX_PER_TRACK} courses per track. Remove one from ${cat} first.`)
+    setList([...list, id])
+    setLimitNote("")
+  }
   const q = query.trim().toLowerCase()
   const filtered = q
     ? all.filter((c) => `${c.title} ${c.category}`.toLowerCase().includes(q))
@@ -509,7 +521,7 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
                 <UniTile u={u} onPeek={setPeek} className="flex items-center gap-4 pr-12 outline-none md:pr-16">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={`/images/universities/${u.id}.png`}
+                    src={`/images/universities/${u.id}.webp`}
                     alt={i < UNIVERSITIES.length ? `${u.short} logo` : ""}
                     draggable={false}
                     className={`block h-16 w-16 shrink-0 object-contain md:h-20 md:w-20 ${u.dark ? "rounded-full bg-[#1a2a4a] p-1.5" : "bg-white"}`}
@@ -994,7 +1006,7 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
                 <div className="flex h-[240px] items-center justify-center overflow-hidden rounded-lg border border-line bg-paper-raised p-3">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={peekUni.letter ?? `/images/universities/${peekUni.id}.png`}
+                    src={peekUni.letter ?? `/images/universities/${peekUni.id}.webp`}
                     alt=""
                     className={peekUni.letter ? "h-full w-full object-cover object-top" : `max-h-full max-w-full object-contain ${peekUni.dark ? "h-40 w-40 rounded-full bg-[#1a2a4a] p-3" : ""}`}
                   />
@@ -1032,9 +1044,14 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
                 ))}
               </ul>
             )}
+            {limitNote && (
+              <p role="alert" className="mb-2 rounded-md bg-white/10 px-3 py-2 text-xs text-white">
+                {limitNote}
+              </p>
+            )}
             <div className="flex items-center gap-2">
               <button onClick={() => setListOpen((o) => !o)} aria-expanded={listOpen} className="flex h-10 flex-1 items-center gap-3 px-2 text-left text-sm">
-                <span className="text-xs text-white/75">{String(listed.length).padStart(2, "0")}</span>
+                <span className="text-xs text-white/75">{String(listed.length).padStart(2, "0")}/{MAX_LIST}</span>
                 {listed.length === 1 ? "course" : "courses"} in your list
                 <span className="text-white/75 underline underline-offset-4">{listOpen ? "Hide" : "View"}</span>
               </button>

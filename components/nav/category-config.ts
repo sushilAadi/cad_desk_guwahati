@@ -14,31 +14,31 @@ export const CATEGORY_DISPLAY: Record<string, CategoryDisplayMeta> = {
   "Civil / Architecture": {
     slogan: "Design. Build. Inspire.",
     description: "AutoCAD, Revit, STAAD Pro, Civil 3D, Tekla, SketchUp & BIM",
-    image: "/images/categories/civil.jpg",
+    image: "/images/categories/civil.webp",
     iconName: "Building2",
   },
   "CS/IT": {
     slogan: "Code. Innovate. Transform.",
     description: "Data Science, Python, Java, C++, Cyber Security & Web Design",
-    image: "/images/categories/cs-it.jpg",
+    image: "/images/categories/cs-it.webp",
     iconName: "Code",
   },
   Mechanical: {
     slogan: "Design. Develop. Deliver.",
     description: "NX CAD, SOLIDWORKS, Creo, CATIA, Fusion 360, ANSYS WB & CNC",
-    image: "/images/categories/mechanical.jpg",
+    image: "/images/categories/mechanical.webp",
     iconName: "Cpu",
   },
   "Creative Arts": {
     slogan: "Create. Imagine. Express.",
     description: "Photoshop, Illustrator, CorelDRAW, Blender & Photography",
-    image: "/images/categories/creative-arts.jpg",
+    image: "/images/categories/creative-arts.webp",
     iconName: "Palette",
   },
   Electrical: {
     slogan: "Power. Connect. Innovate.",
     description: "AutoCAD Electrical, Revit MEP, ETAP, EPLAN & PLC Automation",
-    image: "/images/categories/electrical.jpg",
+    image: "/images/categories/electrical.webp",
     iconName: "Zap",
   },
 }
@@ -46,7 +46,7 @@ export const CATEGORY_DISPLAY: Record<string, CategoryDisplayMeta> = {
 export const DEFAULT_CATEGORY_DISPLAY: CategoryDisplayMeta = {
   slogan: "Learn. Build. Grow.",
   description: "Practical, project-based training",
-  image: "/images/categories/civil.jpg",
+  image: "/images/categories/civil.webp",
   iconName: "BookOpen",
 }
 

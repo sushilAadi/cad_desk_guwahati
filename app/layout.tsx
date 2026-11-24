@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Agentation } from "agentation";
 import { SITE_URL } from "@/lib/site";
+import { CrosshairSections } from "@/components/crosshair-sections";
 
 const plexSans = Geist({
   variable: "--font-plex-sans",
@@ -59,13 +60,13 @@ export const metadata: Metadata = {
     url: "/",
     title: "CAD Desk Guwahati | CAD/CAM & IT Training Institute",
     description,
-    images: ["/images/hero/categories-collage.png"],
+    images: ["/images/hero/categories-collage.webp"],
   },
   twitter: {
     card: "summary_large_image",
     title: "CAD Desk Guwahati | CAD/CAM & IT Training Institute",
     description,
-    images: ["/images/hero/categories-collage.png"],
+    images: ["/images/hero/categories-collage.webp"],
   },
   robots: { index: true, follow: true },
 };
@@ -81,6 +82,7 @@ export default function RootLayout({
       className={`${plexSans.variable} ${plexMono.variable} ${display.variable} ${matangi.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}
+        <CrosshairSections />
         {process.env.NODE_ENV === "development" && <Agentation />}
       </body>
     </html>

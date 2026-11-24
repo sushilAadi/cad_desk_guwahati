@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useLayoutEffect, useRef, useState } from "react"
+import { preload } from "react-dom"
 import InkFlowCarousel from "@/components/ui/ink-flow-carousel"
 
 export type MosaicTile =
@@ -67,6 +68,7 @@ export function MaskedMosaic({
   const ink = !!images && images.length > 1
   const wrap = useRef<HTMLDivElement>(null)
   const cells = useRef<(HTMLDivElement | null)[]>([])
+  preload(images?.[0] ?? src, { as: "image", fetchPriority: "high" })
   const [box, setBox] = useState({ w: 0, h: 0 })
   const [offs, setOffs] = useState<{ x: number; y: number }[]>([])
   const [rects, setRects] = useState<Rect[]>([])
@@ -116,7 +118,7 @@ export function MaskedMosaic({
         // The first picture sits underneath so there is never an empty frame while the canvas starts up.
         <div aria-hidden className="absolute inset-0 z-0" style={{ clipPath: `path('${tilesPath(tiles, rects)}')` }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={images![0]} alt="" draggable={false} className="absolute inset-0 h-full w-full object-cover" style={{ objectPosition: `center ${focusY * 100}%` }} />
+          <img src={images![0]} alt="" draggable={false} fetchPriority="high" className="absolute inset-0 h-full w-full object-cover" style={{ objectPosition: `center ${focusY * 100}%` }} />
           <InkFlowCarousel items={images!.map((u) => ({ src: u }))} height="100%" rail={false} decorative focusY={focusY} autoplay={autoplay} onIndexChange={onSlide} />
         </div>
       )}

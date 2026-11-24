@@ -1,5 +1,5 @@
 // Universities where CAD Desk has trained students and received appreciation letters (home page).
-// Logo files go in public/images/universities/<id>.png; a tile without a file shows a lettered badge.
+// Logo files go in public/images/universities/<id>.webp; a tile without a file shows a lettered badge.
 export type University = {
   id: string
   name: string

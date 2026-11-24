@@ -868,8 +868,11 @@ export default function InkFlowCarousel({
     observer.observe(canvas)
 
     let refused = 0
+    let first: Promise<unknown> = Promise.resolve()
     items.forEach((item, i) => {
-      loadImage(item.src).then(
+      const p = (i === 0 ? loadImage(item.src) : first.then(() => loadImage(item.src)))
+      if (i === 0) first = p.catch(() => {})
+      p.then(
         (img) => {
           if (disposed) return
           const tex = gl.createTexture()
