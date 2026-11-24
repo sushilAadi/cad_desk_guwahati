@@ -13,11 +13,13 @@ const plexSans = Geist({
   display: "swap",
 });
 
+// Anton is far narrower than any fallback, so swapping wraps headings onto extra lines and shifts the page (CLS).
+// "block" hides heading text briefly until the preloaded font arrives instead.
 const display = Anton({
   variable: "--font-display",
   weight: "400",
   subsets: ["latin"],
-  display: "swap",
+  display: "block",
 });
 
 const plexMono = Geist_Mono({
@@ -85,7 +87,7 @@ export default function RootLayout({
     >
       <head>
         {/* Set the saved theme before first paint so dark mode doesn't flash. Admin stays light. */}
-        <InlineScript html={`try{if(localStorage.getItem("theme")==="dark"&&!location.pathname.startsWith("/admin"))document.documentElement.classList.add("dark")}catch(e){}`} />
+        <InlineScript html={`try{if(localStorage.getItem("theme")!=="light"&&!location.pathname.startsWith("/admin"))document.documentElement.classList.add("dark")}catch(e){}`} />
       </head>
       <body className="min-h-full flex flex-col">{children}
         <CrosshairSections />

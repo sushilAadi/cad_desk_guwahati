@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { Moon, Sun } from "lucide-react"
 
-/** Switches light/dark. Light is the default; the choice is remembered in this browser (see the script in app/layout.tsx). */
+/** Switches light/dark. Dark is the default; the choice is remembered in this browser (see the script in app/layout.tsx). */
 export function ThemeToggle() {
   const [dark, setDark] = useState(false)
   useEffect(() => {
