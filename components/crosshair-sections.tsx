@@ -14,6 +14,9 @@ export function CrosshairSections() {
     const runs: { cancel(): void }[] = []
     let io: IntersectionObserver | undefined
     let dead = false
+    // Course detail pages play on load over everything in <main> (banner, side panel, modules).
+    // ponytail: costs LCP on these pages since the banner is covered at first paint; drop the flag if Core Web Vitals slip.
+    const eager = /^\/courses\/[^/]+$/.test(pathname)
     const start = () =>
       import("@/lib/crosshair-skeleton").then(({ crosshair }) => {
         if (dead) return
@@ -25,19 +28,21 @@ export function CrosshairSections() {
             entries.forEach((e) => {
               if (!e.isIntersecting) return
               io!.unobserve(e.target)
-              runs.push(crosshair(e.target as HTMLElement, { auto: true, speed: 2.5 }))
+              runs.push(crosshair(e.target as HTMLElement, { auto: true, speed: e.target.closest("[aria-labelledby=h-toc]") ? 3.5 : 2.5 }))
             }),
           { rootMargin: "50% 0px" },
         )
         // Positions are page-absolute (setup runs after the first scroll). A busy section animates its smaller blocks instead.
         const small = (el: Element) => el.querySelectorAll("*").length <= 150
-        const below = (el: Element) => el.getBoundingClientRect().top + scrollY > innerHeight * 1.5
-        document.querySelectorAll("section").forEach((sec) => {
-          const targets = small(sec) ? [sec] : [...sec.querySelectorAll(":scope > * > *")].filter(small)
-          targets.filter(below).forEach((el) => io!.observe(el))
+        const below = (el: Element) => eager || el.getBoundingClientRect().top + scrollY > innerHeight
+        // Busy blocks are split until each piece is small enough (e.g. course grid -> each card).
+        const pick = (el: Element): Element[] => (small(el) ? [el] : [...el.children].flatMap(pick))
+        document.querySelectorAll(eager ? "main > *" : "section").forEach((sec) => {
+          pick(sec).filter((el) => el.querySelectorAll("*").length >= 3 && below(el)).forEach((el) => io!.observe(el))
         })
       })
-    addEventListener("scroll", start, { once: true, passive: true })
+    if (eager) start()
+    else addEventListener("scroll", start, { once: true, passive: true })
     return () => {
       dead = true
       removeEventListener("scroll", start)
