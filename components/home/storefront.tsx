@@ -517,7 +517,7 @@ export function Storefront({ groups, mode = "home" }: { groups: Groups; mode?: "
         <div data-rule className="uni-marquee mt-8 overflow-hidden border-y border-line py-6 lg:mt-10">
           <ul className="uni-track flex w-max items-center">
             {[...UNIVERSITIES, ...UNIVERSITIES].map((u, i) => (
-              <li key={`${u.id}-${i}`} aria-hidden={i >= UNIVERSITIES.length || undefined} className="shrink-0">
+              <li key={`${u.id}-${i}`} inert={i >= UNIVERSITIES.length || undefined} className="shrink-0">
                 <UniTile u={u} onPeek={setPeek} className="flex items-center gap-4 pr-12 outline-none md:pr-16">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
